@@ -94,6 +94,14 @@ class ChatController extends StateNotifier<ChatState> {
       status: ChatMessageStatus.thinking,
     );
 
+    final allDone = state.messages.where((m) => m.isDone && m.content.isNotEmpty).toList();
+    final recent = allDone.length > AppConstants.chatHistoryMaxMessages
+        ? allDone.sublist(
+            allDone.length - AppConstants.chatHistoryMaxMessages,
+          )
+        : allDone;
+    final history = recent.map((m) => m.toHistoryEntry()).toList();
+
     state = state.copyWith(
       messages: [...state.messages, userMsg, assistantMsg],
       sendStatus: ChatSendStatus.sending,
@@ -103,14 +111,6 @@ class ChatController extends StateNotifier<ChatState> {
     await _persistHistory();
 
     try {
-      final allDone = state.messages.where((m) => m.isDone).toList();
-      final recent = allDone.length > AppConstants.chatHistoryMaxMessages
-          ? allDone.sublist(
-              allDone.length - AppConstants.chatHistoryMaxMessages,
-            )
-          : allDone;
-      final history = recent.map((m) => m.toHistoryEntry()).toList();
-
       final result = await _repository.sendQuestion(
         question: question.trim(),
         history: history,

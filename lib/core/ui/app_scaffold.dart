@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_top_bar.dart';
 import 'app_drawer.dart';
 
-class AppScaffold extends StatelessWidget {
+class AppScaffold extends StatefulWidget {
   final Widget body;
   final String? title;
   final List<Widget>? actions;
@@ -30,27 +30,39 @@ class AppScaffold extends StatelessWidget {
   });
 
   @override
+  State<AppScaffold> createState() => _AppScaffoldState();
+}
+
+class _AppScaffoldState extends State<AppScaffold> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showDrawer
+      key: _scaffoldKey,
+      appBar: widget.showDrawer
           ? AppTopBar(
-              onMenuTap: () => Scaffold.of(context).openDrawer(),
-              actions: actions,
+              onMenuTap: _openDrawer,
+              actions: widget.actions,
             )
-          : (title != null
-                ? AppTopBar(title: Text(title!), actions: actions)
-                : null),
-      drawer: showDrawer
+          : (widget.title != null
+              ? AppTopBar(title: Text(widget.title!), actions: widget.actions)
+              : null),
+      drawer: widget.showDrawer
           ? AppDrawer(
-              isAuthenticated: isAuthenticated,
-              locale: locale,
-              supportedLocales: supportedLocales,
-              onLocaleChanged: onLocaleChanged,
-              onLogout: onLogout,
+              isAuthenticated: widget.isAuthenticated,
+              locale: widget.locale,
+              supportedLocales: widget.supportedLocales,
+              onLocaleChanged: widget.onLocaleChanged,
+              onLogout: widget.onLogout,
             )
           : null,
-      body: body,
-      bottomNavigationBar: bottomNavigationBar,
+      body: widget.body,
+      bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
 }
