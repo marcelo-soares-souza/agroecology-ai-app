@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../bootstrap/providers.dart';
 import '../../core/error/exceptions.dart';
+import '../../features/chat/presentation/pages/chat_page.dart';
 import '../ui/app_scaffold.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -64,8 +65,7 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
           GoRoute(
             path: '/chat',
             name: 'chat',
-            builder: (context, state) =>
-                const _PlaceholderPage(title: 'Chat \u2014 coming in Phase 2'),
+            builder: (context, state) => const ChatPage(),
           ),
           GoRoute(
             path: '/community',

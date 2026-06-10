@@ -12,6 +12,9 @@ import '../core/storage/token_storage.dart';
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/auth/presentation/controllers/auth_controller.dart';
+import '../features/chat/data/repositories/chat_repository_impl.dart';
+import '../features/chat/domain/repositories/chat_repository.dart';
+import '../features/chat/presentation/controllers/chat_controller.dart';
 
 final environmentProvider = Provider<Environment>((ref) {
   throw UnimplementedError('Environment must be set via override');
@@ -56,6 +59,22 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
     apiBaseUrl: env.apiBaseUrl,
   );
 });
+
+final chatRepositoryProvider = Provider<ChatRepository>((ref) {
+  final apiClient = ref.watch(apiClientProvider);
+  final chatStorage = ref.watch(chatStorageProvider);
+
+  return ChatRepositoryImpl(apiClient: apiClient, chatStorage: chatStorage);
+});
+
+final chatControllerProvider =
+    StateNotifierProvider.autoDispose<ChatController, ChatState>((ref) {
+      final chatRepo = ref.watch(chatRepositoryProvider) as ChatRepositoryImpl;
+      final authState = ref.watch(authControllerProvider);
+      final userId = authState.session?.userId ?? '';
+
+      return ChatController(repository: chatRepo, userId: userId);
+    });
 
 final authControllerProvider =
     StateNotifierProvider.autoDispose<AuthController, AuthState>((ref) {
