@@ -116,5 +116,56 @@
   "donateText3": "O apoio fortalece uma plataforma aberta, sem paywall, voltada a comunidades, pesquisadores e agricultores.",
   "donateButton": "Doar via Ko-fi",
   "donateError": "Não foi possível abrir a página de doação.",
-  "retry": "Tentar novamente"
+  "retry": "Tentar novamente",
+  "mySuggestions": "Minhas Sugestões",
+  "knowledgeBase": "Base de Conhecimento",
+  "suggestDocument": "Sugerir Documento",
+  "newSuggestion": "Nova Sugestão",
+  "selectPdf": "Selecionar arquivo PDF",
+  "pdfOnly": "Apenas arquivos PDF são aceitos",
+  "fileRequired": "Um arquivo PDF é obrigatório",
+  "fileTooLarge": "Arquivo deve ter menos de {size} MB",
+  "@fileTooLarge": {
+    "placeholders": {
+      "size": {"type": "int"}
+    }
+  },
+  "commentLabel": "Comentário",
+  "commentHint": "Por que você está sugerindo este documento?",
+  "commentRequired": "Um comentário é obrigatório",
+  "submitSuggestion": "Enviar Sugestão",
+  "suggestionCreated": "Sugestão enviada com sucesso.",
+  "deleteSuggestion": "Excluir Sugestão",
+  "deleteSuggestionConfirm": "Tem certeza que deseja excluir esta sugestão?",
+  "cancel": "Cancelar",
+  "delete": "Excluir",
+  "noSuggestions": "Nenhuma sugestão ainda",
+  "noSuggestionsSub": "Sugira um documento para ajudar a expandir a base de conhecimento.",
+  "allStatus": "Todas",
+  "statusPending": "Pendente",
+  "statusApproved": "Aprovada",
+  "statusRejected": "Rejeitada",
+  "untitled": "Sem título",
+  "filename": "Nome do arquivo",
+  "suggestionDetail": "Detalhe da Sugestão",
+  "adminComment": "Comentário do Admin",
+  "resultingDocument": "Documento Resultante",
+  "viewDocument": "Ver Documento",
+  "kbTitle": "Base de Conhecimento",
+  "kbEmpty": "Nenhum documento na base de conhecimento ainda.",
+  "searchDocuments": "Buscar documentos...",
+  "indexedCount": "{indexed} de {total} indexados",
+  "@indexedCount": {
+    "placeholders": {
+      "indexed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "allIndexed": "Todos os arquivos indexados",
+  "documentDetail": "Detalhe do Documento",
+  "download": "Baixar",
+  "fileType": "Tipo de Arquivo",
+  "fileSize": "Tamanho",
+  "ingested": "Indexado",
+  "notIngested": "Não indexado"
 }

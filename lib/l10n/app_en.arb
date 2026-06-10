@@ -116,5 +116,56 @@
   "donateText3": "Support strengthens an open platform, without paywalls, dedicated to communities, researchers, and farmers.",
   "donateButton": "Donate via Ko-fi",
   "donateError": "Could not open the donation page.",
-  "retry": "Retry"
+  "retry": "Retry",
+  "mySuggestions": "My Suggestions",
+  "knowledgeBase": "Knowledge Base",
+  "suggestDocument": "Suggest Document",
+  "newSuggestion": "New Suggestion",
+  "selectPdf": "Select PDF file",
+  "pdfOnly": "Only PDF files are accepted",
+  "fileRequired": "A PDF file is required",
+  "fileTooLarge": "File must be less than {size} MB",
+  "@fileTooLarge": {
+    "placeholders": {
+      "size": {"type": "int"}
+    }
+  },
+  "commentLabel": "Comment",
+  "commentHint": "Why are you suggesting this document?",
+  "commentRequired": "A comment is required",
+  "submitSuggestion": "Submit Suggestion",
+  "suggestionCreated": "Suggestion submitted successfully.",
+  "deleteSuggestion": "Delete Suggestion",
+  "deleteSuggestionConfirm": "Are you sure you want to delete this suggestion?",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "noSuggestions": "No suggestions yet",
+  "noSuggestionsSub": "Suggest a document to help grow the knowledge base.",
+  "allStatus": "All",
+  "statusPending": "Pending",
+  "statusApproved": "Approved",
+  "statusRejected": "Rejected",
+  "untitled": "Untitled",
+  "filename": "Filename",
+  "suggestionDetail": "Suggestion Detail",
+  "adminComment": "Admin Comment",
+  "resultingDocument": "Resulting Document",
+  "viewDocument": "View Document",
+  "kbTitle": "Knowledge Base",
+  "kbEmpty": "No documents in the knowledge base yet.",
+  "searchDocuments": "Search documents...",
+  "indexedCount": "{indexed} of {total} indexed",
+  "@indexedCount": {
+    "placeholders": {
+      "indexed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "allIndexed": "All files indexed",
+  "documentDetail": "Document Detail",
+  "download": "Download",
+  "fileType": "File Type",
+  "fileSize": "File Size",
+  "ingested": "Indexed",
+  "notIngested": "Not indexed"
 }

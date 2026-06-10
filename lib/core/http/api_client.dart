@@ -231,4 +231,12 @@ class ApiClient {
       throw _mapError(e);
     }
   }
+
+  Future<void> delete(String path, {CancelToken? cancelToken}) async {
+    try {
+      await _dio.delete(path, cancelToken: cancelToken);
+    } on DioException catch (e) {
+      throw _mapError(e);
+    }
+  }
 }

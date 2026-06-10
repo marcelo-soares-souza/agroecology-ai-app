@@ -9,6 +9,11 @@ import '../../features/chat/presentation/pages/chat_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/community/presentation/pages/community_page.dart';
 import '../../features/community/presentation/pages/about_donate.dart';
+import '../../features/suggestions/presentation/pages/suggestion_create_page.dart';
+import '../../features/suggestions/presentation/pages/suggestion_list_page.dart';
+import '../../features/suggestions/presentation/pages/suggestion_detail_page.dart';
+import '../../features/documents/presentation/pages/document_list_page.dart';
+import '../../features/documents/presentation/pages/document_detail_page.dart';
 import '../ui/app_scaffold.dart';
 
 String _resolveError(AppLocalizations l10n, String message) {
@@ -117,6 +122,41 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
             name: 'donate',
             builder: (context, state) => const DonatePage(),
           ),
+          GoRoute(
+            path: '/suggestions',
+            name: 'suggestions',
+            builder: (context, state) => const SuggestionListPage(),
+            routes: [
+              GoRoute(
+                path: 'new',
+                name: 'suggestions-new',
+                builder: (context, state) => const SuggestionCreatePage(),
+              ),
+              GoRoute(
+                path: ':id',
+                name: 'suggestions-detail',
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return SuggestionDetailPage(id: id);
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/documents',
+            name: 'documents',
+            builder: (context, state) => const DocumentListPage(),
+            routes: [
+              GoRoute(
+                path: ':id',
+                name: 'documents-detail',
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return DocumentDetailPage(id: id);
+                },
+              ),
+            ],
+          ),
         ],
       ),
     ],
@@ -129,6 +169,13 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
           state.uri.path == '/forgot-password' ||
           state.uri.path == '/reset-password';
       final isSplash = state.uri.path == '/splash';
+      final isPublicRoute =
+          state.uri.path == '/about' ||
+          state.uri.path == '/donate' ||
+          state.uri.path == '/community' ||
+          state.uri.path.startsWith('/community/') ||
+          state.uri.path == '/documents' ||
+          state.uri.path.startsWith('/documents/');
 
       if (isSplash) {
         if (auth.isLoading) return null;
@@ -140,7 +187,10 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
 
       if (auth.isAuthenticated && isAuthRoute) return '/chat';
 
-      if (!auth.isAuthenticated && !isAuthRoute && !isSplash) {
+      if (!auth.isAuthenticated &&
+          !isAuthRoute &&
+          !isSplash &&
+          !isPublicRoute) {
         return '/login';
       }
 

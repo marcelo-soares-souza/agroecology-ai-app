@@ -707,6 +707,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get retry;
+
+  /// No description provided for @mySuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'My Suggestions'**
+  String get mySuggestions;
+
+  /// No description provided for @knowledgeBase.
+  ///
+  /// In en, this message translates to:
+  /// **'Knowledge Base'**
+  String get knowledgeBase;
+
+  /// No description provided for @suggestDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest Document'**
+  String get suggestDocument;
+
+  /// No description provided for @newSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'New Suggestion'**
+  String get newSuggestion;
+
+  /// No description provided for @selectPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Select PDF file'**
+  String get selectPdf;
+
+  /// No description provided for @pdfOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Only PDF files are accepted'**
+  String get pdfOnly;
+
+  /// No description provided for @fileRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A PDF file is required'**
+  String get fileRequired;
+
+  /// No description provided for @fileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'File must be less than {size} MB'**
+  String fileTooLarge(int size);
+
+  /// No description provided for @commentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment'**
+  String get commentLabel;
+
+  /// No description provided for @commentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you suggesting this document?'**
+  String get commentHint;
+
+  /// No description provided for @commentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A comment is required'**
+  String get commentRequired;
+
+  /// No description provided for @submitSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Suggestion'**
+  String get submitSuggestion;
+
+  /// No description provided for @suggestionCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion submitted successfully.'**
+  String get suggestionCreated;
+
+  /// No description provided for @deleteSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Suggestion'**
+  String get deleteSuggestion;
+
+  /// No description provided for @deleteSuggestionConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this suggestion?'**
+  String get deleteSuggestionConfirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @noSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'No suggestions yet'**
+  String get noSuggestions;
+
+  /// No description provided for @noSuggestionsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest a document to help grow the knowledge base.'**
+  String get noSuggestionsSub;
+
+  /// No description provided for @allStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allStatus;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// No description provided for @statusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get statusApproved;
+
+  /// No description provided for @statusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get statusRejected;
+
+  /// No description provided for @untitled.
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled'**
+  String get untitled;
+
+  /// No description provided for @filename.
+  ///
+  /// In en, this message translates to:
+  /// **'Filename'**
+  String get filename;
+
+  /// No description provided for @suggestionDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion Detail'**
+  String get suggestionDetail;
+
+  /// No description provided for @adminComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Comment'**
+  String get adminComment;
+
+  /// No description provided for @resultingDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Resulting Document'**
+  String get resultingDocument;
+
+  /// No description provided for @viewDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'View Document'**
+  String get viewDocument;
+
+  /// No description provided for @kbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Knowledge Base'**
+  String get kbTitle;
+
+  /// No description provided for @kbEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No documents in the knowledge base yet.'**
+  String get kbEmpty;
+
+  /// No description provided for @searchDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Search documents...'**
+  String get searchDocuments;
+
+  /// No description provided for @indexedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{indexed} of {total} indexed'**
+  String indexedCount(int indexed, int total);
+
+  /// No description provided for @allIndexed.
+  ///
+  /// In en, this message translates to:
+  /// **'All files indexed'**
+  String get allIndexed;
+
+  /// No description provided for @documentDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Document Detail'**
+  String get documentDetail;
+
+  /// No description provided for @download.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get download;
+
+  /// No description provided for @fileType.
+  ///
+  /// In en, this message translates to:
+  /// **'File Type'**
+  String get fileType;
+
+  /// No description provided for @fileSize.
+  ///
+  /// In en, this message translates to:
+  /// **'File Size'**
+  String get fileSize;
+
+  /// No description provided for @ingested.
+  ///
+  /// In en, this message translates to:
+  /// **'Indexed'**
+  String get ingested;
+
+  /// No description provided for @notIngested.
+  ///
+  /// In en, this message translates to:
+  /// **'Not indexed'**
+  String get notIngested;
 }
 
 class _AppLocalizationsDelegate

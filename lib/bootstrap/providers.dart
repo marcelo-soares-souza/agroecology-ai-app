@@ -15,6 +15,11 @@ import '../features/auth/presentation/controllers/auth_controller.dart';
 import '../features/chat/data/repositories/chat_repository_impl.dart';
 import '../features/chat/domain/repositories/chat_repository.dart';
 import '../features/chat/presentation/controllers/chat_controller.dart';
+import '../features/suggestions/data/repositories/suggestion_repository_impl.dart';
+import '../features/suggestions/domain/repositories/suggestion_repository.dart';
+import '../features/suggestions/presentation/controllers/suggestion_controller.dart';
+import '../features/documents/data/repositories/document_repository_impl.dart';
+import '../features/documents/domain/repositories/document_repository.dart';
 
 final environmentProvider = Provider<Environment>((ref) {
   throw UnimplementedError('Environment must be set via override');
@@ -92,6 +97,30 @@ final authControllerProvider =
 
       return controller;
     });
+
+final suggestionRepositoryProvider = Provider<SuggestionRepository>((ref) {
+  final apiClient = ref.watch(apiClientProvider);
+  return SuggestionRepositoryImpl(apiClient: apiClient);
+});
+
+final suggestionControllerProvider =
+    StateNotifierProvider.autoDispose<
+      SuggestionController,
+      SuggestionListState
+    >((ref) {
+      final repo =
+          ref.watch(suggestionRepositoryProvider) as SuggestionRepositoryImpl;
+      return SuggestionController(repository: repo);
+    });
+
+final documentRepositoryProvider = Provider<DocumentRepository>((ref) {
+  final apiClient = ref.watch(apiClientProvider);
+  final env = ref.watch(environmentProvider);
+  return DocumentRepositoryImpl(
+    apiClient: apiClient,
+    apiBaseUrl: env.apiBaseUrl,
+  );
+});
 
 final localeProvider = StateNotifierProvider<LocaleNotifier, String>((ref) {
   return LocaleNotifier();

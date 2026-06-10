@@ -328,4 +328,130 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get retry => 'Reintentar';
+
+  @override
+  String get mySuggestions => 'Mis Sugerencias';
+
+  @override
+  String get knowledgeBase => 'Base de Conocimiento';
+
+  @override
+  String get suggestDocument => 'Sugerir Documento';
+
+  @override
+  String get newSuggestion => 'Nueva Sugerencia';
+
+  @override
+  String get selectPdf => 'Seleccionar archivo PDF';
+
+  @override
+  String get pdfOnly => 'Solo se aceptan archivos PDF';
+
+  @override
+  String get fileRequired => 'Se requiere un archivo PDF';
+
+  @override
+  String fileTooLarge(int size) {
+    return 'El archivo debe tener menos de $size MB';
+  }
+
+  @override
+  String get commentLabel => 'Comentario';
+
+  @override
+  String get commentHint => '¿Por qué sugieres este documento?';
+
+  @override
+  String get commentRequired => 'Se requiere un comentario';
+
+  @override
+  String get submitSuggestion => 'Enviar Sugerencia';
+
+  @override
+  String get suggestionCreated => 'Sugerencia enviada con éxito.';
+
+  @override
+  String get deleteSuggestion => 'Eliminar Sugerencia';
+
+  @override
+  String get deleteSuggestionConfirm =>
+      '¿Estás seguro de que deseas eliminar esta sugerencia?';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get noSuggestions => 'No hay sugerencias aún';
+
+  @override
+  String get noSuggestionsSub =>
+      'Sugiere un documento para ayudar a crecer la base de conocimiento.';
+
+  @override
+  String get allStatus => 'Todas';
+
+  @override
+  String get statusPending => 'Pendiente';
+
+  @override
+  String get statusApproved => 'Aprobada';
+
+  @override
+  String get statusRejected => 'Rechazada';
+
+  @override
+  String get untitled => 'Sin título';
+
+  @override
+  String get filename => 'Nombre del archivo';
+
+  @override
+  String get suggestionDetail => 'Detalle de la Sugerencia';
+
+  @override
+  String get adminComment => 'Comentario del Admin';
+
+  @override
+  String get resultingDocument => 'Documento Resultante';
+
+  @override
+  String get viewDocument => 'Ver Documento';
+
+  @override
+  String get kbTitle => 'Base de Conocimiento';
+
+  @override
+  String get kbEmpty => 'No hay documentos en la base de conocimiento aún.';
+
+  @override
+  String get searchDocuments => 'Buscar documentos...';
+
+  @override
+  String indexedCount(int indexed, int total) {
+    return '$indexed de $total indexados';
+  }
+
+  @override
+  String get allIndexed => 'Todos los archivos indexados';
+
+  @override
+  String get documentDetail => 'Detalle del Documento';
+
+  @override
+  String get download => 'Descargar';
+
+  @override
+  String get fileType => 'Tipo de Archivo';
+
+  @override
+  String get fileSize => 'Tamaño';
+
+  @override
+  String get ingested => 'Indexado';
+
+  @override
+  String get notIngested => 'No indexado';
 }
