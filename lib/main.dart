@@ -36,24 +36,29 @@ class AgroecologyMapApp extends ConsumerStatefulWidget {
 class _AgroecologyMapAppState extends ConsumerState<AgroecologyMapApp> {
   final _authNotifier = AuthChangeNotifier();
   late final GoRouter _router;
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
-
     _router = createRouter(_authNotifier);
-
-    ref.listen(authControllerProvider, (_, _) {
-      _authNotifier.notify();
-    });
-
-    Future.microtask(() {
-      ref.read(authControllerProvider.notifier).restoreSession();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(authControllerProvider, (_, _) {
+      _authNotifier.notify();
+    });
+
+    if (!_initialized) {
+      _initialized = true;
+      Future.microtask(() {
+        if (mounted) {
+          ref.read(authControllerProvider.notifier).restoreSession();
+        }
+      });
+    }
+
     final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(

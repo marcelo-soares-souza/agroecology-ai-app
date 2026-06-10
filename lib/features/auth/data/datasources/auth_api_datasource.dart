@@ -43,6 +43,10 @@ class AuthApiDataSource {
     return data;
   }
 
+  Future<Map<String, dynamic>> getMeWithToken(String token) async {
+    return _client.getAuthenticated('$_prefix/me', token: token);
+  }
+
   Future<Map<String, dynamic>> updateMyProfile(
     Map<String, dynamic> body,
   ) async {

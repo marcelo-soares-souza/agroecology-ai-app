@@ -164,6 +164,34 @@ class ApiClient {
     return AppException(message: error.message ?? 'Unknown error');
   }
 
+  Future<Map<String, dynamic>> getAuthenticated(
+    String path, {
+    required String token,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final bareDio = Dio(
+        BaseOptions(
+          baseUrl: environment.apiBaseUrl,
+          connectTimeout: const Duration(seconds: 15),
+          receiveTimeout: const Duration(seconds: 30),
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      final response = await bareDio.get<Map<String, dynamic>>(
+        path,
+        queryParameters: queryParameters,
+      );
+      return response.data ?? {};
+    } on DioException catch (e) {
+      throw _mapError(e);
+    }
+  }
+
   Future<T> get<T>(
     String path, {
     Map<String, dynamic>? queryParameters,

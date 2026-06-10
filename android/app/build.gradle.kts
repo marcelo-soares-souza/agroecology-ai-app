@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "org.agroecologymap.agroecology_map_ai"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

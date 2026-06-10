@@ -33,14 +33,19 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     final payload = JwtPayload.fromToken(response.accessToken);
-    final user = await getMe();
+
+    User? user;
+    try {
+      final data = await _remote.getMeWithToken(response.accessToken);
+      user = _mapUser(data);
+    } catch (_) {}
 
     return AuthSession(
       userId: payload.sub,
       email: payload.email ?? email,
-      fullName: user.fullName,
-      slug: user.slug,
-      roles: user.roles,
+      fullName: user?.fullName ?? payload.fullName ?? '',
+      slug: user?.slug ?? '',
+      roles: user?.roles ?? payload.roles,
       accessToken: response.accessToken,
       refreshToken: response.refreshToken,
       expiresAt: payload.exp,
@@ -76,14 +81,19 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     final payload = JwtPayload.fromToken(response.accessToken);
-    final user = await getMe();
+
+    User? user;
+    try {
+      final data = await _remote.getMeWithToken(response.accessToken);
+      user = _mapUser(data);
+    } catch (_) {}
 
     return AuthSession(
       userId: payload.sub,
       email: payload.email ?? '',
-      fullName: user.fullName,
-      slug: user.slug,
-      roles: user.roles,
+      fullName: user?.fullName ?? payload.fullName ?? '',
+      slug: user?.slug ?? '',
+      roles: user?.roles ?? payload.roles,
       accessToken: response.accessToken,
       refreshToken: response.refreshToken,
       expiresAt: payload.exp,

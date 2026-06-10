@@ -40,13 +40,14 @@ class _ChatComposerState extends State<ChatComposer> {
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return Container(
       padding: EdgeInsets.only(
         left: 12,
         right: 8,
         top: 8,
-        bottom: 8 + bottomInset,
+        bottom: 8 + bottomInset + bottomPadding,
       ),
       decoration: const BoxDecoration(
         color: AppColors.surface,

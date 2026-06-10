@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:file_picker/file_picker.dart' as file_picker;
+import 'package:file_picker/file_picker.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -36,8 +36,8 @@ class _SuggestionCreatePageState extends ConsumerState<SuggestionCreatePage> {
     final l10n = AppLocalizations.of(context)!;
 
     try {
-      final result = await file_picker.FilePicker.platform.pickFiles(
-        type: file_picker.FileType.custom,
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
         allowedExtensions: ['pdf'],
         allowMultiple: false,
       );
