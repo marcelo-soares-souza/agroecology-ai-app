@@ -5,6 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../bootstrap/providers.dart';
 import '../../core/error/exceptions.dart';
 import '../../features/chat/presentation/pages/chat_page.dart';
+import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/community/presentation/pages/community_page.dart';
+import '../../features/community/presentation/pages/about_donate.dart';
 import '../ui/app_scaffold.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -70,18 +73,14 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
           GoRoute(
             path: '/community',
             name: 'community',
-            builder: (context, state) => const _PlaceholderPage(
-              title: 'Community \u2014 coming in Phase 3',
-            ),
+            builder: (context, state) => const CommunityListPage(),
             routes: [
               GoRoute(
                 path: ':slug',
                 name: 'community-detail',
                 builder: (context, state) {
                   final slug = state.pathParameters['slug']!;
-                  return _PlaceholderPage(
-                    title: 'Community detail: $slug \u2014 coming in Phase 3',
-                  );
+                  return CommunityDetailPage(slug: slug);
                 },
               ),
             ],
@@ -89,31 +88,24 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
           GoRoute(
             path: '/profile',
             name: 'profile',
-            builder: (context, state) => const _PlaceholderPage(
-              title: 'Profile \u2014 coming in Phase 3',
-            ),
+            builder: (context, state) => const ProfilePage(),
             routes: [
               GoRoute(
                 path: 'edit',
                 name: 'profile-edit',
-                builder: (context, state) => const _PlaceholderPage(
-                  title: 'Profile edit \u2014 coming in Phase 3',
-                ),
+                builder: (context, state) => const ProfileEditPage(),
               ),
             ],
           ),
           GoRoute(
             path: '/about',
             name: 'about',
-            builder: (context, state) =>
-                const _PlaceholderPage(title: 'About \u2014 coming in Phase 3'),
+            builder: (context, state) => const AboutPage(),
           ),
           GoRoute(
             path: '/donate',
             name: 'donate',
-            builder: (context, state) => const _PlaceholderPage(
-              title: 'Donate \u2014 coming in Phase 3',
-            ),
+            builder: (context, state) => const DonatePage(),
           ),
         ],
       ),
@@ -145,21 +137,6 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       return null;
     },
   );
-}
-
-class _PlaceholderPage extends StatelessWidget {
-  final String title;
-  const _PlaceholderPage({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 16, color: Color(0xFF78716c)),
-      ),
-    );
-  }
 }
 
 class _ShellPage extends StatelessWidget {
