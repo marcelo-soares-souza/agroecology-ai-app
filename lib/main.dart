@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bootstrap/providers.dart';
 import 'core/config/environment.dart';
+import 'core/constants/app_constants.dart';
 import 'core/navigation/router.dart';
 import 'core/theme/app_theme.dart';
 import 'l10n/app_localizations.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const defines = String.fromEnvironment(
@@ -18,9 +20,20 @@ void main() {
 
   final environment = Environment(apiBaseUrl: defines);
 
+  final prefs = await SharedPreferences.getInstance();
+  final savedLocale = prefs.getString(AppConstants.localeStorageKey);
+  final initialLocale =
+      (savedLocale != null &&
+          AppConstants.supportedLocales.contains(savedLocale))
+      ? savedLocale
+      : AppConstants.defaultLocale;
+
   runApp(
     ProviderScope(
-      overrides: [environmentProvider.overrideWithValue(environment)],
+      overrides: [
+        environmentProvider.overrideWithValue(environment),
+        localeProvider.overrideWith((ref) => LocaleNotifier(initialLocale)),
+      ],
       child: const AgroecologyMapApp(),
     ),
   );
@@ -66,17 +79,16 @@ class _AgroecologyMapAppState extends ConsumerState<AgroecologyMapApp> {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       locale: _localeFromString(locale),
-      supportedLocales: const [
-        Locale('pt', 'BR'),
-        Locale('en'),
-        Locale('es'),
-        Locale('fr'),
-      ],
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        DefaultMaterialLocalizations.delegate,
-        DefaultWidgetsLocalizations.delegate,
-      ],
+      localeListResolutionCallback: (locales, supportedLocales) {
+        for (final loc in locales ?? <Locale>[]) {
+          if (supportedLocales.contains(Locale(loc.languageCode))) {
+            return Locale(loc.languageCode);
+          }
+        }
+        return supportedLocales.first;
+      },
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       routerConfig: _router,
     );
   }

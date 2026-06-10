@@ -7,12 +7,21 @@ class DocumentApiDataSource {
   DocumentApiDataSource(this._client, this._apiBaseUrl);
 
   Future<List<Map<String, dynamic>>> listAll() async {
-    final data = await _client.get('/api/v1/documents');
-    return List<Map<String, dynamic>>.from(data);
+    final response = await _client.dio.get('/api/v1/documents');
+    final data = response.data;
+    if (data is List) {
+      return data.cast<Map<String, dynamic>>();
+    }
+    return [];
   }
 
   Future<Map<String, dynamic>> getOne(String id) async {
-    return await _client.get('/api/v1/documents/$id') as Map<String, dynamic>;
+    final response = await _client.dio.get('/api/v1/documents/$id');
+    final data = response.data;
+    if (data is Map<String, dynamic>) {
+      return data;
+    }
+    return {};
   }
 
   String downloadUrl(String id) {

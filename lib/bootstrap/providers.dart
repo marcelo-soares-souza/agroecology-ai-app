@@ -123,21 +123,11 @@ final documentRepositoryProvider = Provider<DocumentRepository>((ref) {
 });
 
 final localeProvider = StateNotifierProvider<LocaleNotifier, String>((ref) {
-  return LocaleNotifier();
+  throw UnimplementedError('Locale must be set via override');
 });
 
 class LocaleNotifier extends StateNotifier<String> {
-  LocaleNotifier() : super(AppConstants.defaultLocale) {
-    _load();
-  }
-
-  Future<void> _load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final saved = prefs.getString(AppConstants.localeStorageKey);
-    if (saved != null && AppConstants.supportedLocales.contains(saved)) {
-      state = saved;
-    }
-  }
+  LocaleNotifier(String initialLocale) : super(initialLocale);
 
   Future<void> setLocale(String locale) async {
     if (!AppConstants.supportedLocales.contains(locale)) return;

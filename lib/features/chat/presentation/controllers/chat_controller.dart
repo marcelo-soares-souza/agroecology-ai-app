@@ -94,11 +94,11 @@ class ChatController extends StateNotifier<ChatState> {
       status: ChatMessageStatus.thinking,
     );
 
-    final allDone = state.messages.where((m) => m.isDone && m.content.isNotEmpty).toList();
+    final allDone = state.messages
+        .where((m) => m.isDone && m.content.isNotEmpty)
+        .toList();
     final recent = allDone.length > AppConstants.chatHistoryMaxMessages
-        ? allDone.sublist(
-            allDone.length - AppConstants.chatHistoryMaxMessages,
-          )
+        ? allDone.sublist(allDone.length - AppConstants.chatHistoryMaxMessages)
         : allDone;
     final history = recent.map((m) => m.toHistoryEntry()).toList();
 

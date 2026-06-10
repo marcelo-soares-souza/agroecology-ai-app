@@ -45,13 +45,10 @@ class _AppScaffoldState extends State<AppScaffold> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: widget.showDrawer
-          ? AppTopBar(
-              onMenuTap: _openDrawer,
-              actions: widget.actions,
-            )
+          ? AppTopBar(onMenuTap: _openDrawer, actions: widget.actions)
           : (widget.title != null
-              ? AppTopBar(title: Text(widget.title!), actions: widget.actions)
-              : null),
+                ? AppTopBar(title: Text(widget.title!), actions: widget.actions)
+                : null),
       drawer: widget.showDrawer
           ? AppDrawer(
               isAuthenticated: widget.isAuthenticated,
