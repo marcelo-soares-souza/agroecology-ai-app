@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../bootstrap/providers.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../controllers/chat_controller.dart';
 import '../widgets/chat_composer.dart';
@@ -55,6 +56,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final chatState = ref.watch(chatControllerProvider);
     final messages = chatState.messages;
 
@@ -64,10 +66,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
     return Column(
       children: [
-        _buildHeader(context, chatState),
+        _buildHeader(context, l10n, chatState),
         Expanded(
           child: messages.isEmpty
-              ? _buildEmptyState()
+              ? _buildEmptyState(l10n)
               : ListView.builder(
                   controller: _scrollController,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -78,6 +80,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 ),
         ),
         ChatComposer(
+          hint: l10n.askPlaceholder,
           enabled: !chatState.isSending,
           onSend: (text) {
             ref.read(chatControllerProvider.notifier).sendMessage(text);
@@ -87,7 +90,11 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, ChatState state) {
+  Widget _buildHeader(
+    BuildContext context,
+    AppLocalizations l10n,
+    ChatState state,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: const BoxDecoration(
@@ -98,22 +105,22 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       ),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Chat Agroecológico',
-                  style: TextStyle(
+                  l10n.chatTitle,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 Text(
-                  'Ask questions about agroecology',
-                  style: TextStyle(
+                  l10n.chatSubtitle,
+                  style: const TextStyle(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                   ),
@@ -127,14 +134,14 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   ? null
                   : () => ref.read(chatControllerProvider.notifier).clearChat(),
               icon: const Icon(Icons.add, size: 16),
-              label: const Text('New chat'),
+              label: Text(l10n.newChat),
             ),
         ],
       ),
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppLocalizations l10n) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -147,18 +154,21 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               color: AppColors.primary200,
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Ask a question about agroecology',
-              style: TextStyle(
+            Text(
+              l10n.chatEmptyTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'The AI answers from the knowledge base,\nkeeping sources traceable.',
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+            Text(
+              l10n.chatEmptySubtitle,
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

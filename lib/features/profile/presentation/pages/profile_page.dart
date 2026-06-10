@@ -1,14 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -16,24 +17,25 @@ class ProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
-    final isAuthenticated = auth.isAuthenticated;
 
-    if (!isAuthenticated) {
-      return const EmptyState(
+    if (!auth.isAuthenticated) {
+      return EmptyState(
         icon: Icons.person_off,
-        title: 'Not authenticated',
-        subtitle: 'Sign in to view your profile.',
+        title: l10n.profileNotAuth,
+        subtitle: l10n.profileNotAuthSub,
       );
     }
 
-    return _buildProfileContent(context, ref, auth);
+    return _buildProfileContent(context, ref, auth, l10n);
   }
 
   Widget _buildProfileContent(
     BuildContext context,
     WidgetRef ref,
     AuthState auth,
+    AppLocalizations l10n,
   ) {
     final profile = auth.profile;
 
@@ -71,14 +73,16 @@ class ProfilePage extends ConsumerWidget {
                   children: [
                     StatusBadge.active(label: profile?.status ?? 'active'),
                     const SizedBox(width: 8),
-                    ...profile?.roles.map(
-                          (r) => Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: r == 'admin'
-                                ? StatusBadge.admin()
-                                : StatusBadge.info(label: r),
-                          ),
-                        ) ??
+                    ...profile?.roles
+                            .map(
+                              (r) => Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: r == 'admin'
+                                    ? StatusBadge.admin()
+                                    : StatusBadge.info(label: r),
+                              ),
+                            )
+                            .toList() ??
                         [],
                   ],
                 ),
@@ -86,7 +90,7 @@ class ProfilePage extends ConsumerWidget {
                 SizedBox(
                   width: double.infinity,
                   child: AppButton.secondary(
-                    label: 'Edit Profile',
+                    label: l10n.editProfile,
                     icon: Icons.edit,
                     onPressed: () => context.push('/profile/edit'),
                   ),
@@ -100,22 +104,26 @@ class ProfilePage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _infoRow(Icons.email_outlined, 'Email', profile.email),
+                  _infoRow(
+                    Icons.email_outlined,
+                    l10n.emailLabel,
+                    profile.email,
+                  ),
                   if (profile.link != null && profile.link!.isNotEmpty) ...[
                     const Divider(height: 24),
-                    _infoRow(Icons.link, 'Link', profile.link!),
+                    _infoRow(Icons.link, l10n.linkLabel, profile.link!),
                   ],
                   const Divider(height: 24),
                   _infoRow(
                     Icons.calendar_today,
-                    'Joined',
+                    l10n.joined,
                     _formatDate(profile.createdAt),
                   ),
                   if (profile.lastLoginAt != null) ...[
                     const Divider(height: 24),
                     _infoRow(
                       Icons.login,
-                      'Last login',
+                      l10n.lastLogin,
                       _formatDate(profile.lastLoginAt!),
                     ),
                   ],
@@ -128,9 +136,9 @@ class ProfilePage extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'About',
-                      style: TextStyle(
+                    Text(
+                      l10n.about,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textPrimary,
@@ -226,6 +234,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
   }
 
   Future<void> _pickAndUploadAvatar() async {
+    final l10n = AppLocalizations.of(context)!;
     final picker = ImagePicker();
     final picked = await picker.pickImage(
       source: ImageSource.gallery,
@@ -240,10 +249,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
     final sizeInBytes = await file.length();
 
     if (sizeInBytes > AppConstants.avatarMaxSizeBytes) {
-      setState(
-        () => _error =
-            'Image must be less than ${AppConstants.avatarMaxSizeMB} MB',
-      );
+      setState(() => _error = l10n.imageTooLarge(AppConstants.avatarMaxSizeMB));
       return;
     }
 
@@ -255,13 +261,14 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
     } on AppException catch (e) {
       setState(() => _error = e.message);
     } catch (_) {
-      setState(() => _error = 'Failed to upload avatar.');
+      setState(() => _error = l10n.uploadAvatarFailed);
     } finally {
       setState(() => _saving = false);
     }
   }
 
   Future<void> _save() async {
+    final l10n = AppLocalizations.of(context)!;
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _saving = true);
@@ -283,7 +290,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
     } on AppException catch (e) {
       setState(() => _error = e.message);
     } catch (_) {
-      setState(() => _error = 'Failed to save profile.');
+      setState(() => _error = l10n.saveProfileFailed);
     } finally {
       setState(() => _saving = false);
     }
@@ -291,6 +298,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final profile = ref.watch(authControllerProvider).profile;
 
     return Scaffold(
@@ -299,7 +307,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
           icon: const Icon(Icons.close),
           onPressed: () => context.pop(),
         ),
-        title: const Text('Edit Profile'),
+        title: Text(l10n.editProfile),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -367,16 +375,16 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
               const SizedBox(height: 24),
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Full Name',
-                  prefixIcon: Icon(Icons.person_outline),
+                decoration: InputDecoration(
+                  labelText: l10n.fullNameLabel,
+                  prefixIcon: const Icon(Icons.person_outline),
                 ),
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
-                    return 'Name is required';
+                    return l10n.nameRequired;
                   }
                   if (v.length > 200) {
-                    return 'Name must be less than 200 characters';
+                    return l10n.fullNameMaxLength;
                   }
                   return null;
                 },
@@ -385,8 +393,8 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
               TextFormField(
                 controller: _aboutController,
                 decoration: InputDecoration(
-                  labelText: 'About',
-                  hintText: 'Tell the community about yourself',
+                  labelText: l10n.about,
+                  hintText: l10n.aboutHint,
                   prefixIcon: const Icon(Icons.info_outline),
                   counterText: '${_aboutController.text.length}/4096',
                 ),
@@ -394,7 +402,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                 maxLength: AppConstants.aboutMaxLength,
                 validator: (v) {
                   if (v != null && v.length > AppConstants.aboutMaxLength) {
-                    return 'About must be less than ${AppConstants.aboutMaxLength} characters';
+                    return l10n.aboutMaxLength(AppConstants.aboutMaxLength);
                   }
                   return null;
                 },
@@ -403,16 +411,16 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _linkController,
-                decoration: const InputDecoration(
-                  labelText: 'Link',
-                  hintText: 'https://example.com',
-                  prefixIcon: Icon(Icons.link),
+                decoration: InputDecoration(
+                  labelText: l10n.linkLabel,
+                  hintText: l10n.linkHint,
+                  prefixIcon: const Icon(Icons.link),
                 ),
                 keyboardType: TextInputType.url,
                 validator: (v) {
                   if (v != null && v.trim().isNotEmpty) {
                     if (!v.startsWith('http://') && !v.startsWith('https://')) {
-                      return 'Link must start with http:// or https://';
+                      return l10n.linkValidation;
                     }
                   }
                   return null;
@@ -422,7 +430,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
               SizedBox(
                 width: double.infinity,
                 child: AppButton.primary(
-                  label: 'Save',
+                  label: l10n.save,
                   onPressed: _saving ? null : _save,
                   isLoading: _saving,
                 ),

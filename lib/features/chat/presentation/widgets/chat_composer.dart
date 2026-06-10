@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_theme.dart';
 
 class ChatComposer extends StatefulWidget {
+  final String hint;
   final bool enabled;
   final ValueChanged<String> onSend;
 
-  const ChatComposer({super.key, required this.enabled, required this.onSend});
+  const ChatComposer({
+    super.key,
+    required this.hint,
+    required this.enabled,
+    required this.onSend,
+  });
 
   @override
   State<ChatComposer> createState() => _ChatComposerState();
@@ -64,10 +70,10 @@ class _ChatComposerState extends State<ChatComposer> {
                 maxLines: null,
                 textInputAction: TextInputAction.newline,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(
-                  hintText: 'Ask a question...',
+                decoration: InputDecoration(
+                  hintText: widget.hint,
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
+                  contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 10,
                   ),

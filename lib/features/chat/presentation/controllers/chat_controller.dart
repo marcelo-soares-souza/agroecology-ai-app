@@ -152,7 +152,7 @@ class ChatController extends StateNotifier<ChatState> {
       _updateAssistantMessage(
         _lastAssistantMessage?.id ?? '',
         status: ChatMessageStatus.error,
-        error: 'Request timed out. Please try again.',
+        error: 'requestTimeout',
       );
       state = state.copyWith(
         sendStatus: ChatSendStatus.error,

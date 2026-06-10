@@ -5,10 +5,7 @@ import '../constants/app_constants.dart';
 class TokenStorage {
   final FlutterSecureStorage _storage;
 
-  TokenStorage()
-    : _storage = const FlutterSecureStorage(
-        aOptions: AndroidOptions(encryptedSharedPreferences: true),
-      );
+  TokenStorage() : _storage = const FlutterSecureStorage();
 
   Future<String?> getAccessToken() =>
       _storage.read(key: AppConstants.tokenStorageAccessKey);

@@ -6,6 +6,7 @@ import 'bootstrap/providers.dart';
 import 'core/config/environment.dart';
 import 'core/navigation/router.dart';
 import 'core/theme/app_theme.dart';
+import 'l10n/app_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,6 +68,7 @@ class _AgroecologyMapAppState extends ConsumerState<AgroecologyMapApp> {
         Locale('fr'),
       ],
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         DefaultMaterialLocalizations.delegate,
         DefaultWidgetsLocalizations.delegate,
       ],

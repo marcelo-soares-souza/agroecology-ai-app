@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../auth/domain/entities/user.dart';
 
 class CommunityListPage extends ConsumerStatefulWidget {
@@ -40,6 +41,8 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_error != null) {
       return ErrorState(message: _error!, onRetry: _load);
     }
@@ -56,10 +59,10 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
     }
 
     if (_users!.isEmpty) {
-      return const EmptyState(
+      return EmptyState(
         icon: Icons.people_outline,
-        title: 'No community members yet',
-        subtitle: 'Be the first to join!',
+        title: l10n.communityEmpty,
+        subtitle: l10n.communityEmptySub,
       );
     }
 
@@ -187,6 +190,8 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_error != null) {
       return ErrorState(message: _error!, onRetry: _load);
     }
@@ -246,7 +251,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                   SizedBox(
                     width: double.infinity,
                     child: AppButton.secondary(
-                      label: 'Edit Profile',
+                      label: l10n.editProfile,
                       icon: Icons.edit,
                       onPressed: () => context.push('/profile/edit'),
                     ),
@@ -260,16 +265,16 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _infoRow(Icons.email_outlined, 'Email', user.email),
+                _infoRow(Icons.email_outlined, l10n.emailLabel, user.email),
                 if (user.link != null && user.link!.isNotEmpty) ...[
                   const Divider(height: 24),
-                  _infoRow(Icons.link, 'Link', user.link!),
+                  _infoRow(Icons.link, l10n.linkLabel, user.link!),
                   const SizedBox(height: 4),
                   GestureDetector(
                     onTap: () => launchUrl(Uri.parse(user.link!)),
-                    child: const Text(
-                      'Open link',
-                      style: TextStyle(
+                    child: Text(
+                      l10n.openLink,
+                      style: const TextStyle(
                         fontSize: 13,
                         color: AppColors.primary,
                         fontWeight: FontWeight.w500,
@@ -280,14 +285,14 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                 const Divider(height: 24),
                 _infoRow(
                   Icons.calendar_today,
-                  'Joined',
+                  l10n.joined,
                   _formatDate(user.createdAt),
                 ),
                 if (user.lastLoginAt != null) ...[
                   const Divider(height: 24),
                   _infoRow(
                     Icons.login,
-                    'Last login',
+                    l10n.lastLogin,
                     _formatDate(user.lastLoginAt!),
                   ),
                 ],
@@ -300,9 +305,9 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'About',
-                    style: TextStyle(
+                  Text(
+                    l10n.about,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
@@ -336,7 +341,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Approved Suggestions (${_suggestions!.length})',
+                        '${l10n.approvedSuggestions} (${_suggestions!.length})',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

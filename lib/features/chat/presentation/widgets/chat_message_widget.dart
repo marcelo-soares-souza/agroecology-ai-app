@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/chat_message.dart';
+
+String? _resolveError(AppLocalizations l10n, String? key) {
+  if (key == null) return null;
+  return switch (key) {
+    'requestTimeout' => l10n.requestTimeout,
+    'chatError' => l10n.chatError,
+    _ => key,
+  };
+}
 
 class ChatMessageWidget extends StatelessWidget {
   final ChatMessage message;
@@ -27,6 +37,8 @@ class ChatMessageWidget extends StatelessWidget {
   }
 
   Widget _buildBubble(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (message.isUser) {
       return Container(
         constraints: BoxConstraints(
@@ -75,9 +87,9 @@ class ChatMessageWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            const Text(
-              'Thinking...',
-              style: TextStyle(
+            Text(
+              l10n.thinking,
+              style: const TextStyle(
                 fontSize: 13,
                 color: AppColors.textSecondary,
                 fontStyle: FontStyle.italic,
@@ -109,7 +121,7 @@ class ChatMessageWidget extends StatelessWidget {
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                message.error ?? message.content,
+                _resolveError(l10n, message.error) ?? message.content,
                 style: const TextStyle(fontSize: 13, color: Color(0xFF991b1b)),
               ),
             ),
@@ -202,6 +214,8 @@ class _SourcesSectionState extends State<_SourcesSection> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Column(
@@ -219,7 +233,7 @@ class _SourcesSectionState extends State<_SourcesSection> {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Sources (${widget.sources.length})',
+                  '${l10n.sources} (${widget.sources.length})',
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -251,6 +265,8 @@ class _SourceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -275,7 +291,7 @@ class _SourceCard extends StatelessWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  source.metadata?.displayName ?? 'Source',
+                  source.metadata?.displayName ?? l10n.sourceFallback,
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,

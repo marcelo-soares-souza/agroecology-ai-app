@@ -20,7 +20,7 @@ class AppConstants {
   static const chatLocalStorageMaxMessages = 100;
 
   static const supportedLocales = ['pt', 'en', 'es', 'fr'];
-  static const defaultLocale = 'pt';
+  static const defaultLocale = 'en';
 
   static const tokenStorageAccessKey = 'agroecology_access_token';
   static const tokenStorageRefreshKey = 'agroecology_refresh_token';

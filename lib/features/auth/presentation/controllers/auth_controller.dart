@@ -90,7 +90,7 @@ class AuthController extends StateNotifier<AuthState> {
     } catch (e) {
       state = state.copyWith(
         status: AuthStatus.unauthenticated,
-        errorMessage: 'Login failed. Please try again.',
+        errorMessage: 'loginFailed',
       );
     }
   }
@@ -116,8 +116,7 @@ class AuthController extends StateNotifier<AuthState> {
       );
       state = state.copyWith(
         status: AuthStatus.unauthenticated,
-        errorMessage:
-            'Registration successful. Check your email to confirm your account.',
+        errorMessage: 'registrationSuccess',
       );
     } on AppException catch (e) {
       state = state.copyWith(
@@ -127,7 +126,7 @@ class AuthController extends StateNotifier<AuthState> {
     } catch (e) {
       state = state.copyWith(
         status: AuthStatus.unauthenticated,
-        errorMessage: 'Registration failed. Please try again.',
+        errorMessage: 'registrationFailed',
       );
     }
   }

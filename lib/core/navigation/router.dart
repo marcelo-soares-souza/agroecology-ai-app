@@ -4,11 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../bootstrap/providers.dart';
 import '../../core/error/exceptions.dart';
+import '../../l10n/app_localizations.dart';
 import '../../features/chat/presentation/pages/chat_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/community/presentation/pages/community_page.dart';
 import '../../features/community/presentation/pages/about_donate.dart';
 import '../ui/app_scaffold.dart';
+
+String _resolveError(AppLocalizations l10n, String message) {
+  return switch (message) {
+    'loginFailed' => l10n.loginFailed,
+    'registrationSuccess' => l10n.registrationSuccess,
+    'registrationFailed' => l10n.registrationFailed,
+    _ => message,
+  };
+}
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -172,6 +182,7 @@ class _SplashPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
 
     return Scaffold(
@@ -192,9 +203,9 @@ class _SplashPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Restoring session...',
-                style: TextStyle(fontSize: 14, color: Color(0xFF78716c)),
+              Text(
+                l10n.restoringSession,
+                style: const TextStyle(fontSize: 14, color: Color(0xFF78716c)),
               ),
             ],
           ],
@@ -226,6 +237,7 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
 
     return Scaffold(
@@ -247,9 +259,9 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  const Text(
-                    'Sign In',
-                    style: TextStyle(
+                  Text(
+                    l10n.signIn,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF1c1917),
@@ -257,9 +269,12 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Welcome back to Agroecology Map AI',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF78716c)),
+                  Text(
+                    l10n.signInWelcome,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF78716c),
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -280,7 +295,7 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              auth.errorMessage!,
+                              _resolveError(l10n, auth.errorMessage!),
                               style: const TextStyle(
                                 fontSize: 13,
                                 color: Color(0xFF991b1b),
@@ -294,16 +309,16 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                   ],
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'your@email.com',
-                      prefixIcon: Icon(Icons.email_outlined),
+                    decoration: InputDecoration(
+                      labelText: l10n.emailLabel,
+                      hintText: l10n.emailHint,
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Email is required';
+                        return l10n.emailRequired;
                       }
                       return null;
                     },
@@ -312,8 +327,8 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Your password',
+                      labelText: l10n.passwordLabel,
+                      hintText: l10n.passwordHint,
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -331,7 +346,7 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                     onFieldSubmitted: (_) => _handleLogin(),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Password is required';
+                        return l10n.passwordRequired;
                       }
                       return null;
                     },
@@ -341,7 +356,7 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () => context.push('/forgot-password'),
-                      child: const Text('Forgot password?'),
+                      child: Text(l10n.forgotPassword),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -356,24 +371,24 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                               color: Colors.white,
                             ),
                           )
-                        : const Text('Sign In'),
+                        : Text(l10n.signInButton),
                   ),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Don't have an account? ",
-                        style: TextStyle(
+                      Text(
+                        l10n.noAccount,
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Color(0xFF78716c),
                         ),
                       ),
                       GestureDetector(
                         onTap: () => context.push('/register'),
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.register,
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFFd97706),
@@ -448,6 +463,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
 
     return Scaffold(
@@ -469,9 +485,9 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  const Text(
-                    'Create Account',
-                    style: TextStyle(
+                  Text(
+                    l10n.createAccount,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF1c1917),
@@ -479,9 +495,12 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Join the Agroecology Map AI community',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF78716c)),
+                  Text(
+                    l10n.createAccountSubtitle,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF78716c),
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -502,7 +521,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              auth.errorMessage!,
+                              _resolveError(l10n, auth.errorMessage!),
                               style: const TextStyle(
                                 fontSize: 13,
                                 color: Color(0xFF991b1b),
@@ -516,18 +535,18 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                   ],
                   TextFormField(
                     controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Full Name',
-                      hintText: 'Your name',
-                      prefixIcon: Icon(Icons.person_outline),
+                    decoration: InputDecoration(
+                      labelText: l10n.fullNameLabel,
+                      hintText: l10n.fullNameHint,
+                      prefixIcon: const Icon(Icons.person_outline),
                     ),
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Full name is required';
+                        return l10n.fullNameRequired;
                       }
                       if (value.length > 200) {
-                        return 'Name must be less than 200 characters';
+                        return l10n.fullNameMaxLength;
                       }
                       return null;
                     },
@@ -535,16 +554,16 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'your@email.com',
-                      prefixIcon: Icon(Icons.email_outlined),
+                    decoration: InputDecoration(
+                      labelText: l10n.emailLabel,
+                      hintText: l10n.emailHint,
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Email is required';
+                        return l10n.emailRequired;
                       }
                       return null;
                     },
@@ -553,8 +572,8 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'At least 8 characters',
+                      labelText: l10n.passwordLabel,
+                      hintText: l10n.newPasswordHint,
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -571,10 +590,10 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Password is required';
+                        return l10n.passwordRequired;
                       }
                       if (value.length < 8) {
-                        return 'Password must be at least 8 characters';
+                        return l10n.passwordMinLength;
                       }
                       return null;
                     },
@@ -611,16 +630,16 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _answerController,
-                      decoration: const InputDecoration(
-                        labelText: 'Answer',
-                        hintText: 'Your answer to the question above',
-                        prefixIcon: Icon(Icons.edit_outlined),
+                      decoration: InputDecoration(
+                        labelText: l10n.answerLabel,
+                        hintText: l10n.answerHint,
+                        prefixIcon: const Icon(Icons.edit_outlined),
                       ),
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _handleRegister(),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Answer is required';
+                          return l10n.answerRequired;
                         }
                         return null;
                       },
@@ -640,24 +659,24 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                               color: Colors.white,
                             ),
                           )
-                        : const Text('Create Account'),
+                        : Text(l10n.createAccount),
                   ),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Already have an account? ',
-                        style: TextStyle(
+                      Text(
+                        l10n.hasAccount,
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Color(0xFF78716c),
                         ),
                       ),
                       GestureDetector(
                         onTap: () => context.push('/login'),
-                        child: const Text(
-                          'Sign In',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.signIn,
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFFd97706),
@@ -711,13 +730,15 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
-        title: const Text('Reset Password'),
+        title: Text(l10n.resetPassword),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -734,18 +755,18 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
                       color: const Color(0xFFdcfce7),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.check_circle,
                           size: 20,
                           color: Color(0xFF16a34a),
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'If the email exists, a reset link has been sent.',
-                            style: TextStyle(
+                            l10n.resetLinkSent,
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xFF166534),
                             ),
@@ -755,23 +776,26 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
                     ),
                   ),
                 ] else ...[
-                  const Text(
-                    'Enter your email and we\'ll send you a reset link.',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF78716c)),
+                  Text(
+                    l10n.resetLinkInstruction,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF78716c),
+                    ),
                   ),
                   const SizedBox(height: 24),
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'your@email.com',
-                      prefixIcon: Icon(Icons.email_outlined),
+                    decoration: InputDecoration(
+                      labelText: l10n.emailLabel,
+                      hintText: l10n.emailHint,
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Email is required';
+                        return l10n.emailRequired;
                       }
                       return null;
                     },
@@ -779,7 +803,7 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _handleSubmit,
-                    child: const Text('Send Reset Link'),
+                    child: Text(l10n.sendResetLink),
                   ),
                 ],
                 const SizedBox(height: 16),
@@ -787,7 +811,7 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
                   alignment: Alignment.center,
                   child: TextButton(
                     onPressed: () => context.pop(),
-                    child: const Text('Back to Sign In'),
+                    child: Text(l10n.backToSignIn),
                   ),
                 ),
               ],
@@ -837,13 +861,15 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
-        title: const Text('New Password'),
+        title: Text(l10n.newPassword),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -860,18 +886,18 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                       color: const Color(0xFFdcfce7),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.check_circle,
                           size: 20,
                           color: Color(0xFF16a34a),
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'Password reset successfully.',
-                            style: TextStyle(
+                            l10n.passwordResetSuccess,
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xFF166534),
                             ),
@@ -883,12 +909,15 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => context.go('/login'),
-                    child: const Text('Go to Sign In'),
+                    child: Text(l10n.goToSignIn),
                   ),
                 ] else ...[
-                  const Text(
-                    'Enter the reset token from your email and your new password.',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF78716c)),
+                  Text(
+                    l10n.resetTokenInstruction,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF78716c),
+                    ),
                   ),
                   if (_error != null) ...[
                     const SizedBox(height: 16),
@@ -922,15 +951,15 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                   const SizedBox(height: 24),
                   TextFormField(
                     controller: _tokenController,
-                    decoration: const InputDecoration(
-                      labelText: 'Reset Token',
-                      hintText: 'Paste the token from your email',
-                      prefixIcon: Icon(Icons.key),
+                    decoration: InputDecoration(
+                      labelText: l10n.resetTokenLabel,
+                      hintText: l10n.resetTokenHint,
+                      prefixIcon: const Icon(Icons.key),
                     ),
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Token is required';
+                        return l10n.tokenRequired;
                       }
                       return null;
                     },
@@ -939,8 +968,8 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      labelText: 'New Password',
-                      hintText: 'At least 8 characters',
+                      labelText: l10n.newPasswordLabel,
+                      hintText: l10n.newPasswordHint,
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -957,10 +986,10 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                     textInputAction: TextInputAction.done,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Password is required';
+                        return l10n.passwordRequired;
                       }
                       if (value.length < 8) {
-                        return 'Password must be at least 8 characters';
+                        return l10n.passwordMinLength;
                       }
                       return null;
                     },
@@ -968,7 +997,7 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                   const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: _handleSubmit,
-                    child: const Text('Reset Password'),
+                    child: Text(l10n.resetPasswordButton),
                   ),
                 ],
                 const SizedBox(height: 16),
@@ -977,7 +1006,7 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                     alignment: Alignment.center,
                     child: TextButton(
                       onPressed: () => context.pop(),
-                      child: const Text('Back to Sign In'),
+                      child: Text(l10n.backToSignIn),
                     ),
                   ),
               ],
@@ -990,6 +1019,8 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
 
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
+
+    final l10n = AppLocalizations.of(context)!;
 
     try {
       final client = ref.read(apiClientProvider);
@@ -1004,7 +1035,7 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
     } on AppException catch (e) {
       setState(() => _error = e.message);
     } catch (_) {
-      setState(() => _error = 'Failed to reset password.');
+      setState(() => _error = l10n.resetFailed);
     }
   }
 }

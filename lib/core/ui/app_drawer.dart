@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -19,18 +20,19 @@ class AppDrawer extends StatelessWidget {
     this.onLogout,
   });
 
-  String _localeLabel(String loc) {
+  String _localeLabel(AppLocalizations l10n, String loc) {
     return switch (loc) {
-      'pt' => 'Português',
-      'en' => 'English',
-      'es' => 'Español',
-      'fr' => 'Français',
+      'pt' => l10n.localePt,
+      'en' => l10n.localeEn,
+      'es' => l10n.localeEs,
+      'fr' => l10n.localeFr,
       _ => loc,
     };
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final currentRoute = GoRouterState.of(context).uri.toString();
 
     return Drawer(
@@ -38,7 +40,7 @@ class AppDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildHeader(context),
+            _buildHeader(context, l10n),
             const Divider(),
             Expanded(
               child: ListView(
@@ -46,31 +48,31 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   _NavItem(
                     icon: Icons.chat_bubble_outline,
-                    label: 'Chat',
+                    label: l10n.drawerChat,
                     selected: currentRoute.startsWith('/chat'),
                     onTap: () => _navigate(context, '/chat'),
                   ),
                   _NavItem(
                     icon: Icons.people_outline,
-                    label: 'Community',
+                    label: l10n.drawerCommunity,
                     selected: currentRoute.startsWith('/community'),
                     onTap: () => _navigate(context, '/community'),
                   ),
                   _NavItem(
                     icon: Icons.person_outline,
-                    label: 'Profile',
+                    label: l10n.drawerProfile,
                     selected: currentRoute.startsWith('/profile'),
                     onTap: () => _navigate(context, '/profile'),
                   ),
                   _NavItem(
                     icon: Icons.info_outline,
-                    label: 'About',
+                    label: l10n.drawerAbout,
                     selected: currentRoute == '/about',
                     onTap: () => _navigate(context, '/about'),
                   ),
                   _NavItem(
                     icon: Icons.favorite_border,
-                    label: 'Donate',
+                    label: l10n.drawerDonate,
                     selected: false,
                     onTap: () {
                       context.push('/donate');
@@ -80,14 +82,14 @@ class AppDrawer extends StatelessWidget {
                   _LocaleSelector(
                     currentLocale: locale,
                     supportedLocales: supportedLocales,
-                    localeLabel: _localeLabel,
+                    localeLabel: (loc) => _localeLabel(l10n, loc),
                     onLocaleChanged: onLocaleChanged,
                   ),
                   const Divider(),
                   if (isAuthenticated)
                     _NavItem(
                       icon: Icons.logout,
-                      label: 'Logout',
+                      label: l10n.drawerLogout,
                       selected: false,
                       isDestructive: true,
                       onTap: onLogout,
@@ -101,17 +103,17 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
           Image.asset('assets/logo.png', width: 32, height: 32),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Text(
-              'Agroecology Map AI',
-              style: TextStyle(
+              l10n.appName,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: AppColors.primary,
