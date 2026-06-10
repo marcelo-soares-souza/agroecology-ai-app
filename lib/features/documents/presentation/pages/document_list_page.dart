@@ -123,6 +123,9 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
       );
     }
 
+    final docs = _documents;
+    if (docs == null) return const SizedBox.shrink();
+
     if (_filtered.isEmpty) {
       return EmptyState(
         icon: Icons.menu_book_outlined,
@@ -131,8 +134,8 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
       );
     }
 
-    final indexed = _documents!.where((d) => d.ingested).length;
-    final total = _documents!.length;
+    final indexed = docs.where((d) => d.ingested).length;
+    final total = docs.length;
 
     return RefreshIndicator(
       onRefresh: _load,
@@ -170,11 +173,15 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
                         ),
                       ),
                     ),
-                    LinearProgressIndicator(
-                      value: total > 0 ? indexed / total : 0,
-                      backgroundColor: AppColors.primary100,
-                      color: AppColors.primary,
-                      minHeight: 4,
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 80,
+                      child: LinearProgressIndicator(
+                        value: total > 0 ? indexed / total : 0,
+                        backgroundColor: AppColors.primary100,
+                        color: AppColors.primary,
+                        minHeight: 4,
+                      ),
                     ),
                   ],
                 ),
