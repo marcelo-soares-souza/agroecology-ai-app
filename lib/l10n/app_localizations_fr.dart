@@ -455,4 +455,70 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get notIngested => 'Non indexé';
+
+  @override
+  String get drawerPrivacy => 'Politique de confidentialité';
+
+  @override
+  String get drawerTerms => 'Conditions d\'utilisation';
+
+  @override
+  String get privacyPolicyTitle => 'Politique de confidentialité';
+
+  @override
+  String get privacyPolicyLastUpdated => 'Dernière mise à jour : 11 juin 2026';
+
+  @override
+  String get privacyPolicyContent =>
+      'Ceci est la Politique de confidentialité de Agroecology Map AI.';
+
+  @override
+  String get termsOfServiceTitle => 'Conditions d\'utilisation';
+
+  @override
+  String get termsOfServiceLastUpdated => 'Dernière mise à jour : 11 juin 2026';
+
+  @override
+  String get termsOfServiceContent =>
+      'Conditions d\'utilisation de Agroecology Map AI.';
+
+  @override
+  String get acceptPrivacyPrefix => 'J\'accepte la ';
+
+  @override
+  String get acceptPrivacyLink => 'Politique de confidentialité';
+
+  @override
+  String get acceptTosPrefix => 'J\'accepte les ';
+
+  @override
+  String get acceptTosLink => 'Conditions d\'utilisation';
+
+  @override
+  String get dataAndPrivacy => 'Données et confidentialité';
+
+  @override
+  String get exportMyData => 'Exporter Mes Données';
+
+  @override
+  String get exportSuccess => 'Données exportées avec succès';
+
+  @override
+  String get exportFailed => 'Échec de l\'exportation';
+
+  @override
+  String get deleteMyAccount => 'Supprimer Mon Compte';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Supprimer le compte';
+
+  @override
+  String get deleteAccountConfirmBody =>
+      'Êtes-vous sûr ? Un email de confirmation sera envoyé.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Supprimer';
+
+  @override
+  String get deleteAccountFailed => 'Échec de la demande de suppression';
 }

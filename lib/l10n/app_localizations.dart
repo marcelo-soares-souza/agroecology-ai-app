@@ -947,6 +947,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not indexed'**
   String get notIngested;
+
+  /// No description provided for @drawerPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get drawerPrivacy;
+
+  /// No description provided for @drawerTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get drawerTerms;
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @privacyPolicyLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: June 11, 2026'**
+  String get privacyPolicyLastUpdated;
+
+  /// No description provided for @privacyPolicyContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the Privacy Policy for Agroecology Map AI.\n\nAgroecology Map AI is a free software platform that provides an AI-powered chat interface for querying a curated knowledge base of agroecological documents.\n\nData We Collect:\n- Full name, email address, and hashed password (required for account)\n- Preferred language/locale\n- Optional: bio/about text, external link, profile avatar\n- IP address in request logs (transient, not stored in database)\n\nWe DO NOT collect: location data, browsing history, device identifiers, advertising IDs, or sensitive personal data.\n\nHow We Use Your Data:\n- Account authentication and management\n- Email communication (verification, password reset, notifications)\n- Community profile display\n- Platform operation and improvement\n\nData Storage: PostgreSQL database, local server filesystem (avatars), LanceDB vector store (document chunks). No cloud analytics or third-party data sharing.\n\nData Sharing: We do NOT share, sell, rent, or trade your personal data with third parties. No advertisers, no data brokers, no external analytics.\n\nYour Rights (LGPD/GDPR):\n- Access: Export your data via the profile page\n- Rectification: Edit your profile at any time\n- Erasure: Delete your account via the profile page\n- Portability: Receive your data in machine-readable format\n- Withdraw consent: Stop using the platform at any time\n\nRight to be Forgotten:\nClick \'Delete My Account\' on your profile page. You will receive a confirmation email. Once confirmed, your personal data is permanently anonymized: name becomes \'Deleted User\', email is replaced, bio/link/avatar deleted, all sessions terminated.\n\nApp Store Compliance:\nThe mobile app: uses no sensitive device permissions, no background data collection, no third-party SDKs, HTTPS encryption for all data.\n\nContact: admin@agroecologymap.org\nLicense: GPLv3 (Free Software)\nRepository: https://codeberg.org/agroecologymap'**
+  String get privacyPolicyContent;
+
+  /// No description provided for @termsOfServiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfServiceTitle;
+
+  /// No description provided for @termsOfServiceLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: June 11, 2026'**
+  String get termsOfServiceLastUpdated;
+
+  /// No description provided for @termsOfServiceContent.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Acceptance of Terms\nBy creating an account and using Agroecology Map AI, you agree to these Terms of Service.\n\n2. Description of Service\nAgroecology Map AI is a free software AI chat platform for querying agroecological knowledge.\n\n3. User Accounts\nYou are responsible for your account credentials. You must provide accurate registration information. Minimum age: 16 years.\n\n4. Acceptable Use\nDo not use the platform for illegal purposes, submit harmful content, attempt to disrupt service, use automated means without permission, or misrepresent your identity.\n\n5. User Content\nBy submitting content, you grant the platform a non-exclusive license to display it. You retain ownership.\n\n6. Intellectual Property\nThe software is GPLv3 licensed. Document content retains its original licenses.\n\n7. Disclaimer\nThe platform is provided \'AS IS\'. AI-generated answers may not be accurate. Always verify with primary sources.\n\n8. Limitation of Liability\nThe project and its volunteers are not liable for damages arising from platform use.\n\n9. Account Termination\nAccounts violating these terms may be suspended. Users may delete accounts at any time.\n\n10. Modifications\nTerms may be updated. Material changes communicated via email.\n\n11. Governing Law\nGoverned by the laws of Brazil.\n\n12. Contact\nadmin@agroecologymap.org'**
+  String get termsOfServiceContent;
+
+  /// No description provided for @acceptPrivacyPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'I accept the '**
+  String get acceptPrivacyPrefix;
+
+  /// No description provided for @acceptPrivacyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get acceptPrivacyLink;
+
+  /// No description provided for @acceptTosPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'I accept the '**
+  String get acceptTosPrefix;
+
+  /// No description provided for @acceptTosLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get acceptTosLink;
+
+  /// No description provided for @dataAndPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Privacy'**
+  String get dataAndPrivacy;
+
+  /// No description provided for @exportMyData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export My Data'**
+  String get exportMyData;
+
+  /// No description provided for @exportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Data exported successfully'**
+  String get exportSuccess;
+
+  /// No description provided for @exportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export data'**
+  String get exportFailed;
+
+  /// No description provided for @deleteMyAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete My Account'**
+  String get deleteMyAccount;
+
+  /// No description provided for @deleteAccountConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountConfirmTitle;
+
+  /// No description provided for @deleteAccountConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure? A confirmation email will be sent. Once confirmed, your personal data will be permanently anonymized.'**
+  String get deleteAccountConfirmBody;
+
+  /// No description provided for @deleteAccountConfirmButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteAccountConfirmButton;
+
+  /// No description provided for @deleteAccountFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to request account deletion'**
+  String get deleteAccountFailed;
 }
 
 class _AppLocalizationsDelegate

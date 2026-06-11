@@ -454,4 +454,72 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get notIngested => 'No indexado';
+
+  @override
+  String get drawerPrivacy => 'Política de Privacidad';
+
+  @override
+  String get drawerTerms => 'Términos de Servicio';
+
+  @override
+  String get privacyPolicyTitle => 'Política de Privacidad';
+
+  @override
+  String get privacyPolicyLastUpdated =>
+      'Última actualización: 11 de junio de 2026';
+
+  @override
+  String get privacyPolicyContent =>
+      'Esta es la Política de Privacidad de Agroecology Map AI.';
+
+  @override
+  String get termsOfServiceTitle => 'Términos de Servicio';
+
+  @override
+  String get termsOfServiceLastUpdated =>
+      'Última actualización: 11 de junio de 2026';
+
+  @override
+  String get termsOfServiceContent =>
+      'Términos de Servicio de Agroecology Map AI.';
+
+  @override
+  String get acceptPrivacyPrefix => 'Acepto la ';
+
+  @override
+  String get acceptPrivacyLink => 'Política de Privacidad';
+
+  @override
+  String get acceptTosPrefix => 'Acepto los ';
+
+  @override
+  String get acceptTosLink => 'Términos de Servicio';
+
+  @override
+  String get dataAndPrivacy => 'Datos y Privacidad';
+
+  @override
+  String get exportMyData => 'Exportar Mis Datos';
+
+  @override
+  String get exportSuccess => 'Datos exportados exitosamente';
+
+  @override
+  String get exportFailed => 'Error al exportar datos';
+
+  @override
+  String get deleteMyAccount => 'Eliminar Mi Cuenta';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Eliminar Cuenta';
+
+  @override
+  String get deleteAccountConfirmBody =>
+      '¿Estás seguro? Se enviará un correo de confirmación.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Eliminar';
+
+  @override
+  String get deleteAccountFailed => 'Error al solicitar eliminación';
 }

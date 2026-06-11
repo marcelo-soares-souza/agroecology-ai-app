@@ -10,6 +10,8 @@ abstract class AuthRepository {
     required String password,
     required String challengeId,
     required String challengeAnswer,
+    bool privacyPolicyAccepted = false,
+    bool tosAccepted = false,
     String locale = 'pt-BR',
   });
 
@@ -21,4 +23,7 @@ abstract class AuthRepository {
   Future<List<PublicUser>> listActiveUsers();
   Future<User> getUserBySlug(String slug);
   Future<AuthSession?> restoreSession();
+  Future<Map<String, dynamic>> exportMyData();
+  Future<String> requestDeleteAccount();
+  Future<String> confirmDeleteAccount(String token);
 }

@@ -83,6 +83,18 @@ class AppDrawer extends StatelessWidget {
                     onTap: () => _navigate(context, '/about'),
                   ),
                   _NavItem(
+                    icon: Icons.shield_outlined,
+                    label: l10n.drawerPrivacy,
+                    selected: currentRoute == '/privacy',
+                    onTap: () => _navigate(context, '/privacy'),
+                  ),
+                  _NavItem(
+                    icon: Icons.gavel_outlined,
+                    label: l10n.drawerTerms,
+                    selected: currentRoute == '/terms',
+                    onTap: () => _navigate(context, '/terms'),
+                  ),
+                  _NavItem(
                     icon: Icons.favorite_border,
                     label: l10n.drawerDonate,
                     selected: false,

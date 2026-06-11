@@ -46,7 +46,6 @@
   "registrationSuccess": "Registro exitoso. Revisa tu email para confirmar tu cuenta.",
   "registrationFailed": "Error de registro. Intenta de nuevo.",
   "connectionError": "Error de conexión. Verifica tu red.",
-
   "drawerChat": "Chat",
   "drawerCommunity": "Comunidad",
   "drawerProfile": "Perfil",
@@ -57,7 +56,6 @@
   "localeEn": "English",
   "localeEs": "Español",
   "localeFr": "Français",
-
   "chatTitle": "Chat Agroecológico",
   "chatSubtitle": "Haz preguntas sobre agroecología",
   "newChat": "Nueva conversación",
@@ -69,7 +67,6 @@
   "chatEmptyTitle": "Haz una pregunta sobre agroecología",
   "chatEmptySubtitle": "La IA responde desde la base de conocimiento,\nmanteniendo las fuentes rastreables.",
   "chatError": "Ocurrió un error",
-
   "profileTitle": "Perfil",
   "profileNotAuth": "No autenticado",
   "profileNotAuthSub": "Inicia sesión para ver tu perfil.",
@@ -84,7 +81,9 @@
   "aboutMaxLength": "Acerca de debe tener menos de {count} caracteres",
   "@aboutMaxLength": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "linkValidation": "El enlace debe comenzar con http:// o https://",
@@ -93,23 +92,22 @@
   "imageTooLarge": "La imagen debe tener menos de {mb} MB",
   "@imageTooLarge": {
     "placeholders": {
-      "mb": {"type": "int"}
+      "mb": {
+        "type": "int"
+      }
     }
   },
   "uploadAvatarFailed": "Error al subir el avatar.",
   "saveProfileFailed": "Error al guardar el perfil.",
-
   "communityTitle": "Comunidad",
   "communityEmpty": "Aún no hay miembros en la comunidad",
   "communityEmptySub": "¡Sé el primero en unirte!",
   "approvedSuggestions": "Sugerencias Aprobadas",
-
   "aboutPageTitle": "Acerca de",
   "aboutText1": "Agroecology Map AI es una herramienta de software libre que hace que el conocimiento agroecológico sea más fácil de encontrar, comprender y compartir.",
   "aboutText2": "La IA responde a partir de documentos de la base de conocimiento, manteniendo fuentes rastreables en lugar de actuar como un chatbot genérico.",
   "aboutText3": "El proyecto es parte del ecosistema Agroecology Map, una iniciativa de ciencia ciudadana, datos abiertos y software libre que mapea experiencias agroecológicas y conecta comunidades.",
   "aboutText4": "La propuesta es apoyar a agricultores, investigadores, extensionistas, educadores, estudiantes, comunidades y movimientos sociales.",
-
   "donateTitle": "Donar",
   "donateText1": "Agroecology Map AI se mantiene con trabajo voluntario y software libre.",
   "donateText2": "Las donaciones ayudan a mantener y expandir la infraestructura, procesamiento, almacenamiento, indexación de documentos y experimentos con modelos locales.",
@@ -127,7 +125,9 @@
   "fileTooLarge": "El archivo debe tener menos de {size} MB",
   "@fileTooLarge": {
     "placeholders": {
-      "size": {"type": "int"}
+      "size": {
+        "type": "int"
+      }
     }
   },
   "commentLabel": "Comentario",
@@ -157,8 +157,12 @@
   "indexedCount": "{indexed} de {total} indexados",
   "@indexedCount": {
     "placeholders": {
-      "indexed": {"type": "int"},
-      "total": {"type": "int"}
+      "indexed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "allIndexed": "Todos los archivos indexados",
@@ -167,5 +171,26 @@
   "fileType": "Tipo de Archivo",
   "fileSize": "Tamaño",
   "ingested": "Indexado",
-  "notIngested": "No indexado"
+  "notIngested": "No indexado",
+  "drawerPrivacy": "Política de Privacidad",
+  "drawerTerms": "Términos de Servicio",
+  "privacyPolicyTitle": "Política de Privacidad",
+  "privacyPolicyLastUpdated": "Última actualización: 11 de junio de 2026",
+  "privacyPolicyContent": "Esta es la Política de Privacidad de Agroecology Map AI.",
+  "termsOfServiceTitle": "Términos de Servicio",
+  "termsOfServiceLastUpdated": "Última actualización: 11 de junio de 2026",
+  "termsOfServiceContent": "Términos de Servicio de Agroecology Map AI.",
+  "acceptPrivacyPrefix": "Acepto la ",
+  "acceptPrivacyLink": "Política de Privacidad",
+  "acceptTosPrefix": "Acepto los ",
+  "acceptTosLink": "Términos de Servicio",
+  "dataAndPrivacy": "Datos y Privacidad",
+  "exportMyData": "Exportar Mis Datos",
+  "exportSuccess": "Datos exportados exitosamente",
+  "exportFailed": "Error al exportar datos",
+  "deleteMyAccount": "Eliminar Mi Cuenta",
+  "deleteAccountConfirmTitle": "Eliminar Cuenta",
+  "deleteAccountConfirmBody": "¿Estás seguro? Se enviará un correo de confirmación.",
+  "deleteAccountConfirmButton": "Eliminar",
+  "deleteAccountFailed": "Error al solicitar eliminación"
 }

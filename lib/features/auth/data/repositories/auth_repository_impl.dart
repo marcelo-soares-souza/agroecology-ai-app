@@ -59,6 +59,8 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
     required String challengeId,
     required String challengeAnswer,
+    bool privacyPolicyAccepted = false,
+    bool tosAccepted = false,
     String locale = 'pt-BR',
   }) async {
     await _remote.register({
@@ -68,6 +70,8 @@ class AuthRepositoryImpl implements AuthRepository {
       'challenge_id': challengeId,
       'challenge_answer': challengeAnswer,
       'locale': locale,
+      'privacy_policy_accepted': privacyPolicyAccepted,
+      'tos_accepted': tosAccepted,
     });
   }
 
@@ -145,6 +149,23 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<User> getUserBySlug(String slug) async {
     final data = await _remote.getUserBySlug(slug);
     return _mapUser(data);
+  }
+
+  @override
+  Future<Map<String, dynamic>> exportMyData() async {
+    return await _remote.exportMyData();
+  }
+
+  @override
+  Future<String> requestDeleteAccount() async {
+    final response = await _remote.requestDeleteAccount();
+    return response.message;
+  }
+
+  @override
+  Future<String> confirmDeleteAccount(String token) async {
+    final response = await _remote.confirmDeleteAccount(token);
+    return response.message;
   }
 
   @override

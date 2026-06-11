@@ -452,4 +452,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notIngested => 'Not indexed';
+
+  @override
+  String get drawerPrivacy => 'Privacy Policy';
+
+  @override
+  String get drawerTerms => 'Terms of Service';
+
+  @override
+  String get privacyPolicyTitle => 'Privacy Policy';
+
+  @override
+  String get privacyPolicyLastUpdated => 'Last updated: June 11, 2026';
+
+  @override
+  String get privacyPolicyContent =>
+      'This is the Privacy Policy for Agroecology Map AI.\n\nAgroecology Map AI is a free software platform that provides an AI-powered chat interface for querying a curated knowledge base of agroecological documents.\n\nData We Collect:\n- Full name, email address, and hashed password (required for account)\n- Preferred language/locale\n- Optional: bio/about text, external link, profile avatar\n- IP address in request logs (transient, not stored in database)\n\nWe DO NOT collect: location data, browsing history, device identifiers, advertising IDs, or sensitive personal data.\n\nHow We Use Your Data:\n- Account authentication and management\n- Email communication (verification, password reset, notifications)\n- Community profile display\n- Platform operation and improvement\n\nData Storage: PostgreSQL database, local server filesystem (avatars), LanceDB vector store (document chunks). No cloud analytics or third-party data sharing.\n\nData Sharing: We do NOT share, sell, rent, or trade your personal data with third parties. No advertisers, no data brokers, no external analytics.\n\nYour Rights (LGPD/GDPR):\n- Access: Export your data via the profile page\n- Rectification: Edit your profile at any time\n- Erasure: Delete your account via the profile page\n- Portability: Receive your data in machine-readable format\n- Withdraw consent: Stop using the platform at any time\n\nRight to be Forgotten:\nClick \'Delete My Account\' on your profile page. You will receive a confirmation email. Once confirmed, your personal data is permanently anonymized: name becomes \'Deleted User\', email is replaced, bio/link/avatar deleted, all sessions terminated.\n\nApp Store Compliance:\nThe mobile app: uses no sensitive device permissions, no background data collection, no third-party SDKs, HTTPS encryption for all data.\n\nContact: admin@agroecologymap.org\nLicense: GPLv3 (Free Software)\nRepository: https://codeberg.org/agroecologymap';
+
+  @override
+  String get termsOfServiceTitle => 'Terms of Service';
+
+  @override
+  String get termsOfServiceLastUpdated => 'Last updated: June 11, 2026';
+
+  @override
+  String get termsOfServiceContent =>
+      '1. Acceptance of Terms\nBy creating an account and using Agroecology Map AI, you agree to these Terms of Service.\n\n2. Description of Service\nAgroecology Map AI is a free software AI chat platform for querying agroecological knowledge.\n\n3. User Accounts\nYou are responsible for your account credentials. You must provide accurate registration information. Minimum age: 16 years.\n\n4. Acceptable Use\nDo not use the platform for illegal purposes, submit harmful content, attempt to disrupt service, use automated means without permission, or misrepresent your identity.\n\n5. User Content\nBy submitting content, you grant the platform a non-exclusive license to display it. You retain ownership.\n\n6. Intellectual Property\nThe software is GPLv3 licensed. Document content retains its original licenses.\n\n7. Disclaimer\nThe platform is provided \'AS IS\'. AI-generated answers may not be accurate. Always verify with primary sources.\n\n8. Limitation of Liability\nThe project and its volunteers are not liable for damages arising from platform use.\n\n9. Account Termination\nAccounts violating these terms may be suspended. Users may delete accounts at any time.\n\n10. Modifications\nTerms may be updated. Material changes communicated via email.\n\n11. Governing Law\nGoverned by the laws of Brazil.\n\n12. Contact\nadmin@agroecologymap.org';
+
+  @override
+  String get acceptPrivacyPrefix => 'I accept the ';
+
+  @override
+  String get acceptPrivacyLink => 'Privacy Policy';
+
+  @override
+  String get acceptTosPrefix => 'I accept the ';
+
+  @override
+  String get acceptTosLink => 'Terms of Service';
+
+  @override
+  String get dataAndPrivacy => 'Data & Privacy';
+
+  @override
+  String get exportMyData => 'Export My Data';
+
+  @override
+  String get exportSuccess => 'Data exported successfully';
+
+  @override
+  String get exportFailed => 'Failed to export data';
+
+  @override
+  String get deleteMyAccount => 'Delete My Account';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Delete Account';
+
+  @override
+  String get deleteAccountConfirmBody =>
+      'Are you sure? A confirmation email will be sent. Once confirmed, your personal data will be permanently anonymized.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Delete';
+
+  @override
+  String get deleteAccountFailed => 'Failed to request account deletion';
 }

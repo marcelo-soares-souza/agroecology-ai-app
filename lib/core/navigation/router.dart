@@ -9,6 +9,8 @@ import '../../features/chat/presentation/pages/chat_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/community/presentation/pages/community_page.dart';
 import '../../features/community/presentation/pages/about_donate.dart';
+import '../../features/community/presentation/pages/privacy_policy_page.dart';
+import '../../features/community/presentation/pages/terms_of_service_page.dart';
 import '../../features/suggestions/presentation/pages/suggestion_create_page.dart';
 import '../../features/suggestions/presentation/pages/suggestion_list_page.dart';
 import '../../features/suggestions/presentation/pages/suggestion_detail_page.dart';
@@ -121,6 +123,16 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
             path: '/donate',
             name: 'donate',
             builder: (context, state) => const DonatePage(),
+          ),
+          GoRoute(
+            path: '/privacy',
+            name: 'privacy',
+            builder: (context, state) => const PrivacyPolicyPage(),
+          ),
+          GoRoute(
+            path: '/terms',
+            name: 'terms',
+            builder: (context, state) => const TermsOfServicePage(),
           ),
           GoRoute(
             path: '/suggestions',
@@ -481,6 +493,8 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
   String? _challengeId;
   String? _challengeQuestion;
   final _answerController = TextEditingController();
+  bool _privacyAccepted = false;
+  bool _tosAccepted = false;
 
   @override
   void initState() {
@@ -695,9 +709,87 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                       },
                     ),
                   ],
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () =>
+                        setState(() => _privacyAccepted = !_privacyAccepted),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: _privacyAccepted,
+                          activeColor: const Color(0xFFd97706),
+                          onChanged: (v) =>
+                              setState(() => _privacyAccepted = v ?? false),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => context.push('/privacy'),
+                            child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xFF78716c),
+                                ),
+                                children: [
+                                  TextSpan(
+                                      text: l10n.acceptPrivacyPrefix),
+                                  TextSpan(
+                                    text: l10n.acceptPrivacyLink,
+                                    style: const TextStyle(
+                                      color: Color(0xFFd97706),
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => setState(() => _tosAccepted = !_tosAccepted),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: _tosAccepted,
+                          activeColor: const Color(0xFFd97706),
+                          onChanged: (v) =>
+                              setState(() => _tosAccepted = v ?? false),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => context.push('/terms'),
+                            child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xFF78716c),
+                                ),
+                                children: [
+                                  TextSpan(text: l10n.acceptTosPrefix),
+                                  TextSpan(
+                                    text: l10n.acceptTosLink,
+                                    style: const TextStyle(
+                                      color: Color(0xFFd97706),
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: auth.isLoading || _challengeId == null
+                    onPressed: (auth.isLoading ||
+                            _challengeId == null ||
+                            !_privacyAccepted ||
+                            !_tosAccepted)
                         ? null
                         : _handleRegister,
                     child: auth.isLoading
@@ -754,6 +846,8 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
             password: _passwordController.text,
             challengeId: _challengeId!,
             challengeAnswer: _answerController.text.trim(),
+            privacyPolicyAccepted: _privacyAccepted,
+            tosAccepted: _tosAccepted,
           );
     }
   }

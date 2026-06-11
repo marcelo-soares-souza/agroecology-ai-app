@@ -453,4 +453,72 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get notIngested => 'Não indexado';
+
+  @override
+  String get drawerPrivacy => 'Política de Privacidade';
+
+  @override
+  String get drawerTerms => 'Termos de Serviço';
+
+  @override
+  String get privacyPolicyTitle => 'Política de Privacidade';
+
+  @override
+  String get privacyPolicyLastUpdated =>
+      'Última atualização: 11 de junho de 2026';
+
+  @override
+  String get privacyPolicyContent =>
+      'Esta é a Política de Privacidade do Agroecology Map AI.\n\nO Agroecology Map AI é uma plataforma de software livre que oferece chat com IA para consultar uma base de conhecimento agroecológica.\n\nDados que Coletamos:\n- Nome completo, email e senha hash (obrigatórios para conta)\n- Idioma/localidade de preferência\n- Opcionais: texto sobre, link externo, avatar de perfil\n- Endereço IP em logs de requisição (transitório, não armazenado no banco)\n\nNÃO coletamos: localização, histórico de navegação, identificadores de dispositivo, IDs de publicidade ou dados pessoais sensíveis.\n\nComo Usamos Seus Dados:\n- Autenticação e gerenciamento de conta\n- Comunicação por email (verificação, redefinição de senha, notificações)\n- Exibição do perfil na comunidade\n- Operação e melhoria da plataforma\n\nArmazenamento: PostgreSQL, sistema de arquivos local (avatares), LanceDB (vetores de documentos). Sem analytics de nuvem ou compartilhamento com terceiros.\n\nCompartilhamento: NÃO compartilhamos, vendemos, alugamos ou negociamos seus dados pessoais com terceiros.\n\nSeus Direitos (LGPD/GDPR):\n- Acesso: Exporte seus dados na página de perfil\n- Retificação: Edite seu perfil a qualquer momento\n- Exclusão: Exclua sua conta na página de perfil\n- Portabilidade: Receba seus dados em formato legível\n- Revogar consentimento: Pare de usar a plataforma a qualquer momento\n\nDireito ao Esquecimento:\nClique em \'Excluir Minha Conta\' na página de perfil. Você receberá um email de confirmação. Após confirmado, seus dados são anonimizados permanentemente.\n\nConformidade com Lojas de Apps:\nO app mobile: não solicita permissões sensíveis, não coleta dados em segundo plano, sem SDKs de terceiros, criptografia HTTPS.\n\nContato: admin@agroecologymap.org\nLicença: GPLv3 (Software Livre)';
+
+  @override
+  String get termsOfServiceTitle => 'Termos de Serviço';
+
+  @override
+  String get termsOfServiceLastUpdated =>
+      'Última atualização: 11 de junho de 2026';
+
+  @override
+  String get termsOfServiceContent =>
+      '1. Aceitação dos Termos\nAo criar uma conta e usar o Agroecology Map AI, você concorda com estes Termos de Serviço.\n\n2. Descrição do Serviço\nO Agroecology Map AI é uma plataforma de chat com IA para consulta de conhecimento agroecológico.\n\n3. Contas de Usuário\nVocê é responsável por suas credenciais. Forneça informações precisas. Idade mínima: 16 anos.\n\n4. Uso Aceitável\nNão use a plataforma para fins ilegais, envie conteúdo prejudicial, tente interromper o serviço ou deturpe sua identidade.\n\n5. Conteúdo do Usuário\nAo enviar conteúdo, você concede licença não exclusiva de exibição. Você mantém a propriedade.\n\n6. Propriedade Intelectual\nO software é licenciado GPLv3. Conteúdo de documentos mantém suas licenças originais.\n\n7. Isenção de Garantias\nA plataforma é fornecida \'COMO ESTÁ\'. Respostas da IA podem não ser precisas.\n\n8. Limitação de Responsabilidade\nO projeto e voluntários não são responsáveis por danos decorrentes do uso.\n\n9. Encerramento de Conta\nContas que violarem estes termos podem ser suspensas. Usuários podem excluir contas a qualquer momento.\n\n10. Modificações\nTermos podem ser atualizados. Alterações significativas comunicadas por email.\n\n11. Lei Aplicável\nRegido pelas leis do Brasil.\n\n12. Contato\nadmin@agroecologymap.org';
+
+  @override
+  String get acceptPrivacyPrefix => 'Aceito a ';
+
+  @override
+  String get acceptPrivacyLink => 'Política de Privacidade';
+
+  @override
+  String get acceptTosPrefix => 'Aceito os ';
+
+  @override
+  String get acceptTosLink => 'Termos de Serviço';
+
+  @override
+  String get dataAndPrivacy => 'Dados e Privacidade';
+
+  @override
+  String get exportMyData => 'Exportar Meus Dados';
+
+  @override
+  String get exportSuccess => 'Dados exportados com sucesso';
+
+  @override
+  String get exportFailed => 'Falha ao exportar dados';
+
+  @override
+  String get deleteMyAccount => 'Excluir Minha Conta';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Excluir Conta';
+
+  @override
+  String get deleteAccountConfirmBody =>
+      'Tem certeza? Um email de confirmação será enviado. Após confirmado, seus dados pessoais serão anonimizados permanentemente.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Excluir';
+
+  @override
+  String get deleteAccountFailed => 'Falha ao solicitar exclusão da conta';
 }

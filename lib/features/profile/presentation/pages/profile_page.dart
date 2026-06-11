@@ -39,6 +39,61 @@ class ProfilePage extends ConsumerWidget {
   ) {
     final profile = auth.profile;
 
+    Future<void> handleExport() async {
+      try {
+        await ref.read(authControllerProvider.notifier).exportMyData();
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.exportSuccess)),
+        );
+      } catch (e) {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.exportFailed)),
+        );
+      }
+    }
+
+    Future<void> handleDeleteRequest() async {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l10n.deleteAccountConfirmTitle),
+          content: Text(l10n.deleteAccountConfirmBody),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(
+                l10n.deleteAccountConfirmButton,
+                style: const TextStyle(color: AppColors.error),
+              ),
+            ),
+          ],
+        ),
+      );
+
+      if (confirmed == true && context.mounted) {
+        try {
+          final message = await ref
+              .read(authControllerProvider.notifier)
+              .requestDeleteAccount();
+          if (!context.mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(message)),
+          );
+        } catch (e) {
+          if (!context.mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.deleteAccountFailed)),
+          );
+        }
+      }
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -157,6 +212,39 @@ class ProfilePage extends ConsumerWidget {
                 ),
               ),
             ],
+            const SizedBox(height: 16),
+            AppCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    l10n.dataAndPrivacy,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  AppButton(
+                    label: l10n.exportMyData,
+                    icon: Icons.download_outlined,
+                    width: double.infinity,
+                    isOutlined: true,
+                    onPressed: handleExport,
+                  ),
+                  const SizedBox(height: 8),
+                  AppButton(
+                    label: l10n.deleteMyAccount,
+                    icon: Icons.delete_outline,
+                    width: double.infinity,
+                    backgroundColor: const Color(0xFFfecaca),
+                    foregroundColor: AppColors.error,
+                    onPressed: handleDeleteRequest,
+                  ),
+                ],
+              ),
+            ),
           ],
         ],
       ),

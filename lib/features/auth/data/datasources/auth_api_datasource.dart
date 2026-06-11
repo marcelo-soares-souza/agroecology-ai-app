@@ -76,4 +76,23 @@ class AuthApiDataSource {
             as Map<String, dynamic>;
     return data;
   }
+
+  Future<Map<String, dynamic>> exportMyData() async {
+    final data =
+        await _client.get('$_prefix/me/export') as Map<String, dynamic>;
+    return data;
+  }
+
+  Future<MessageResponse> requestDeleteAccount() async {
+    final data = await _client.post('$_prefix/me/delete-request');
+    return MessageResponse.fromJson(data);
+  }
+
+  Future<MessageResponse> confirmDeleteAccount(String token) async {
+    final data = await _client.post(
+      '$_prefix/me/delete-confirm',
+      data: {'token': token},
+    );
+    return MessageResponse.fromJson(data);
+  }
 }

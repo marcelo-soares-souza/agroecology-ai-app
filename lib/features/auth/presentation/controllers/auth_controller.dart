@@ -101,6 +101,8 @@ class AuthController extends StateNotifier<AuthState> {
     required String password,
     required String challengeId,
     required String challengeAnswer,
+    bool privacyPolicyAccepted = false,
+    bool tosAccepted = false,
     String locale = 'pt-BR',
   }) async {
     state = state.copyWith(status: AuthStatus.restoring, clearError: true);
@@ -112,6 +114,8 @@ class AuthController extends StateNotifier<AuthState> {
         password: password,
         challengeId: challengeId,
         challengeAnswer: challengeAnswer,
+        privacyPolicyAccepted: privacyPolicyAccepted,
+        tosAccepted: tosAccepted,
         locale: locale,
       );
       state = state.copyWith(
@@ -172,6 +176,18 @@ class AuthController extends StateNotifier<AuthState> {
     final profile = await _authRepository.uploadAvatar(filePath);
     state = state.copyWith(profile: profile);
     return profile;
+  }
+
+  Future<Map<String, dynamic>> exportMyData() async {
+    return await _authRepository.exportMyData();
+  }
+
+  Future<String> requestDeleteAccount() async {
+    return await _authRepository.requestDeleteAccount();
+  }
+
+  Future<String> confirmDeleteAccount(String token) async {
+    return await _authRepository.confirmDeleteAccount(token);
   }
 
   void clearError() {

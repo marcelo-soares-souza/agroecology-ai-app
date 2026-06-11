@@ -46,7 +46,6 @@
   "registrationSuccess": "Cadastro realizado. Verifique seu email para confirmar sua conta.",
   "registrationFailed": "Falha no cadastro. Tente novamente.",
   "connectionError": "Erro de conexão. Verifique sua rede.",
-
   "drawerChat": "Chat",
   "drawerCommunity": "Comunidade",
   "drawerProfile": "Perfil",
@@ -57,7 +56,6 @@
   "localeEn": "English",
   "localeEs": "Español",
   "localeFr": "Français",
-
   "chatTitle": "Chat Agroecológico",
   "chatSubtitle": "Faça perguntas sobre agroecologia",
   "newChat": "Nova conversa",
@@ -69,7 +67,6 @@
   "chatEmptyTitle": "Faça uma pergunta sobre agroecologia",
   "chatEmptySubtitle": "A IA responde a partir da base de conhecimento,\nmantendo as fontes rastreáveis.",
   "chatError": "Ocorreu um erro",
-
   "profileTitle": "Perfil",
   "profileNotAuth": "Não autenticado",
   "profileNotAuthSub": "Faça login para ver seu perfil.",
@@ -84,7 +81,9 @@
   "aboutMaxLength": "Sobre deve ter menos de {count} caracteres",
   "@aboutMaxLength": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "linkValidation": "Link deve começar com http:// ou https://",
@@ -93,23 +92,22 @@
   "imageTooLarge": "Imagem deve ter menos de {mb} MB",
   "@imageTooLarge": {
     "placeholders": {
-      "mb": {"type": "int"}
+      "mb": {
+        "type": "int"
+      }
     }
   },
   "uploadAvatarFailed": "Falha ao enviar avatar.",
   "saveProfileFailed": "Falha ao salvar perfil.",
-
   "communityTitle": "Comunidade",
   "communityEmpty": "Nenhum membro na comunidade ainda",
   "communityEmptySub": "Seja o primeiro a participar!",
   "approvedSuggestions": "Sugestões Aprovadas",
-
   "aboutPageTitle": "Sobre",
   "aboutText1": "Agroecology Map AI é uma ferramenta de software livre que torna o conhecimento agroecológico mais fácil de encontrar, compreender e compartilhar.",
   "aboutText2": "A IA responde a partir de documentos da base de conhecimento, mantendo fontes rastreáveis em vez de atuar como chatbot genérico.",
   "aboutText3": "O projeto faz parte do ecossistema Agroecology Map, iniciativa de ciência cidadã, dados abertos e software livre que mapeia experiências agroecológicas e conecta comunidades.",
   "aboutText4": "A proposta é apoiar agricultores, pesquisadores, extensionistas, educadores, estudantes, comunidades e movimentos sociais.",
-
   "donateTitle": "Doar",
   "donateText1": "Agroecology Map AI é mantido por trabalho voluntário e software livre.",
   "donateText2": "Doações ajudam a manter e expandir a infraestrutura, processamento, armazenamento, indexação de documentos e experimentos com modelos locais.",
@@ -127,7 +125,9 @@
   "fileTooLarge": "Arquivo deve ter menos de {size} MB",
   "@fileTooLarge": {
     "placeholders": {
-      "size": {"type": "int"}
+      "size": {
+        "type": "int"
+      }
     }
   },
   "commentLabel": "Comentário",
@@ -157,8 +157,12 @@
   "indexedCount": "{indexed} de {total} indexados",
   "@indexedCount": {
     "placeholders": {
-      "indexed": {"type": "int"},
-      "total": {"type": "int"}
+      "indexed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "allIndexed": "Todos os arquivos indexados",
@@ -167,5 +171,26 @@
   "fileType": "Tipo de Arquivo",
   "fileSize": "Tamanho",
   "ingested": "Indexado",
-  "notIngested": "Não indexado"
+  "notIngested": "Não indexado",
+  "drawerPrivacy": "Política de Privacidade",
+  "drawerTerms": "Termos de Serviço",
+  "privacyPolicyTitle": "Política de Privacidade",
+  "privacyPolicyLastUpdated": "Última atualização: 11 de junho de 2026",
+  "privacyPolicyContent": "Esta é a Política de Privacidade do Agroecology Map AI.\n\nO Agroecology Map AI é uma plataforma de software livre que oferece chat com IA para consultar uma base de conhecimento agroecológica.\n\nDados que Coletamos:\n- Nome completo, email e senha hash (obrigatórios para conta)\n- Idioma/localidade de preferência\n- Opcionais: texto sobre, link externo, avatar de perfil\n- Endereço IP em logs de requisição (transitório, não armazenado no banco)\n\nNÃO coletamos: localização, histórico de navegação, identificadores de dispositivo, IDs de publicidade ou dados pessoais sensíveis.\n\nComo Usamos Seus Dados:\n- Autenticação e gerenciamento de conta\n- Comunicação por email (verificação, redefinição de senha, notificações)\n- Exibição do perfil na comunidade\n- Operação e melhoria da plataforma\n\nArmazenamento: PostgreSQL, sistema de arquivos local (avatares), LanceDB (vetores de documentos). Sem analytics de nuvem ou compartilhamento com terceiros.\n\nCompartilhamento: NÃO compartilhamos, vendemos, alugamos ou negociamos seus dados pessoais com terceiros.\n\nSeus Direitos (LGPD/GDPR):\n- Acesso: Exporte seus dados na página de perfil\n- Retificação: Edite seu perfil a qualquer momento\n- Exclusão: Exclua sua conta na página de perfil\n- Portabilidade: Receba seus dados em formato legível\n- Revogar consentimento: Pare de usar a plataforma a qualquer momento\n\nDireito ao Esquecimento:\nClique em 'Excluir Minha Conta' na página de perfil. Você receberá um email de confirmação. Após confirmado, seus dados são anonimizados permanentemente.\n\nConformidade com Lojas de Apps:\nO app mobile: não solicita permissões sensíveis, não coleta dados em segundo plano, sem SDKs de terceiros, criptografia HTTPS.\n\nContato: admin@agroecologymap.org\nLicença: GPLv3 (Software Livre)",
+  "termsOfServiceTitle": "Termos de Serviço",
+  "termsOfServiceLastUpdated": "Última atualização: 11 de junho de 2026",
+  "termsOfServiceContent": "1. Aceitação dos Termos\nAo criar uma conta e usar o Agroecology Map AI, você concorda com estes Termos de Serviço.\n\n2. Descrição do Serviço\nO Agroecology Map AI é uma plataforma de chat com IA para consulta de conhecimento agroecológico.\n\n3. Contas de Usuário\nVocê é responsável por suas credenciais. Forneça informações precisas. Idade mínima: 16 anos.\n\n4. Uso Aceitável\nNão use a plataforma para fins ilegais, envie conteúdo prejudicial, tente interromper o serviço ou deturpe sua identidade.\n\n5. Conteúdo do Usuário\nAo enviar conteúdo, você concede licença não exclusiva de exibição. Você mantém a propriedade.\n\n6. Propriedade Intelectual\nO software é licenciado GPLv3. Conteúdo de documentos mantém suas licenças originais.\n\n7. Isenção de Garantias\nA plataforma é fornecida 'COMO ESTÁ'. Respostas da IA podem não ser precisas.\n\n8. Limitação de Responsabilidade\nO projeto e voluntários não são responsáveis por danos decorrentes do uso.\n\n9. Encerramento de Conta\nContas que violarem estes termos podem ser suspensas. Usuários podem excluir contas a qualquer momento.\n\n10. Modificações\nTermos podem ser atualizados. Alterações significativas comunicadas por email.\n\n11. Lei Aplicável\nRegido pelas leis do Brasil.\n\n12. Contato\nadmin@agroecologymap.org",
+  "acceptPrivacyPrefix": "Aceito a ",
+  "acceptPrivacyLink": "Política de Privacidade",
+  "acceptTosPrefix": "Aceito os ",
+  "acceptTosLink": "Termos de Serviço",
+  "dataAndPrivacy": "Dados e Privacidade",
+  "exportMyData": "Exportar Meus Dados",
+  "exportSuccess": "Dados exportados com sucesso",
+  "exportFailed": "Falha ao exportar dados",
+  "deleteMyAccount": "Excluir Minha Conta",
+  "deleteAccountConfirmTitle": "Excluir Conta",
+  "deleteAccountConfirmBody": "Tem certeza? Um email de confirmação será enviado. Após confirmado, seus dados pessoais serão anonimizados permanentemente.",
+  "deleteAccountConfirmButton": "Excluir",
+  "deleteAccountFailed": "Falha ao solicitar exclusão da conta"
 }

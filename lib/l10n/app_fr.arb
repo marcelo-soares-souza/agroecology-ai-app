@@ -46,7 +46,6 @@
   "registrationSuccess": "Inscription réussie. Vérifiez votre email pour confirmer votre compte.",
   "registrationFailed": "Échec de l'inscription. Veuillez réessayer.",
   "connectionError": "Erreur de connexion. Vérifiez votre réseau.",
-
   "drawerChat": "Chat",
   "drawerCommunity": "Communauté",
   "drawerProfile": "Profil",
@@ -57,7 +56,6 @@
   "localeEn": "English",
   "localeEs": "Español",
   "localeFr": "Français",
-
   "chatTitle": "Chat Agroécologique",
   "chatSubtitle": "Posez des questions sur l'agroécologie",
   "newChat": "Nouvelle conversation",
@@ -69,7 +67,6 @@
   "chatEmptyTitle": "Posez une question sur l'agroécologie",
   "chatEmptySubtitle": "L'IA répond à partir de la base de connaissances,\nen gardant les sources traçables.",
   "chatError": "Une erreur est survenue",
-
   "profileTitle": "Profil",
   "profileNotAuth": "Non authentifié",
   "profileNotAuthSub": "Connectez-vous pour voir votre profil.",
@@ -84,7 +81,9 @@
   "aboutMaxLength": "À propos doit avoir moins de {count} caractères",
   "@aboutMaxLength": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "linkValidation": "Le lien doit commencer par http:// ou https://",
@@ -93,23 +92,22 @@
   "imageTooLarge": "L'image doit faire moins de {mb} Mo",
   "@imageTooLarge": {
     "placeholders": {
-      "mb": {"type": "int"}
+      "mb": {
+        "type": "int"
+      }
     }
   },
   "uploadAvatarFailed": "Échec du téléchargement de l'avatar.",
   "saveProfileFailed": "Échec de l'enregistrement du profil.",
-
   "communityTitle": "Communauté",
   "communityEmpty": "Aucun membre dans la communauté",
   "communityEmptySub": "Soyez le premier à rejoindre !",
   "approvedSuggestions": "Suggestions Approuvées",
-
   "aboutPageTitle": "À Propos",
   "aboutText1": "Agroecology Map AI est un outil logiciel libre qui rend la connaissance agroécologique plus facile à trouver, comprendre et partager.",
   "aboutText2": "L'IA répond à partir des documents de la base de connaissances, en gardant les sources traçables plutôt que d'agir comme un chatbot générique.",
   "aboutText3": "Le projet fait partie de l'écosystème Agroecology Map, une initiative de science citoyenne, données ouvertes et logiciel libre qui cartographie les expériences agroécologiques et connecte les communautés.",
   "aboutText4": "La proposition est de soutenir les agriculteurs, chercheurs, vulgarisateurs, éducateurs, étudiants, communautés et mouvements sociaux.",
-
   "donateTitle": "Faire un Don",
   "donateText1": "Agroecology Map AI est maintenu par du travail bénévole et des logiciels libres.",
   "donateText2": "Les dons aident à maintenir et étendre l'infrastructure, le traitement, le stockage, l'indexation des documents et les expériences avec des modèles locaux.",
@@ -127,7 +125,9 @@
   "fileTooLarge": "Le fichier doit faire moins de {size} Mo",
   "@fileTooLarge": {
     "placeholders": {
-      "size": {"type": "int"}
+      "size": {
+        "type": "int"
+      }
     }
   },
   "commentLabel": "Commentaire",
@@ -157,8 +157,12 @@
   "indexedCount": "{indexed} sur {total} indexés",
   "@indexedCount": {
     "placeholders": {
-      "indexed": {"type": "int"},
-      "total": {"type": "int"}
+      "indexed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "allIndexed": "Tous les fichiers indexés",
@@ -167,5 +171,26 @@
   "fileType": "Type de Fichier",
   "fileSize": "Taille",
   "ingested": "Indexé",
-  "notIngested": "Non indexé"
+  "notIngested": "Non indexé",
+  "drawerPrivacy": "Politique de confidentialité",
+  "drawerTerms": "Conditions d'utilisation",
+  "privacyPolicyTitle": "Politique de confidentialité",
+  "privacyPolicyLastUpdated": "Dernière mise à jour : 11 juin 2026",
+  "privacyPolicyContent": "Ceci est la Politique de confidentialité de Agroecology Map AI.",
+  "termsOfServiceTitle": "Conditions d'utilisation",
+  "termsOfServiceLastUpdated": "Dernière mise à jour : 11 juin 2026",
+  "termsOfServiceContent": "Conditions d'utilisation de Agroecology Map AI.",
+  "acceptPrivacyPrefix": "J'accepte la ",
+  "acceptPrivacyLink": "Politique de confidentialité",
+  "acceptTosPrefix": "J'accepte les ",
+  "acceptTosLink": "Conditions d'utilisation",
+  "dataAndPrivacy": "Données et confidentialité",
+  "exportMyData": "Exporter Mes Données",
+  "exportSuccess": "Données exportées avec succès",
+  "exportFailed": "Échec de l'exportation",
+  "deleteMyAccount": "Supprimer Mon Compte",
+  "deleteAccountConfirmTitle": "Supprimer le compte",
+  "deleteAccountConfirmBody": "Êtes-vous sûr ? Un email de confirmation sera envoyé.",
+  "deleteAccountConfirmButton": "Supprimer",
+  "deleteAccountFailed": "Échec de la demande de suppression"
 }
