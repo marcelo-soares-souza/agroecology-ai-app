@@ -52,6 +52,15 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: AppColors.background,
+      textTheme: const TextTheme(
+        bodyLarge: TextStyle(fontSize: 17, height: 1.45),
+        bodyMedium: TextStyle(fontSize: 16, height: 1.45),
+        bodySmall: TextStyle(fontSize: 14, height: 1.4),
+        labelLarge: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+        labelMedium: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+        titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+        titleMedium: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+      ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.surface,
         foregroundColor: AppColors.textPrimary,
@@ -95,8 +104,14 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.error, width: 2),
         ),
-        labelStyle: const TextStyle(color: AppColors.textSecondary),
-        hintStyle: const TextStyle(color: AppColors.textSecondary),
+        labelStyle: const TextStyle(
+          fontSize: 16,
+          color: AppColors.textSecondary,
+        ),
+        hintStyle: const TextStyle(
+          fontSize: 16,
+          color: AppColors.textSecondary,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -106,7 +121,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -117,13 +132,13 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.textSecondary,
-          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
         ),
       ),
       iconTheme: const IconThemeData(color: AppColors.textSecondary),

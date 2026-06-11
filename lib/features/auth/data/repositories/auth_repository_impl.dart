@@ -106,10 +106,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> logout() async {
-    try {
-      await _remote.logout();
-    } catch (_) {}
+  Future<void> logout({bool revokeRemote = true}) async {
+    if (revokeRemote) {
+      try {
+        await _remote.logout();
+      } catch (_) {}
+    }
     await _tokenStorage.clearTokens();
   }
 

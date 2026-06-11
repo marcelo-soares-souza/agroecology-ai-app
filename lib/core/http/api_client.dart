@@ -55,6 +55,10 @@ class ApiClient {
           return handler.next(error);
         }
 
+        if (_isPublicAuthEndpoint(error.requestOptions.path)) {
+          return handler.next(error);
+        }
+
         final refreshToken = await tokenStorage.getRefreshToken();
         if (refreshToken == null) {
           onAuthFailure?.call();
@@ -103,6 +107,15 @@ class ApiClient {
         handler.next(error);
       },
     );
+  }
+
+  bool _isPublicAuthEndpoint(String path) {
+    return path == '/api/v1/auth/login' ||
+        path == '/api/v1/auth/register' ||
+        path == '/api/v1/auth/human-challenge' ||
+        path == '/api/v1/auth/confirm-email' ||
+        path == '/api/v1/auth/confirm-email/resend' ||
+        path.startsWith('/api/v1/auth/password-reset/');
   }
 
   Future<void> _retryRequest(

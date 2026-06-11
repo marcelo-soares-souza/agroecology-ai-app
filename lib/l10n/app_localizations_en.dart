@@ -188,7 +188,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get localeFr => 'Français';
 
   @override
-  String get chatTitle => 'Chat Agroecológico';
+  String get chatTitle => 'Agroecology Chat';
 
   @override
   String get chatSubtitle => 'Ask questions about agroecology';
@@ -296,19 +296,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutText1 =>
-      'Agroecology Map AI is a free software tool that makes agroecological knowledge easier to find, understand, and share.';
+      'Agroecology Map AI helps people explore agroecological knowledge through a free software assistant grounded in curated documents and community context.';
 
   @override
   String get aboutText2 =>
-      'The AI answers from the knowledge base documents, keeping sources traceable rather than acting as a generic chatbot.';
+      'Answers are generated from the knowledge base and keep sources traceable, so the app works as a guided research tool instead of a generic chatbot.';
 
   @override
   String get aboutText3 =>
-      'The project is part of the Agroecology Map ecosystem, a citizen science, open data, and free software initiative that maps agroecological experiences and connects communities.';
+      'The project belongs to the Agroecology Map ecosystem, an open data and citizen science initiative that maps experiences, documents practices, and connects territories.';
 
   @override
   String get aboutText4 =>
-      'The proposal is to support farmers, researchers, extension workers, educators, students, communities, and social movements.';
+      'It is built for farmers, educators, researchers, extension workers, students, communities, and social movements that need practical agroecological references.';
 
   @override
   String get donateTitle => 'Donate';
@@ -342,6 +342,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suggestDocument => 'Suggest Document';
+
+  @override
+  String get suggestionCountLabel => 'suggestions';
 
   @override
   String get newSuggestion => 'New Suggestion';

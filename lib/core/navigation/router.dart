@@ -50,9 +50,7 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       GoRoute(
         path: '/login',
         name: 'login',
-        builder: (context, state) => const _AuthScaffold(
-          child: _LoginPage(),
-        ),
+        builder: (context, state) => const _AuthScaffold(child: _LoginPage()),
       ),
       GoRoute(
         path: '/register',
@@ -198,15 +196,13 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
           state.uri.path == '/community' ||
           state.uri.path.startsWith('/community/') ||
           state.uri.path == '/profile' ||
-          state.uri.path == '/suggestions' ||
-          state.uri.path.startsWith('/suggestions/') &&
-              state.uri.path != '/suggestions/new' ||
           state.uri.path == '/documents' ||
           state.uri.path.startsWith('/documents/');
       final requiresAuth =
           state.uri.path == '/chat' ||
           state.uri.path == '/profile/edit' ||
-          state.uri.path == '/suggestions/new';
+          state.uri.path == '/suggestions' ||
+          state.uri.path.startsWith('/suggestions/');
 
       if (isSplash) {
         if (auth.isLoading) return null;
@@ -864,8 +860,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                                   color: Color(0xFF78716c),
                                 ),
                                 children: [
-                                  TextSpan(
-                                      text: l10n.acceptPrivacyPrefix),
+                                  TextSpan(text: l10n.acceptPrivacyPrefix),
                                   TextSpan(
                                     text: l10n.acceptPrivacyLink,
                                     style: const TextStyle(
@@ -919,7 +914,8 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: (auth.isLoading ||
+                    onPressed:
+                        (auth.isLoading ||
                             _challengeId == null ||
                             !_privacyAccepted ||
                             !_tosAccepted)

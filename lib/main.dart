@@ -89,6 +89,18 @@ class _AgroecologyMapAppState extends ConsumerState<AgroecologyMapApp> {
       },
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
+      builder: (context, child) {
+        final media = MediaQuery.of(context);
+        return MediaQuery(
+          data: media.copyWith(
+            textScaler: media.textScaler.clamp(
+              minScaleFactor: 1.08,
+              maxScaleFactor: 1.35,
+            ),
+          ),
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
       routerConfig: _router,
     );
   }
@@ -99,7 +111,7 @@ class _AgroecologyMapAppState extends ConsumerState<AgroecologyMapApp> {
       'en' => const Locale('en'),
       'es' => const Locale('es'),
       'fr' => const Locale('fr'),
-      _ => const Locale('pt', 'BR'),
+      _ => const Locale('en'),
     };
   }
 }

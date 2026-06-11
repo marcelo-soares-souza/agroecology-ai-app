@@ -92,7 +92,7 @@ final authControllerProvider =
       );
 
       ref.listen(authFailureStreamProvider, (_, _) {
-        controller.logout();
+        controller.logout(revokeRemote: false);
       });
 
       return controller;

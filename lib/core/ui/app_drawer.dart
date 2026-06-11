@@ -76,12 +76,13 @@ class AppDrawer extends StatelessWidget {
                     selected: currentRoute.startsWith('/community'),
                     onTap: () => _navigate(context, '/community'),
                   ),
-                  _NavItem(
-                    icon: Icons.person_outline,
-                    label: l10n.drawerProfile,
-                    selected: currentRoute.startsWith('/profile'),
-                    onTap: () => _navigate(context, '/profile'),
-                  ),
+                  if (isAuthenticated)
+                    _NavItem(
+                      icon: Icons.person_outline,
+                      label: l10n.drawerProfile,
+                      selected: currentRoute.startsWith('/profile'),
+                      onTap: () => _navigate(context, '/profile'),
+                    ),
                   _NavItem(
                     icon: Icons.info_outline,
                     label: l10n.drawerAbout,

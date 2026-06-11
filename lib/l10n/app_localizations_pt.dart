@@ -297,19 +297,19 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get aboutText1 =>
-      'Agroecology Map AI é uma ferramenta de software livre que torna o conhecimento agroecológico mais fácil de encontrar, compreender e compartilhar.';
+      'O Agroecology Map AI ajuda pessoas a explorar conhecimentos agroecológicos por meio de um assistente de software livre baseado em documentos curados e no contexto das comunidades.';
 
   @override
   String get aboutText2 =>
-      'A IA responde a partir de documentos da base de conhecimento, mantendo fontes rastreáveis em vez de atuar como chatbot genérico.';
+      'As respostas são geradas a partir da base de conhecimento e mantêm as fontes rastreáveis, funcionando como uma ferramenta guiada de pesquisa, não como um chatbot genérico.';
 
   @override
   String get aboutText3 =>
-      'O projeto faz parte do ecossistema Agroecology Map, iniciativa de ciência cidadã, dados abertos e software livre que mapeia experiências agroecológicas e conecta comunidades.';
+      'O projeto faz parte do ecossistema Agroecology Map, uma iniciativa de dados abertos e ciência cidadã que mapeia experiências, documenta práticas e conecta territórios.';
 
   @override
   String get aboutText4 =>
-      'A proposta é apoiar agricultores, pesquisadores, extensionistas, educadores, estudantes, comunidades e movimentos sociais.';
+      'Ele é feito para agricultores, educadores, pesquisadores, extensionistas, estudantes, comunidades e movimentos sociais que precisam de referências agroecológicas práticas.';
 
   @override
   String get donateTitle => 'Doar';
@@ -343,6 +343,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get suggestDocument => 'Sugerir Documento';
+
+  @override
+  String get suggestionCountLabel => 'sugestões';
 
   @override
   String get newSuggestion => 'Nova Sugestão';

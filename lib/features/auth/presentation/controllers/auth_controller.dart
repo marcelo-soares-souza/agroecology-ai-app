@@ -135,9 +135,9 @@ class AuthController extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout({bool revokeRemote = true}) async {
     final userId = state.session?.userId;
-    await _authRepository.logout();
+    await _authRepository.logout(revokeRemote: revokeRemote);
     if (userId != null) {
       await _chatStorage.clearChatHistory(userId);
     }

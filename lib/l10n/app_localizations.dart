@@ -453,7 +453,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatTitle.
   ///
   /// In en, this message translates to:
-  /// **'Chat Agroecológico'**
+  /// **'Agroecology Chat'**
   String get chatTitle;
 
   /// No description provided for @chatSubtitle.
@@ -657,25 +657,25 @@ abstract class AppLocalizations {
   /// No description provided for @aboutText1.
   ///
   /// In en, this message translates to:
-  /// **'Agroecology Map AI is a free software tool that makes agroecological knowledge easier to find, understand, and share.'**
+  /// **'Agroecology Map AI helps people explore agroecological knowledge through a free software assistant grounded in curated documents and community context.'**
   String get aboutText1;
 
   /// No description provided for @aboutText2.
   ///
   /// In en, this message translates to:
-  /// **'The AI answers from the knowledge base documents, keeping sources traceable rather than acting as a generic chatbot.'**
+  /// **'Answers are generated from the knowledge base and keep sources traceable, so the app works as a guided research tool instead of a generic chatbot.'**
   String get aboutText2;
 
   /// No description provided for @aboutText3.
   ///
   /// In en, this message translates to:
-  /// **'The project is part of the Agroecology Map ecosystem, a citizen science, open data, and free software initiative that maps agroecological experiences and connects communities.'**
+  /// **'The project belongs to the Agroecology Map ecosystem, an open data and citizen science initiative that maps experiences, documents practices, and connects territories.'**
   String get aboutText3;
 
   /// No description provided for @aboutText4.
   ///
   /// In en, this message translates to:
-  /// **'The proposal is to support farmers, researchers, extension workers, educators, students, communities, and social movements.'**
+  /// **'It is built for farmers, educators, researchers, extension workers, students, communities, and social movements that need practical agroecological references.'**
   String get aboutText4;
 
   /// No description provided for @donateTitle.
@@ -737,6 +737,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Suggest Document'**
   String get suggestDocument;
+
+  /// No description provided for @suggestionCountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'suggestions'**
+  String get suggestionCountLabel;
 
   /// No description provided for @newSuggestion.
   ///

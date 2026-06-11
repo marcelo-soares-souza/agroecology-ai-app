@@ -41,32 +41,35 @@ class _AppScaffoldState extends State<AppScaffold> {
     _scaffoldKey.currentState?.openDrawer();
   }
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        key: _scaffoldKey,
-        appBar: widget.showDrawer
-            ? AppTopBar(onMenuTap: _openDrawer, actions: widget.actions)
-            : (widget.title != null
-                  ? AppTopBar(title: Text(widget.title!), actions: widget.actions)
-                  : null),
-        drawer: widget.showDrawer
-            ? AppDrawer(
-                isAuthenticated: widget.isAuthenticated,
-                locale: widget.locale,
-                supportedLocales: widget.supportedLocales,
-                onLocaleChanged: widget.onLocaleChanged,
-                onLogout: widget.onLogout,
-              )
-            : null,
-        body: widget.body,
-        bottomNavigationBar: Column(
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: widget.showDrawer
+          ? AppTopBar(onMenuTap: _openDrawer, actions: widget.actions)
+          : (widget.title != null
+                ? AppTopBar(title: Text(widget.title!), actions: widget.actions)
+                : null),
+      drawer: widget.showDrawer
+          ? AppDrawer(
+              isAuthenticated: widget.isAuthenticated,
+              locale: widget.locale,
+              supportedLocales: widget.supportedLocales,
+              onLocaleChanged: widget.onLocaleChanged,
+              onLogout: widget.onLogout,
+            )
+          : null,
+      body: SafeArea(top: false, child: widget.body),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const CookieConsentBanner(),
             if (widget.bottomNavigationBar != null) widget.bottomNavigationBar!,
           ],
         ),
-      );
-    }
+      ),
+    );
+  }
 }

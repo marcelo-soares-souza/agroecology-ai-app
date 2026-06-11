@@ -16,7 +16,7 @@ abstract class AuthRepository {
   });
 
   Future<AuthSession> refreshSession(String refreshToken);
-  Future<void> logout();
+  Future<void> logout({bool revokeRemote = true});
   Future<User> getMe();
   Future<User> updateMyProfile({String? fullName, String? about, String? link});
   Future<User> uploadAvatar(String filePath);

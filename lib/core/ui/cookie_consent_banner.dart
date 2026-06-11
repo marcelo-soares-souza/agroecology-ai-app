@@ -54,103 +54,103 @@ class _CookieConsentBannerState extends State<CookieConsentBanner> {
         color: AppColors.surface,
         border: const Border(top: BorderSide(color: AppColors.primary100)),
       ),
-      child: SafeArea(
-        top: false,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 2),
-              child: Icon(Icons.privacy_tip_outlined,
-                  size: 18, color: AppColors.primary),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 2),
+            child: Icon(
+              Icons.privacy_tip_outlined,
+              size: 18,
+              color: AppColors.primary,
             ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                    height: 1.4,
-                  ),
-                  children: [
-                    TextSpan(text: l10n.consentMessage),
-                    const TextSpan(text: ' '),
-                    WidgetSpan(
-                      child: GestureDetector(
-                        onTap: () => context.push('/privacy'),
-                        child: Text(
-                          l10n.drawerPrivacy,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.primary,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TextSpan(text: ' ${l10n.consentAnd} '),
-                    WidgetSpan(
-                      child: GestureDetector(
-                        onTap: () => context.push('/terms'),
-                        child: Text(
-                          l10n.drawerTerms,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.primary,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                  height: 1.4,
                 ),
+                children: [
+                  TextSpan(text: l10n.consentMessage),
+                  const TextSpan(text: ' '),
+                  WidgetSpan(
+                    child: GestureDetector(
+                      onTap: () => context.push('/privacy'),
+                      child: Text(
+                        l10n.drawerPrivacy,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.primary,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TextSpan(text: ' ${l10n.consentAnd} '),
+                  WidgetSpan(
+                    child: GestureDetector(
+                      onTap: () => context.push('/terms'),
+                      child: Text(
+                        l10n.drawerTerms,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.primary,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 8),
-            Column(
-              children: [
-                SizedBox(
-                  height: 32,
-                  child: ElevatedButton(
-                    onPressed: _accept,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(72, 32),
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    child: Text(l10n.consentAccept),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                SizedBox(
-                  height: 28,
-                  child: TextButton(
-                    onPressed: _decline,
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: const Size(0, 28),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    child: Text(
-                      l10n.consentDecline,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
-                      ),
+          ),
+          const SizedBox(width: 8),
+          Column(
+            children: [
+              SizedBox(
+                height: 32,
+                child: ElevatedButton(
+                  onPressed: _accept,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(72, 32),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    textStyle: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
+                  child: Text(l10n.consentAccept),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              const SizedBox(height: 4),
+              SizedBox(
+                height: 28,
+                child: TextButton(
+                  onPressed: _decline,
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: const Size(0, 28),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: Text(
+                    l10n.consentDecline,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

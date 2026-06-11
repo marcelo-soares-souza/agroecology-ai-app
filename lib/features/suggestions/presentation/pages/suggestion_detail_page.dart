@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -211,7 +212,10 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                       ),
                     ),
                   ),
-                  TextButton(onPressed: () {}, child: Text(l10n.viewDocument)),
+                  TextButton(
+                    onPressed: () => context.push('/documents/${s.documentId}'),
+                    child: Text(l10n.viewDocument),
+                  ),
                 ],
               ),
             ),

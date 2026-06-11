@@ -39,9 +39,53 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
 
     return Column(
       children: [
+        _buildHeader(context, l10n, state),
         _buildFilterBar(l10n),
         Expanded(child: _buildContent(l10n, state)),
       ],
+    );
+  }
+
+  Widget _buildHeader(
+    BuildContext context,
+    AppLocalizations l10n,
+    SuggestionListState state,
+  ) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
+        border: Border(
+          bottom: BorderSide(color: AppColors.primary100, width: 1),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l10n.mySuggestions,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            '${state.suggestions.length} ${l10n.suggestionCountLabel}',
+            style: const TextStyle(
+              fontSize: 13,
+              color: AppColors.textSecondary,
+            ),
+          ),
+          const SizedBox(height: 12),
+          ElevatedButton.icon(
+            onPressed: () => context.push('/suggestions/new'),
+            icon: const Icon(Icons.add, size: 18),
+            label: Text(l10n.suggestDocument),
+          ),
+        ],
+      ),
     );
   }
 
@@ -106,10 +150,45 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
     }
 
     if (state.suggestions.isEmpty) {
-      return EmptyState(
-        icon: Icons.lightbulb_outline,
-        title: l10n.noSuggestions,
-        subtitle: l10n.noSuggestionsSub,
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.lightbulb_outline,
+                size: 48,
+                color: AppColors.primary200,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                l10n.noSuggestions,
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                l10n.noSuggestionsSub,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: AppColors.textSecondary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              AppButton.primary(
+                label: l10n.suggestDocument,
+                icon: Icons.add,
+                onPressed: () => context.push('/suggestions/new'),
+              ),
+            ],
+          ),
+        ),
       );
     }
 
