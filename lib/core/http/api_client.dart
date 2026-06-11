@@ -171,6 +171,13 @@ class ApiClient {
         return AuthException(message: message, statusCode: response.statusCode);
       }
 
+      if (response.statusCode == 403) {
+        return ForbiddenException(
+          message: message,
+          statusCode: response.statusCode,
+        );
+      }
+
       return AppException(message: message, statusCode: response.statusCode);
     }
 

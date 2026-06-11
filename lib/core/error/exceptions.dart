@@ -16,6 +16,10 @@ class AuthException extends AppException {
   const AuthException({required super.message, super.statusCode});
 }
 
+class ForbiddenException extends AppException {
+  const ForbiddenException({required super.message, super.statusCode});
+}
+
 class ChatException extends AppException {
   const ChatException({required super.message, super.statusCode});
 }
