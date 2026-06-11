@@ -562,4 +562,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roleUser => 'user';
+
+  @override
+  String get loggedOut => 'You have been logged out.';
 }

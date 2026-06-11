@@ -566,4 +566,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get roleUser => 'usuario';
+
+  @override
+  String get loggedOut => 'Has cerrado sesión.';
 }

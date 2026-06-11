@@ -59,12 +59,6 @@ class AppDrawer extends StatelessWidget {
                     onTap: () => _navigate(context, '/chat'),
                   ),
                   _NavItem(
-                    icon: Icons.lightbulb_outline,
-                    label: l10n.mySuggestions,
-                    selected: currentRoute.startsWith('/suggestions'),
-                    onTap: () => _navigate(context, '/suggestions'),
-                  ),
-                  _NavItem(
                     icon: Icons.menu_book_outlined,
                     label: l10n.knowledgeBase,
                     selected: currentRoute.startsWith('/documents'),
@@ -75,6 +69,12 @@ class AppDrawer extends StatelessWidget {
                     label: l10n.drawerCommunity,
                     selected: currentRoute.startsWith('/community'),
                     onTap: () => _navigate(context, '/community'),
+                  ),
+                  _NavItem(
+                    icon: Icons.lightbulb_outline,
+                    label: l10n.mySuggestions,
+                    selected: currentRoute.startsWith('/suggestions'),
+                    onTap: () => _navigate(context, '/suggestions'),
                   ),
                   if (isAuthenticated)
                     _NavItem(

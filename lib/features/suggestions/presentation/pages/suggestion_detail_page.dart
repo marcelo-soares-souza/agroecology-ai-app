@@ -71,6 +71,8 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                     Expanded(
                       child: Text(
                         s.displayTitle,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: AppTokens.pageTitleSize,
                           fontWeight: FontWeight.w700,
@@ -100,26 +102,6 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                       onPressed: () => openExternalUrl(s.url!),
                       child: Text(l10n.openLink),
                     ),
-                  ),
-                ],
-                if (s.originalFilename != null) ...[
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.insert_drive_file_outlined,
-                        size: 16,
-                        color: AppColors.textSecondary,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${l10n.filename}: ${s.originalFilename}',
-                        style: const TextStyle(
-                          fontSize: AppTokens.metaSize,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
                 const SizedBox(height: 8),
@@ -210,6 +192,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                   Expanded(
                     child: Text(
                       l10n.resultingDocument,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: AppTokens.bodySmallSize,
                         fontWeight: FontWeight.w500,
@@ -219,7 +202,10 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                   ),
                   TextButton(
                     onPressed: () => context.push('/documents/${s.documentId}'),
-                    child: Text(l10n.viewDocument),
+                    child: Text(
+                      l10n.viewDocument,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

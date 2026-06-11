@@ -565,4 +565,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get roleUser => 'utilisateur';
+
+  @override
+  String get loggedOut => 'Vous avez été déconnecté.';
 }

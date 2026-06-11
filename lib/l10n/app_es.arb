@@ -206,5 +206,6 @@
   "statusSuspended": "suspendido",
   "statusDeleted": "eliminado",
   "roleAdmin": "admin",
-  "roleUser": "usuario"
+  "roleUser": "usuario",
+  "loggedOut": "Has cerrado sesión."
 }

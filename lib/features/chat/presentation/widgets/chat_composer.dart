@@ -69,7 +69,7 @@ class _ChatComposerState extends State<ChatComposer> {
                 focusNode: _focusNode,
                 enabled: widget.enabled,
                 maxLines: null,
-                textInputAction: TextInputAction.newline,
+                textInputAction: TextInputAction.send,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   hintText: widget.hint,
@@ -79,7 +79,17 @@ class _ChatComposerState extends State<ChatComposer> {
                     vertical: 10,
                   ),
                 ),
-                onChanged: (_) => setState(() {}),
+                onChanged: (value) {
+                  if (value.endsWith('\n')) {
+                    _controller.clear();
+                    final trimmed = value.trim();
+                    if (trimmed.isNotEmpty && widget.enabled) {
+                      widget.onSend(trimmed);
+                    }
+                    return;
+                  }
+                  setState(() {});
+                },
               ),
             ),
           ),

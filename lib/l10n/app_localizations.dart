@@ -1157,6 +1157,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'user'**
   String get roleUser;
+
+  /// No description provided for @loggedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'You have been logged out.'**
+  String get loggedOut;
 }
 
 class _AppLocalizationsDelegate

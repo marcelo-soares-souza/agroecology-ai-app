@@ -101,6 +101,8 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
               children: [
                 Text(
                   d.displayTitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: AppTokens.pageTitleSize,
                     fontWeight: FontWeight.w700,
@@ -111,6 +113,8 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
                   const SizedBox(height: 4),
                   Text(
                     d.filename,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: AppTokens.metaSize,
                       color: AppColors.textSecondary,
@@ -121,6 +125,8 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
                   const SizedBox(height: 8),
                   Text(
                     d.authors!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: AppTokens.bodySmallSize,
                       color: AppColors.textSecondary,

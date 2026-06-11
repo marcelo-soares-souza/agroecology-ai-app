@@ -14,11 +14,44 @@ import '../../../../core/utils/external_link.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 
-class ProfilePage extends ConsumerWidget {
+class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends ConsumerState<ProfilePage> {
+  List<Map<String, dynamic>>? _suggestions;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      final auth = ref.read(authControllerProvider);
+      if (auth.isAuthenticated) {
+        ref.read(authControllerProvider.notifier).fetchProfile();
+        _loadSuggestions();
+      }
+    });
+  }
+
+  Future<void> _loadSuggestions() async {
+    try {
+      final auth = ref.read(authControllerProvider);
+      final userId = auth.session?.userId;
+      if (userId == null) return;
+      final client = ref.read(apiClientProvider);
+      final data = await client.get(
+        '/api/v1/suggestions/public',
+        queryParameters: {'user_id': userId},
+      );
+      setState(() => _suggestions = List<Map<String, dynamic>>.from(data));
+    } catch (_) {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
 
@@ -30,15 +63,10 @@ class ProfilePage extends ConsumerWidget {
       );
     }
 
-    return _buildProfileContent(context, ref, auth, l10n);
+    return _buildProfileContent(l10n, auth);
   }
 
-  Widget _buildProfileContent(
-    BuildContext context,
-    WidgetRef ref,
-    AuthState auth,
-    AppLocalizations l10n,
-  ) {
+  Widget _buildProfileContent(AppLocalizations l10n, AuthState auth) {
     final profile = auth.profile;
 
     String resolveStatusLabel(String status, AppLocalizations l10n) {
@@ -232,6 +260,70 @@ class ProfilePage extends ConsumerWidget {
                         height: 1.5,
                       ),
                     ),
+                  ],
+                ),
+              ),
+            ],
+            if (_suggestions != null && _suggestions!.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              AppCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.lightbulb_outline,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${l10n.approvedSuggestions} (${_suggestions!.length})',
+                          style: const TextStyle(
+                            fontSize: AppTokens.sectionTitleSize,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    ..._suggestions!.map((s) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary50,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: AppColors.primary200),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.description_outlined,
+                                size: 18,
+                                color: AppColors.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  s['title'] as String? ??
+                                      s['filename'] as String? ??
+                                      'Suggestion',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: AppTokens.metaSize,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ),

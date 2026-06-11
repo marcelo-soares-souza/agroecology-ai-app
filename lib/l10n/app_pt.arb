@@ -206,5 +206,6 @@
   "statusSuspended": "suspenso",
   "statusDeleted": "excluído",
   "roleAdmin": "admin",
-  "roleUser": "usuário"
+  "roleUser": "usuário",
+  "loggedOut": "Você saiu da sua conta."
 }

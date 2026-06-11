@@ -24,6 +24,8 @@ String _resolveError(AppLocalizations l10n, String message) {
     'registrationSuccess' => l10n.registrationSuccess,
     'registrationFailed' => l10n.registrationFailed,
     'deleteAccountFailed' => l10n.deleteAccountFailed,
+    'passwordResetSuccess' => l10n.passwordResetSuccess,
+    'resetLinkSent' => l10n.resetLinkSent,
     _ => message,
   };
 }
@@ -55,27 +57,25 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       GoRoute(
         path: '/register',
         name: 'register',
-        builder: (context, state) => const _RegisterPage(),
+        builder: (context, state) => const _AuthScaffold(child: _RegisterPage()),
       ),
       GoRoute(
         path: '/forgot-password',
         name: 'forgot-password',
-        builder: (context, state) => const _ForgotPasswordPage(),
+        builder: (context, state) =>
+            const _AuthScaffold(child: _ForgotPasswordPage()),
       ),
       GoRoute(
         path: '/reset-password',
         name: 'reset-password',
-        builder: (context, state) => const _ResetPasswordPage(),
+        builder: (context, state) =>
+            const _AuthScaffold(child: _ResetPasswordPage()),
       ),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
           final container = ProviderScope.containerOf(context);
-          final auth = container.read(authControllerProvider);
-          final locale = container.read(localeProvider);
           return _ShellPage(
-            isAuthenticated: auth.isAuthenticated,
-            locale: locale,
             onLogout: () {
               container.read(authControllerProvider.notifier).logout();
             },
@@ -228,27 +228,43 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
   );
 }
 
-class _ShellPage extends StatelessWidget {
+class _ShellPage extends ConsumerWidget {
   final Widget child;
-  final bool isAuthenticated;
-  final String locale;
   final VoidCallback onLogout;
 
   const _ShellPage({
     required this.child,
-    required this.isAuthenticated,
-    required this.locale,
     required this.onLogout,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authControllerProvider);
+    final locale = ref.watch(localeProvider);
+
+    ref.listen(authControllerProvider, (prev, next) {
+      if (prev?.isAuthenticated == true && !next.isAuthenticated) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!context.mounted) return;
+          final l10n = AppLocalizations.of(context)!;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.loggedOut),
+              backgroundColor: const Color(0xFF16a34a),
+              behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+          context.go('/');
+        });
+      }
+    });
+
     return AppScaffold(
-      isAuthenticated: isAuthenticated,
+      isAuthenticated: auth.isAuthenticated,
       locale: locale,
       onLocaleChanged: (newLocale) {
-        final container = ProviderScope.containerOf(context);
-        container.read(localeProvider.notifier).setLocale(newLocale);
+        ref.read(localeProvider.notifier).setLocale(newLocale);
       },
       onLogout: onLogout,
       body: child,
@@ -265,6 +281,24 @@ class _AuthScaffold extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authControllerProvider);
     final locale = ref.watch(localeProvider);
+
+    ref.listen(authControllerProvider, (prev, next) {
+      if (prev?.isAuthenticated == true && !next.isAuthenticated) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!context.mounted) return;
+          final l10n = AppLocalizations.of(context)!;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.loggedOut),
+              backgroundColor: const Color(0xFF16a34a),
+              behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+          context.go('/');
+        });
+      }
+    });
 
     return AppScaffold(
       isAuthenticated: auth.isAuthenticated,
@@ -416,6 +450,9 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
+    final isSuccessMessage = auth.errorMessage == 'registrationSuccess' ||
+        auth.errorMessage == 'passwordResetSuccess' ||
+        auth.errorMessage == 'resetLinkSent';
 
     return Scaffold(
       body: SafeArea(
@@ -459,23 +496,31 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFfecaca),
+                        color: isSuccessMessage
+                            ? const Color(0xFFdcfce7)
+                            : const Color(0xFFfecaca),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
-                          const Icon(
-                            Icons.error_outline,
+                          Icon(
+                            isSuccessMessage
+                                ? Icons.check_circle_outline
+                                : Icons.error_outline,
                             size: 18,
-                            color: Color(0xFFdc2626),
+                            color: isSuccessMessage
+                                ? const Color(0xFF16a34a)
+                                : const Color(0xFFdc2626),
                           ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               _resolveError(l10n, auth.errorMessage!),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 13,
-                                color: Color(0xFF991b1b),
+                                color: isSuccessMessage
+                                    ? const Color(0xFF166534)
+                                    : const Color(0xFF991b1b),
                               ),
                             ),
                           ),
@@ -651,22 +696,30 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
     final auth = ref.watch(authControllerProvider);
     final registrationSucceeded = auth.errorMessage == 'registrationSuccess';
 
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Center(
-                    child: Image.asset(
-                      'assets/logo.png',
-                      width: 64,
-                      height: 64,
+    ref.listen(authControllerProvider, (prev, next) {
+      if (next.errorMessage == 'registrationSuccess') {
+        Future.delayed(const Duration(seconds: 3), () {
+          if (!context.mounted) return;
+          context.go('/login');
+        });
+      }
+    });
+
+    return SafeArea(
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                  child: Image.asset(
+                    'assets/logo.png',
+                    width: 64,
+                    height: 64,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -961,7 +1014,6 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
             ),
           ),
         ),
-      ),
     );
   }
 
@@ -994,7 +1046,7 @@ class _ForgotPasswordPage extends ConsumerStatefulWidget {
 class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
   final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _submitted = false;
+  bool _loading = false;
 
   @override
   void dispose() {
@@ -1006,80 +1058,52 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
-        title: Text(l10n.resetPassword),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (_submitted) ...[
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFdcfce7),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.check_circle,
-                          size: 20,
-                          color: Color(0xFF16a34a),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            l10n.resetLinkSent,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF166534),
-                            ),
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+                Text(
+                  l10n.resetLinkInstruction,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF78716c),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: l10n.emailLabel,
+                    hintText: l10n.emailHint,
+                    prefixIcon: const Icon(Icons.email_outlined),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.done,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return l10n.emailRequired;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: _loading ? null : _handleSubmit,
+                  child: _loading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ] else ...[
-                  Text(
-                    l10n.resetLinkInstruction,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF78716c),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: l10n.emailLabel,
-                      hintText: l10n.emailHint,
-                      prefixIcon: const Icon(Icons.email_outlined),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.done,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return l10n.emailRequired;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _handleSubmit,
-                    child: Text(l10n.sendResetLink),
-                  ),
-                ],
+                        )
+                      : Text(l10n.sendResetLink),
+                ),
                 const SizedBox(height: 16),
                 Align(
                   alignment: Alignment.center,
@@ -1092,12 +1116,13 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
             ),
           ),
         ),
-      ),
     );
   }
 
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _loading = true);
 
     try {
       final client = ref.read(apiClientProvider);
@@ -1107,7 +1132,10 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
       );
     } catch (_) {}
 
-    setState(() => _submitted = true);
+    ref.read(authControllerProvider.notifier).showSuccessMessage('resetLinkSent');
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) context.go('/login');
+    });
   }
 }
 
@@ -1123,7 +1151,7 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
   final _tokenController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
-  bool _submitted = false;
+  bool _loading = false;
   String? _error;
 
   @override
@@ -1137,64 +1165,23 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
-        title: Text(l10n.newPassword),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Form(
-            key: _formKey,
-            child: Column(
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Form(
+          key: _formKey,
+          child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (_submitted) ...[
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFdcfce7),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.check_circle,
-                          size: 20,
-                          color: Color(0xFF16a34a),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            l10n.passwordResetSuccess,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF166534),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                Text(
+                  l10n.resetTokenInstruction,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF78716c),
                   ),
+                ),
+                if (_error != null) ...[
                   const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => context.go('/login'),
-                    child: Text(l10n.goToSignIn),
-                  ),
-                ] else ...[
-                  Text(
-                    l10n.resetTokenInstruction,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF78716c),
-                    ),
-                  ),
-                  if (_error != null) ...[
-                    const SizedBox(height: 16),
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
@@ -1268,26 +1255,32 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: _handleSubmit,
-                    child: Text(l10n.resetPasswordButton),
-                  ),
-                ],
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _loading ? null : _handleSubmit,
+                  child: _loading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(l10n.resetPasswordButton),
+                ),
                 const SizedBox(height: 16),
-                if (!_submitted)
-                  Align(
-                    alignment: Alignment.center,
-                    child: TextButton(
-                      onPressed: () => context.pop(),
-                      child: Text(l10n.backToSignIn),
-                    ),
+                Align(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                    onPressed: () => context.pop(),
+                    child: Text(l10n.backToSignIn),
                   ),
+                ),
               ],
             ),
           ),
         ),
-      ),
     );
   }
 
@@ -1295,6 +1288,7 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
     if (!_formKey.currentState!.validate()) return;
 
     final l10n = AppLocalizations.of(context)!;
+    setState(() => _loading = true);
 
     try {
       final client = ref.read(apiClientProvider);
@@ -1305,11 +1299,22 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
           'new_password': _passwordController.text,
         },
       );
-      setState(() => _submitted = true);
+      ref
+          .read(authControllerProvider.notifier)
+          .showSuccessMessage('passwordResetSuccess');
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) context.go('/login');
+      });
     } on AppException catch (e) {
-      setState(() => _error = e.message);
+      setState(() {
+        _error = e.message;
+        _loading = false;
+      });
     } catch (_) {
-      setState(() => _error = l10n.resetFailed);
+      setState(() {
+        _error = l10n.resetFailed;
+        _loading = false;
+      });
     }
   }
 }

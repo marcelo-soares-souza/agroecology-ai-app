@@ -193,4 +193,11 @@ class AuthController extends StateNotifier<AuthState> {
   void clearError() {
     state = state.copyWith(clearError: true);
   }
+
+  void showSuccessMessage(String message) {
+    state = state.copyWith(
+      status: AuthStatus.unauthenticated,
+      errorMessage: message,
+    );
+  }
 }

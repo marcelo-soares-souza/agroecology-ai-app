@@ -565,4 +565,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get roleUser => 'usuário';
+
+  @override
+  String get loggedOut => 'Você saiu da sua conta.';
 }
