@@ -127,7 +127,7 @@ final localeProvider = StateNotifierProvider<LocaleNotifier, String>((ref) {
 });
 
 class LocaleNotifier extends StateNotifier<String> {
-  LocaleNotifier(String initialLocale) : super(initialLocale);
+  LocaleNotifier(super.initialLocale);
 
   Future<void> setLocale(String locale) async {
     if (!AppConstants.supportedLocales.contains(locale)) return;
