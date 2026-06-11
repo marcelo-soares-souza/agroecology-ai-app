@@ -97,7 +97,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     ChatState state,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
       decoration: const BoxDecoration(
         color: AppColors.surface,
         border: Border(
@@ -106,37 +106,17 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l10n.chatTitle,
-                  style: const TextStyle(
-                    fontSize: AppTokens.pageTitleSize,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  l10n.chatSubtitle,
-                  style: const TextStyle(
-                    fontSize: AppTokens.metaSize,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
+          const Spacer(),
+          TextButton.icon(
+            onPressed: state.isSending
+                ? null
+                : () => ref.read(chatControllerProvider.notifier).clearChat(),
+            icon: const Icon(Icons.add, size: 10),
+            label: Text(
+              l10n.newChat,
+              style: const TextStyle(fontSize: 10),
             ),
           ),
-          if (state.messages.isNotEmpty)
-            TextButton.icon(
-              onPressed: state.isSending
-                  ? null
-                  : () => ref.read(chatControllerProvider.notifier).clearChat(),
-              icon: const Icon(Icons.add, size: 16),
-              label: Text(l10n.newChat),
-            ),
         ],
       ),
     );
