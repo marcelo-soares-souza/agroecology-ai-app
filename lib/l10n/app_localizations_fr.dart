@@ -395,7 +395,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get allStatus => 'Toutes';
 
   @override
-  String get statusPending => 'En attente';
+  String get statusPending => 'en attente';
 
   @override
   String get statusApproved => 'Approuvée';
@@ -521,4 +521,32 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteAccountFailed => 'Échec de la demande de suppression';
+
+  @override
+  String get consentMessage =>
+      'Ce site n\'utilise pas de cookies publicitaires ni de traceurs tiers. En continuant, vous reconnaissez notre';
+
+  @override
+  String get consentAnd => 'et nos';
+
+  @override
+  String get consentAccept => 'Accepter';
+
+  @override
+  String get consentDecline => 'Refuser';
+
+  @override
+  String get statusActive => 'actif';
+
+  @override
+  String get statusSuspended => 'suspendu';
+
+  @override
+  String get statusDeleted => 'supprimé';
+
+  @override
+  String get roleAdmin => 'admin';
+
+  @override
+  String get roleUser => 'utilisateur';
 }

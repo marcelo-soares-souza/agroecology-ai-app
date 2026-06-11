@@ -142,7 +142,7 @@
   "noSuggestions": "No hay sugerencias aún",
   "noSuggestionsSub": "Sugiere un documento para ayudar a crecer la base de conocimiento.",
   "allStatus": "Todas",
-  "statusPending": "Pendiente",
+  "statusPending": "pendiente",
   "statusApproved": "Aprobada",
   "statusRejected": "Rechazada",
   "untitled": "Sin título",
@@ -192,5 +192,14 @@
   "deleteAccountConfirmTitle": "Eliminar Cuenta",
   "deleteAccountConfirmBody": "¿Estás seguro? Se enviará un correo de confirmación.",
   "deleteAccountConfirmButton": "Eliminar",
-  "deleteAccountFailed": "Error al solicitar eliminación"
+  "deleteAccountFailed": "Error al solicitar eliminación",
+  "consentMessage": "Este sitio no utiliza cookies publicitarios ni rastreadores de terceros. Al continuar, reconoces nuestra",
+  "consentAnd": "y nuestros",
+  "consentAccept": "Aceptar",
+  "consentDecline": "Rechazar",
+  "statusActive": "activo",
+  "statusSuspended": "suspendido",
+  "statusDeleted": "eliminado",
+  "roleAdmin": "admin",
+  "roleUser": "usuario"
 }

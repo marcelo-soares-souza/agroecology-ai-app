@@ -23,6 +23,7 @@ String _resolveError(AppLocalizations l10n, String message) {
     'loginFailed' => l10n.loginFailed,
     'registrationSuccess' => l10n.registrationSuccess,
     'registrationFailed' => l10n.registrationFailed,
+    'deleteAccountFailed' => l10n.deleteAccountFailed,
     _ => message,
   };
 }

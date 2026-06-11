@@ -142,7 +142,7 @@
   "noSuggestions": "Nenhuma sugestão ainda",
   "noSuggestionsSub": "Sugira um documento para ajudar a expandir a base de conhecimento.",
   "allStatus": "Todas",
-  "statusPending": "Pendente",
+  "statusPending": "pendente",
   "statusApproved": "Aprovada",
   "statusRejected": "Rejeitada",
   "untitled": "Sem título",
@@ -192,5 +192,14 @@
   "deleteAccountConfirmTitle": "Excluir Conta",
   "deleteAccountConfirmBody": "Tem certeza? Um email de confirmação será enviado. Após confirmado, seus dados pessoais serão anonimizados permanentemente.",
   "deleteAccountConfirmButton": "Excluir",
-  "deleteAccountFailed": "Falha ao solicitar exclusão da conta"
+  "deleteAccountFailed": "Falha ao solicitar exclusão da conta",
+  "consentMessage": "Este site não utiliza cookies de publicidade ou rastreadores de terceiros. Ao continuar, você reconhece nossa",
+  "consentAnd": "e nossos",
+  "consentAccept": "Aceitar",
+  "consentDecline": "Recusar",
+  "statusActive": "ativo",
+  "statusSuspended": "suspenso",
+  "statusDeleted": "excluído",
+  "roleAdmin": "admin",
+  "roleUser": "usuário"
 }

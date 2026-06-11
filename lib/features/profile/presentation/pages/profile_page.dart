@@ -39,6 +39,16 @@ class ProfilePage extends ConsumerWidget {
   ) {
     final profile = auth.profile;
 
+    String resolveStatusLabel(String status, AppLocalizations l10n) {
+      return switch (status) {
+        'active' => l10n.statusActive,
+        'pending' => l10n.statusPending,
+        'suspended' => l10n.statusSuspended,
+        'deleted' => l10n.statusDeleted,
+        _ => status,
+      };
+    }
+
     Future<void> handleExport() async {
       try {
         await ref.read(authControllerProvider.notifier).exportMyData();
@@ -126,15 +136,24 @@ class ProfilePage extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    StatusBadge.active(label: profile?.status ?? 'active'),
+                    StatusBadge.active(
+                      label: resolveStatusLabel(
+                          profile?.status ?? 'active', l10n),
+                    ),
                     const SizedBox(width: 8),
                     ...profile?.roles
                             .map(
                               (r) => Padding(
                                 padding: const EdgeInsets.only(left: 8),
                                 child: r == 'admin'
-                                    ? StatusBadge.admin()
-                                    : StatusBadge.info(label: r),
+                                    ? StatusBadge.admin(
+                                        label: l10n.roleAdmin,
+                                      )
+                                    : StatusBadge.info(
+                                        label: r == 'user'
+                                            ? l10n.roleUser
+                                            : r,
+                                      ),
                               ),
                             )
                             .toList() ??
@@ -172,14 +191,16 @@ class ProfilePage extends ConsumerWidget {
                   _infoRow(
                     Icons.calendar_today,
                     l10n.joined,
-                    _formatDate(profile.createdAt),
+                    _formatDate(profile.createdAt,
+                      Localizations.localeOf(context).languageCode),
                   ),
                   if (profile.lastLoginAt != null) ...[
                     const Divider(height: 24),
                     _infoRow(
                       Icons.login,
                       l10n.lastLogin,
-                      _formatDate(profile.lastLoginAt!),
+                      _formatDate(profile.lastLoginAt!,
+                        Localizations.localeOf(context).languageCode),
                     ),
                   ],
                 ],
@@ -276,9 +297,14 @@ class ProfilePage extends ConsumerWidget {
     );
   }
 
-  String _formatDate(String iso) {
+  String _formatDate(String iso, String localeStr) {
     try {
       final dt = DateTime.parse(iso);
+      if (localeStr.startsWith('en')) {
+        return '${dt.month.toString().padLeft(2, '0')}/'
+            '${dt.day.toString().padLeft(2, '0')}/'
+            '${dt.year}';
+      }
       return '${dt.day.toString().padLeft(2, '0')}/'
           '${dt.month.toString().padLeft(2, '0')}/'
           '${dt.year}';

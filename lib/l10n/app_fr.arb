@@ -142,7 +142,7 @@
   "noSuggestions": "Aucune suggestion pour le moment",
   "noSuggestionsSub": "Suggérez un document pour enrichir la base de connaissances.",
   "allStatus": "Toutes",
-  "statusPending": "En attente",
+  "statusPending": "en attente",
   "statusApproved": "Approuvée",
   "statusRejected": "Rejetée",
   "untitled": "Sans titre",
@@ -192,5 +192,14 @@
   "deleteAccountConfirmTitle": "Supprimer le compte",
   "deleteAccountConfirmBody": "Êtes-vous sûr ? Un email de confirmation sera envoyé.",
   "deleteAccountConfirmButton": "Supprimer",
-  "deleteAccountFailed": "Échec de la demande de suppression"
+  "deleteAccountFailed": "Échec de la demande de suppression",
+  "consentMessage": "Ce site n'utilise pas de cookies publicitaires ni de traceurs tiers. En continuant, vous reconnaissez notre",
+  "consentAnd": "et nos",
+  "consentAccept": "Accepter",
+  "consentDecline": "Refuser",
+  "statusActive": "actif",
+  "statusSuspended": "suspendu",
+  "statusDeleted": "supprimé",
+  "roleAdmin": "admin",
+  "roleUser": "utilisateur"
 }

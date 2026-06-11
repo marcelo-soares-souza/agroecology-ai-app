@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_top_bar.dart';
 import 'app_drawer.dart';
+import 'cookie_consent_banner.dart';
 
 class AppScaffold extends StatefulWidget {
   final Widget body;
@@ -40,26 +41,32 @@ class _AppScaffoldState extends State<AppScaffold> {
     _scaffoldKey.currentState?.openDrawer();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: widget.showDrawer
-          ? AppTopBar(onMenuTap: _openDrawer, actions: widget.actions)
-          : (widget.title != null
-                ? AppTopBar(title: Text(widget.title!), actions: widget.actions)
-                : null),
-      drawer: widget.showDrawer
-          ? AppDrawer(
-              isAuthenticated: widget.isAuthenticated,
-              locale: widget.locale,
-              supportedLocales: widget.supportedLocales,
-              onLocaleChanged: widget.onLocaleChanged,
-              onLogout: widget.onLogout,
-            )
-          : null,
-      body: widget.body,
-      bottomNavigationBar: widget.bottomNavigationBar,
-    );
-  }
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        key: _scaffoldKey,
+        appBar: widget.showDrawer
+            ? AppTopBar(onMenuTap: _openDrawer, actions: widget.actions)
+            : (widget.title != null
+                  ? AppTopBar(title: Text(widget.title!), actions: widget.actions)
+                  : null),
+        drawer: widget.showDrawer
+            ? AppDrawer(
+                isAuthenticated: widget.isAuthenticated,
+                locale: widget.locale,
+                supportedLocales: widget.supportedLocales,
+                onLocaleChanged: widget.onLocaleChanged,
+                onLogout: widget.onLogout,
+              )
+            : null,
+        body: widget.body,
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CookieConsentBanner(),
+            if (widget.bottomNavigationBar != null) widget.bottomNavigationBar!,
+          ],
+        ),
+      );
+    }
 }

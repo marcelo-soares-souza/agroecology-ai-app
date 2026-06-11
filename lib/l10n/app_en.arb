@@ -142,7 +142,7 @@
   "noSuggestions": "No suggestions yet",
   "noSuggestionsSub": "Suggest a document to help grow the knowledge base.",
   "allStatus": "All",
-  "statusPending": "Pending",
+  "statusPending": "pending",
   "statusApproved": "Approved",
   "statusRejected": "Rejected",
   "untitled": "Untitled",
@@ -192,5 +192,14 @@
   "deleteAccountConfirmTitle": "Delete Account",
   "deleteAccountConfirmBody": "Are you sure? A confirmation email will be sent. Once confirmed, your personal data will be permanently anonymized.",
   "deleteAccountConfirmButton": "Delete",
-  "deleteAccountFailed": "Failed to request account deletion"
+  "deleteAccountFailed": "Failed to request account deletion",
+  "consentMessage": "This site does not use advertising cookies or third-party trackers. By continuing, you acknowledge our",
+  "consentAnd": "and",
+  "consentAccept": "Accept",
+  "consentDecline": "Decline",
+  "statusActive": "active",
+  "statusSuspended": "suspended",
+  "statusDeleted": "deleted",
+  "roleAdmin": "admin",
+  "roleUser": "user"
 }

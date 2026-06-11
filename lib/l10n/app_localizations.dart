@@ -831,7 +831,7 @@ abstract class AppLocalizations {
   /// No description provided for @statusPending.
   ///
   /// In en, this message translates to:
-  /// **'Pending'**
+  /// **'pending'**
   String get statusPending;
 
   /// No description provided for @statusApproved.
@@ -1073,6 +1073,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to request account deletion'**
   String get deleteAccountFailed;
+
+  /// No description provided for @consentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This site does not use advertising cookies or third-party trackers. By continuing, you acknowledge our'**
+  String get consentMessage;
+
+  /// No description provided for @consentAnd.
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get consentAnd;
+
+  /// No description provided for @consentAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get consentAccept;
+
+  /// No description provided for @consentDecline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get consentDecline;
+
+  /// No description provided for @statusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'active'**
+  String get statusActive;
+
+  /// No description provided for @statusSuspended.
+  ///
+  /// In en, this message translates to:
+  /// **'suspended'**
+  String get statusSuspended;
+
+  /// No description provided for @statusDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'deleted'**
+  String get statusDeleted;
+
+  /// No description provided for @roleAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'admin'**
+  String get roleAdmin;
+
+  /// No description provided for @roleUser.
+  ///
+  /// In en, this message translates to:
+  /// **'user'**
+  String get roleUser;
 }
 
 class _AppLocalizationsDelegate
