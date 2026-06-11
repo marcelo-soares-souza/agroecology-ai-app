@@ -378,6 +378,12 @@ abstract class AppLocalizations {
   /// **'Connection error. Please check your network.'**
   String get connectionError;
 
+  /// No description provided for @drawerHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get drawerHome;
+
   /// No description provided for @drawerChat.
   ///
   /// In en, this message translates to:
@@ -413,6 +419,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get drawerLogout;
+
+  /// No description provided for @homeIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Query agroecological knowledge, explore documents, and follow the community in a free software AI platform.'**
+  String get homeIntro;
 
   /// No description provided for @localePt.
   ///

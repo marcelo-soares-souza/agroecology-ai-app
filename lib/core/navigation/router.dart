@@ -50,7 +50,9 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       GoRoute(
         path: '/login',
         name: 'login',
-        builder: (context, state) => const _LoginPage(),
+        builder: (context, state) => const _AuthScaffold(
+          child: _LoginPage(),
+        ),
       ),
       GoRoute(
         path: '/register',
@@ -83,6 +85,11 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
           );
         },
         routes: [
+          GoRoute(
+            path: '/',
+            name: 'home',
+            builder: (context, state) => const _LandingPage(),
+          ),
           GoRoute(
             path: '/chat',
             name: 'chat',
@@ -183,34 +190,40 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
           state.uri.path == '/reset-password';
       final isSplash = state.uri.path == '/splash';
       final isPublicRoute =
+          state.uri.path == '/' ||
           state.uri.path == '/about' ||
           state.uri.path == '/donate' ||
           state.uri.path == '/privacy' ||
           state.uri.path == '/terms' ||
           state.uri.path == '/community' ||
           state.uri.path.startsWith('/community/') ||
+          state.uri.path == '/profile' ||
+          state.uri.path == '/suggestions' ||
+          state.uri.path.startsWith('/suggestions/') &&
+              state.uri.path != '/suggestions/new' ||
           state.uri.path == '/documents' ||
           state.uri.path.startsWith('/documents/');
+      final requiresAuth =
+          state.uri.path == '/chat' ||
+          state.uri.path == '/profile/edit' ||
+          state.uri.path == '/suggestions/new';
 
       if (isSplash) {
         if (auth.isLoading) return null;
-        if (auth.isAuthenticated) return '/chat';
-        return '/login';
+        return '/';
       }
 
       if (auth.isLoading &&
           !auth.isAuthenticated &&
           !isAuthRoute &&
-          !isPublicRoute) {
+          !isPublicRoute &&
+          requiresAuth) {
         return '/splash';
       }
 
       if (auth.isAuthenticated && isAuthRoute) return '/chat';
 
-      if (!auth.isAuthenticated &&
-          !isAuthRoute &&
-          !isSplash &&
-          !isPublicRoute) {
+      if (!auth.isAuthenticated && requiresAuth) {
         return '/login';
       }
 
@@ -243,6 +256,104 @@ class _ShellPage extends StatelessWidget {
       },
       onLogout: onLogout,
       body: child,
+    );
+  }
+}
+
+class _AuthScaffold extends ConsumerWidget {
+  final Widget child;
+
+  const _AuthScaffold({required this.child});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authControllerProvider);
+    final locale = ref.watch(localeProvider);
+
+    return AppScaffold(
+      isAuthenticated: auth.isAuthenticated,
+      locale: locale,
+      onLocaleChanged: (newLocale) {
+        ref.read(localeProvider.notifier).setLocale(newLocale);
+      },
+      onLogout: () {
+        ref.read(authControllerProvider.notifier).logout();
+      },
+      body: child,
+    );
+  }
+}
+
+class _LandingPage extends StatelessWidget {
+  const _LandingPage();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Center(
+      child: FractionalTranslation(
+        translation: const Offset(0, -0.08),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 420),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset('assets/logo.png', width: 104, height: 104),
+                const SizedBox(height: 24),
+                Text(
+                  l10n.appName,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1c1917),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 14),
+                Text(
+                  l10n.homeIntro,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    height: 1.55,
+                    color: Color(0xFF78716c),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 28),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () => context.go('/chat'),
+                    icon: const Icon(Icons.chat_bubble_outline),
+                    label: Text(l10n.drawerChat),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () => context.go('/documents'),
+                    icon: const Icon(Icons.menu_book_outlined),
+                    label: Text(l10n.knowledgeBase),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () => context.go('/community'),
+                    icon: const Icon(Icons.people_outline),
+                    label: Text(l10n.drawerCommunity),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -515,13 +626,18 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
       final client = ref.read(apiClientProvider);
       final data = await client.get(
         '/api/v1/auth/human-challenge',
-        queryParameters: {'locale': 'pt-BR'},
+        queryParameters: {'locale': _backendLocale()},
       );
       setState(() {
         _challengeId = data['challenge_id'] as String;
         _challengeQuestion = data['question'] as String;
       });
     } catch (_) {}
+  }
+
+  String _backendLocale() {
+    final locale = ref.read(localeProvider);
+    return locale == 'pt' ? 'pt-BR' : locale;
   }
 
   @override
@@ -537,6 +653,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
+    final registrationSucceeded = auth.errorMessage == 'registrationSuccess';
 
     return Scaffold(
       body: SafeArea(
@@ -580,23 +697,31 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFfecaca),
+                        color: registrationSucceeded
+                            ? const Color(0xFFdcfce7)
+                            : const Color(0xFFfecaca),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
-                          const Icon(
-                            Icons.error_outline,
+                          Icon(
+                            registrationSucceeded
+                                ? Icons.check_circle_outline
+                                : Icons.error_outline,
                             size: 18,
-                            color: Color(0xFFdc2626),
+                            color: registrationSucceeded
+                                ? const Color(0xFF16a34a)
+                                : const Color(0xFFdc2626),
                           ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               _resolveError(l10n, auth.errorMessage!),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 13,
-                                color: Color(0xFF991b1b),
+                                color: registrationSucceeded
+                                    ? const Color(0xFF166534)
+                                    : const Color(0xFF991b1b),
                               ),
                             ),
                           ),
@@ -856,6 +981,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
             challengeAnswer: _answerController.text.trim(),
             privacyPolicyAccepted: _privacyAccepted,
             tosAccepted: _tosAccepted,
+            locale: _backendLocale(),
           );
     }
   }

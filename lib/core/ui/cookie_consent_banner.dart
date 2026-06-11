@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/theme/app_theme.dart';
-import '../../../core/ui/components.dart';
 import '../../../l10n/app_localizations.dart';
 
 class CookieConsentBanner extends StatefulWidget {
@@ -113,10 +112,20 @@ class _CookieConsentBannerState extends State<CookieConsentBanner> {
               children: [
                 SizedBox(
                   height: 32,
-                  child: AppButton(
-                    label: l10n.consentAccept,
+                  child: ElevatedButton(
                     onPressed: _accept,
-                    icon: null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(72, 32),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      textStyle: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    child: Text(l10n.consentAccept),
                   ),
                 ),
                 const SizedBox(height: 4),

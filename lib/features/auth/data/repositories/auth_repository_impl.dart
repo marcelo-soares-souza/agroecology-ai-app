@@ -53,7 +53,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> register({
+  Future<String> register({
     required String fullName,
     required String email,
     required String password,
@@ -63,7 +63,7 @@ class AuthRepositoryImpl implements AuthRepository {
     bool tosAccepted = false,
     String locale = 'pt-BR',
   }) async {
-    await _remote.register({
+    final response = await _remote.register({
       'full_name': fullName,
       'email': email,
       'password': password,
@@ -73,6 +73,7 @@ class AuthRepositoryImpl implements AuthRepository {
       'privacy_policy_accepted': privacyPolicyAccepted,
       'tos_accepted': tosAccepted,
     });
+    return response.message;
   }
 
   @override

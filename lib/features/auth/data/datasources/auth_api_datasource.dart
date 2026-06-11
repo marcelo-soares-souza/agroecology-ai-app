@@ -18,9 +18,9 @@ class AuthApiDataSource {
     return ChallengeResponse.fromJson(data);
   }
 
-  Future<TokenResponse> register(Map<String, dynamic> body) async {
+  Future<MessageResponse> register(Map<String, dynamic> body) async {
     final data = await _client.post('$_prefix/register', data: body);
-    return TokenResponse.fromJson(data);
+    return MessageResponse.fromJson(data);
   }
 
   Future<TokenResponse> login(Map<String, dynamic> body) async {

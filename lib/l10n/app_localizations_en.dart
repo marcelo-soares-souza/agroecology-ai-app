@@ -151,6 +151,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get connectionError => 'Connection error. Please check your network.';
 
   @override
+  String get drawerHome => 'Home';
+
+  @override
   String get drawerChat => 'Chat';
 
   @override
@@ -167,6 +170,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get drawerLogout => 'Logout';
+
+  @override
+  String get homeIntro =>
+      'Query agroecological knowledge, explore documents, and follow the community in a free software AI platform.';
 
   @override
   String get localePt => 'Português';

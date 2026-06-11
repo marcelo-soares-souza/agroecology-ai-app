@@ -47,6 +47,12 @@ class AppDrawer extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 children: [
                   _NavItem(
+                    icon: Icons.home_outlined,
+                    label: l10n.drawerHome,
+                    selected: currentRoute == '/',
+                    onTap: () => _navigate(context, '/'),
+                  ),
+                  _NavItem(
                     icon: Icons.chat_bubble_outline,
                     label: l10n.drawerChat,
                     selected: currentRoute.startsWith('/chat'),
@@ -195,8 +201,8 @@ class _NavItem extends StatelessWidget {
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                  fontSize: 16,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                   color: color,
                 ),
               ),
