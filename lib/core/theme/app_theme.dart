@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_tokens.dart';
+
 class AppColors {
   static const primary = Color(0xFFd97706);
   static const primaryLight = Color(0xFFf59e0b);
@@ -53,13 +55,25 @@ class AppTheme {
       colorScheme: colorScheme,
       scaffoldBackgroundColor: AppColors.background,
       textTheme: const TextTheme(
-        bodyLarge: TextStyle(fontSize: 17, height: 1.45),
-        bodyMedium: TextStyle(fontSize: 16, height: 1.45),
-        bodySmall: TextStyle(fontSize: 14, height: 1.4),
-        labelLarge: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
-        labelMedium: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-        titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-        titleMedium: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+        bodyLarge: TextStyle(fontSize: AppTokens.bodySize, height: 1.5),
+        bodyMedium: TextStyle(fontSize: AppTokens.bodySize, height: 1.5),
+        bodySmall: TextStyle(fontSize: AppTokens.metaSize, height: 1.4),
+        labelLarge: TextStyle(
+          fontSize: AppTokens.bodySize,
+          fontWeight: FontWeight.w600,
+        ),
+        labelMedium: TextStyle(
+          fontSize: AppTokens.metaSize,
+          fontWeight: FontWeight.w500,
+        ),
+        titleLarge: TextStyle(
+          fontSize: AppTokens.pageTitleSize,
+          fontWeight: FontWeight.w700,
+        ),
+        titleMedium: TextStyle(
+          fontSize: AppTokens.sectionTitleSize,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.surface,
@@ -67,12 +81,17 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 1,
         centerTitle: false,
+        titleTextStyle: TextStyle(
+          fontSize: AppTokens.pageTitleSize,
+          fontWeight: FontWeight.w700,
+          color: AppColors.textPrimary,
+        ),
       ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppTokens.cardRadius),
           side: const BorderSide(color: AppColors.primary100, width: 1),
         ),
         margin: EdgeInsets.zero,
@@ -121,7 +140,10 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          textStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(
+            fontSize: AppTokens.bodySize,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -132,13 +154,19 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          textStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(
+            fontSize: AppTokens.bodySize,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.textSecondary,
-          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          textStyle: const TextStyle(
+            fontSize: AppTokens.metaSize,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
       iconTheme: const IconThemeData(color: AppColors.textSecondary),

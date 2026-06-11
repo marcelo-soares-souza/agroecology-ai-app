@@ -328,7 +328,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'El apoyo fortalece una plataforma abierta, sin paywall, dedicada a comunidades, investigadores y agricultores.';
 
   @override
-  String get donateButton => 'Donar vía Ko-fi';
+  String get donateButton => 'Abrir página de donación';
 
   @override
   String get donateError => 'No se pudo abrir la página de donación.';
@@ -452,6 +452,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get download => 'Descargar';
+
+  @override
+  String get downloadError => 'Error al descargar el documento';
+
+  @override
+  String get downloadSuccess => 'Documento guardado correctamente';
 
   @override
   String get fileType => 'Tipo de Archivo';

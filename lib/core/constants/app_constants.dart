@@ -1,7 +1,7 @@
 class AppConstants {
   static const appName = 'Agroecology Map AI';
   static const betaLabel = 'BETA';
-  static const kofiUrl = 'https://ko-fi.com/agroecologymap';
+  static const donateUrl = 'https://ai.agroecologymap.org/donate';
 
   static const passwordMinLength = 8;
   static const passwordMaxLength = 128;

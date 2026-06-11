@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import '../../../../core/http/api_client.dart';
 import '../../domain/entities/document_record.dart';
 import '../../domain/repositories/document_repository.dart';
@@ -22,6 +24,11 @@ class DocumentRepositoryImpl implements DocumentRepository {
   Future<DocumentRecord> getOne(String id) async {
     final data = await _remote.getOne(id);
     return DocumentMapper.fromJson(data);
+  }
+
+  @override
+  Future<Uint8List> downloadBytes(String id) async {
+    return await _remote.downloadBytes(id);
   }
 
   @override

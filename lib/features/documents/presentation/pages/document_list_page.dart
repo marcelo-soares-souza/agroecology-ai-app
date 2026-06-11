@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../bootstrap/providers.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/ui/components.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -167,7 +168,7 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
                             ? l10n.allIndexed
                             : l10n.indexedCount(indexed, total),
                         style: const TextStyle(
-                          fontSize: 13,
+                          fontSize: AppTokens.metaSize,
                           fontWeight: FontWeight.w500,
                           color: AppColors.primary700,
                         ),
@@ -203,7 +204,7 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
                         child: Text(
                           d.displayTitle,
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: AppTokens.bodySmallSize,
                             fontWeight: FontWeight.w600,
                             color: AppColors.textPrimary,
                           ),
@@ -218,7 +219,7 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
                     Text(
                       d.authors!,
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: AppTokens.metaSize,
                         color: AppColors.textSecondary,
                       ),
                       maxLines: 1,
@@ -257,7 +258,7 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
       child: Text(
         label,
         style: TextStyle(
-          fontSize: 10,
+          fontSize: AppTokens.microSize,
           fontWeight: FontWeight.w500,
           color: textColor,
         ),

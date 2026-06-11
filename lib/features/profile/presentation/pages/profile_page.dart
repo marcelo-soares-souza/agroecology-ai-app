@@ -8,7 +8,9 @@ import '../../../../bootstrap/providers.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../core/utils/external_link.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 
@@ -53,14 +55,14 @@ class ProfilePage extends ConsumerWidget {
       try {
         await ref.read(authControllerProvider.notifier).exportMyData();
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.exportSuccess)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.exportSuccess)));
       } catch (e) {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.exportFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.exportFailed)));
       }
     }
 
@@ -92,14 +94,14 @@ class ProfilePage extends ConsumerWidget {
               .read(authControllerProvider.notifier)
               .requestDeleteAccount();
           if (!context.mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(message)));
         } catch (e) {
           if (!context.mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.deleteAccountFailed)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n.deleteAccountFailed)));
         }
       }
     }
@@ -117,7 +119,7 @@ class ProfilePage extends ConsumerWidget {
                 Text(
                   profile?.fullName ?? auth.session?.fullName ?? '',
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: AppTokens.pageTitleSize,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -127,7 +129,7 @@ class ProfilePage extends ConsumerWidget {
                   Text(
                     '@${profile.slug}',
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTokens.metaSize,
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -138,7 +140,9 @@ class ProfilePage extends ConsumerWidget {
                   children: [
                     StatusBadge.active(
                       label: resolveStatusLabel(
-                          profile?.status ?? 'active', l10n),
+                        profile?.status ?? 'active',
+                        l10n,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     ...profile?.roles
@@ -146,13 +150,9 @@ class ProfilePage extends ConsumerWidget {
                               (r) => Padding(
                                 padding: const EdgeInsets.only(left: 8),
                                 child: r == 'admin'
-                                    ? StatusBadge.admin(
-                                        label: l10n.roleAdmin,
-                                      )
+                                    ? StatusBadge.admin(label: l10n.roleAdmin)
                                     : StatusBadge.info(
-                                        label: r == 'user'
-                                            ? l10n.roleUser
-                                            : r,
+                                        label: r == 'user' ? l10n.roleUser : r,
                                       ),
                               ),
                             )
@@ -178,29 +178,32 @@ class ProfilePage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _infoRow(
-                    Icons.email_outlined,
-                    l10n.emailLabel,
-                    profile.email,
-                  ),
                   if (profile.link != null && profile.link!.isNotEmpty) ...[
+                    _linkActionRow(
+                      context,
+                      l10n.linkLabel,
+                      l10n.openLink,
+                      profile.link!,
+                    ),
                     const Divider(height: 24),
-                    _infoRow(Icons.link, l10n.linkLabel, profile.link!),
                   ],
-                  const Divider(height: 24),
                   _infoRow(
                     Icons.calendar_today,
                     l10n.joined,
-                    _formatDate(profile.createdAt,
-                      Localizations.localeOf(context).languageCode),
+                    _formatDate(
+                      profile.createdAt,
+                      Localizations.localeOf(context).languageCode,
+                    ),
                   ),
                   if (profile.lastLoginAt != null) ...[
                     const Divider(height: 24),
                     _infoRow(
                       Icons.login,
                       l10n.lastLogin,
-                      _formatDate(profile.lastLoginAt!,
-                        Localizations.localeOf(context).languageCode),
+                      _formatDate(
+                        profile.lastLoginAt!,
+                        Localizations.localeOf(context).languageCode,
+                      ),
                     ),
                   ],
                 ],
@@ -215,7 +218,7 @@ class ProfilePage extends ConsumerWidget {
                     Text(
                       l10n.about,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: AppTokens.sectionTitleSize,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textPrimary,
                       ),
@@ -224,7 +227,7 @@ class ProfilePage extends ConsumerWidget {
                     Text(
                       profile.about!,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: AppTokens.bodySmallSize,
                         color: AppColors.textSecondary,
                         height: 1.5,
                       ),
@@ -234,42 +237,78 @@ class ProfilePage extends ConsumerWidget {
               ),
             ],
             const SizedBox(height: 16),
-            if (!(auth.profile?.roles.contains('admin') ?? false))
-              AppCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      l10n.dataAndPrivacy,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
-                      ),
+            AppCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    l10n.dataAndPrivacy,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
                     ),
-                    const SizedBox(height: 12),
-                    AppButton(
-                      label: l10n.exportMyData,
-                      icon: Icons.download_outlined,
-                      width: double.infinity,
-                      isOutlined: true,
-                      onPressed: handleExport,
-                    ),
-                    const SizedBox(height: 8),
-                    AppButton(
-                      label: l10n.deleteMyAccount,
-                      icon: Icons.delete_outline,
-                      width: double.infinity,
-                      backgroundColor: const Color(0xFFfecaca),
-                      foregroundColor: AppColors.error,
-                      onPressed: handleDeleteRequest,
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 12),
+                  AppButton(
+                    label: l10n.exportMyData,
+                    icon: Icons.download_outlined,
+                    width: double.infinity,
+                    isOutlined: true,
+                    onPressed: handleExport,
+                  ),
+                  const SizedBox(height: 8),
+                  AppButton(
+                    label: l10n.deleteMyAccount,
+                    icon: Icons.delete_outline,
+                    width: double.infinity,
+                    backgroundColor: const Color(0xFFfecaca),
+                    foregroundColor: AppColors.error,
+                    onPressed: handleDeleteRequest,
+                  ),
+                ],
               ),
+            ),
           ],
         ],
       ),
+    );
+  }
+
+  Future<void> _openLink(String rawUrl) async {
+    await openExternalUrl(rawUrl);
+  }
+
+  Widget _linkActionRow(
+    BuildContext context,
+    String label,
+    String actionLabel,
+    String value,
+  ) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Icon(Icons.link, size: 18, color: AppColors.textSecondary),
+        const SizedBox(width: 8),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: AppTokens.metaSize,
+            fontWeight: FontWeight.w500,
+            color: AppColors.textSecondary,
+          ),
+        ),
+        const SizedBox(width: 4),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () => _openLink(value),
+              child: Text(actionLabel),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -281,7 +320,7 @@ class ProfilePage extends ConsumerWidget {
         Text(
           label,
           style: const TextStyle(
-            fontSize: 13,
+            fontSize: AppTokens.metaSize,
             fontWeight: FontWeight.w500,
             color: AppColors.textSecondary,
           ),
@@ -290,7 +329,10 @@ class ProfilePage extends ConsumerWidget {
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(fontSize: 13, color: AppColors.textPrimary),
+            style: const TextStyle(
+              fontSize: AppTokens.metaSize,
+              color: AppColors.textPrimary,
+            ),
             textAlign: TextAlign.right,
           ),
         ),
@@ -478,7 +520,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                         child: Text(
                           _error!,
                           style: const TextStyle(
-                            fontSize: 13,
+                            fontSize: AppTokens.metaSize,
                             color: Color(0xFF991b1b),
                           ),
                         ),

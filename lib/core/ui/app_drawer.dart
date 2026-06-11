@@ -104,10 +104,8 @@ class AppDrawer extends StatelessWidget {
                   _NavItem(
                     icon: Icons.favorite_border,
                     label: l10n.drawerDonate,
-                    selected: false,
-                    onTap: () {
-                      context.push('/donate');
-                    },
+                    selected: currentRoute == '/donate',
+                    onTap: () => _navigate(context, '/donate'),
                   ),
                   const Divider(),
                   _LocaleSelector(
@@ -123,7 +121,10 @@ class AppDrawer extends StatelessWidget {
                       label: l10n.drawerLogout,
                       selected: false,
                       isDestructive: true,
-                      onTap: onLogout,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        onLogout?.call();
+                      },
                     ),
                 ],
               ),

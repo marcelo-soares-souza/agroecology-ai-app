@@ -705,7 +705,7 @@ abstract class AppLocalizations {
   /// No description provided for @donateButton.
   ///
   /// In en, this message translates to:
-  /// **'Donate via Ko-fi'**
+  /// **'Open donation page'**
   String get donateButton;
 
   /// No description provided for @donateError.
@@ -941,6 +941,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Download'**
   String get download;
+
+  /// No description provided for @downloadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to download document'**
+  String get downloadError;
+
+  /// No description provided for @downloadSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Document saved successfully'**
+  String get downloadSuccess;
 
   /// No description provided for @fileType.
   ///

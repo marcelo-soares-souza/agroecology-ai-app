@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
+import '../theme/app_tokens.dart';
 
 class AppCard extends StatelessWidget {
   final Widget? child;
@@ -17,11 +18,8 @@ class AppCard extends StatelessWidget {
       margin: margin,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: padding ?? const EdgeInsets.all(16),
-          child: child,
-        ),
+        borderRadius: BorderRadius.circular(AppTokens.cardRadius),
+        child: Padding(padding: padding ?? AppTokens.cardPadding, child: child),
       ),
     );
   }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../core/theme/app_tokens.dart';
+import '../../../../core/utils/external_link.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/domain/entities/user.dart';
 
@@ -89,7 +90,7 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
                         Text(
                           user.fullName,
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: AppTokens.bodySmallSize,
                             fontWeight: FontWeight.w600,
                             color: AppColors.textPrimary,
                           ),
@@ -98,7 +99,7 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
                         Text(
                           '@${user.slug}',
                           style: const TextStyle(
-                            fontSize: 13,
+                            fontSize: AppTokens.metaSize,
                             color: AppColors.textSecondary,
                           ),
                         ),
@@ -127,7 +128,7 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
                           Text(
                             '${user.approvedSuggestionsCount}',
                             style: const TextStyle(
-                              fontSize: 12,
+                              fontSize: AppTokens.microSize,
                               fontWeight: FontWeight.w600,
                               color: AppColors.primary700,
                             ),
@@ -217,7 +218,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                 Text(
                   user.fullName,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: AppTokens.pageTitleSize,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -226,7 +227,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                 Text(
                   '@${user.slug}',
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: AppTokens.metaSize,
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -265,24 +266,32 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _infoRow(Icons.email_outlined, l10n.emailLabel, user.email),
                 if (user.link != null && user.link!.isNotEmpty) ...[
-                  const Divider(height: 24),
-                  _infoRow(Icons.link, l10n.linkLabel, user.link!),
-                  const SizedBox(height: 4),
-                  GestureDetector(
-                    onTap: () => launchUrl(Uri.parse(user.link!)),
-                    child: Text(
-                      l10n.openLink,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w500,
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.link,
+                        size: 18,
+                        color: AppColors.textSecondary,
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                      Text(
+                        l10n.linkLabel,
+                        style: const TextStyle(
+                          fontSize: AppTokens.metaSize,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () => openExternalUrl(user.link!),
+                        child: Text(l10n.openLink),
+                      ),
+                    ],
                   ),
+                  const Divider(height: 24),
                 ],
-                const Divider(height: 24),
                 _infoRow(
                   Icons.calendar_today,
                   l10n.joined,
@@ -308,7 +317,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                   Text(
                     l10n.about,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: AppTokens.sectionTitleSize,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -317,7 +326,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                   Text(
                     user.about!,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTokens.bodySmallSize,
                       color: AppColors.textSecondary,
                       height: 1.5,
                     ),
@@ -343,7 +352,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                       Text(
                         '${l10n.approvedSuggestions} (${_suggestions!.length})',
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: AppTokens.sectionTitleSize,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
                         ),
@@ -375,7 +384,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                                     s['filename'] as String? ??
                                     'Suggestion',
                                 style: const TextStyle(
-                                  fontSize: 13,
+                                  fontSize: AppTokens.metaSize,
                                   color: AppColors.textPrimary,
                                 ),
                               ),

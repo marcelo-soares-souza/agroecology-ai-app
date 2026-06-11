@@ -1,3 +1,7 @@
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
+
 import '../../../../core/http/api_client.dart';
 
 class DocumentApiDataSource {
@@ -22,6 +26,14 @@ class DocumentApiDataSource {
       return data;
     }
     return {};
+  }
+
+  Future<Uint8List> downloadBytes(String id) async {
+    final response = await _client.dio.get(
+      '/api/v1/documents/$id/download',
+      options: Options(responseType: ResponseType.bytes),
+    );
+    return Uint8List.fromList(response.data as List<int>);
   }
 
   String downloadUrl(String id) {

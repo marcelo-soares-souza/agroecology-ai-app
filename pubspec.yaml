@@ -1,7 +1,7 @@
 name: agroecology_map_ai
 description: "Agroecology Map AI — Mobile app for Android and iPhone."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.0+5
 
 environment:
   sdk: ^3.12.1

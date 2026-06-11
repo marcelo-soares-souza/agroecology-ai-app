@@ -329,7 +329,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le soutien renforce une plateforme ouverte, sans paywall, dédiée aux communautés, chercheurs et agriculteurs.';
 
   @override
-  String get donateButton => 'Faire un don via Ko-fi';
+  String get donateButton => 'Ouvrir la page de don';
 
   @override
   String get donateError => 'Impossible d\'ouvrir la page de don.';
@@ -453,6 +453,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get download => 'Télécharger';
+
+  @override
+  String get downloadError => 'Échec du téléchargement du document';
+
+  @override
+  String get downloadSuccess => 'Document enregistré avec succès';
 
   @override
   String get fileType => 'Type de Fichier';

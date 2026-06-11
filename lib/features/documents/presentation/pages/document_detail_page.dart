@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../core/utils/external_link.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/document_record.dart';
 
@@ -20,6 +22,7 @@ class DocumentDetailPage extends ConsumerStatefulWidget {
 class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
   DocumentRecord? _document;
   String? _error;
+  bool _downloading = false;
 
   @override
   void initState() {
@@ -42,11 +45,34 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
 
   Future<void> _download() async {
     if (_document == null) return;
-    final repo = ref.read(documentRepositoryProvider);
-    final url = repo.getDownloadUrl(_document!.id);
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final doc = _document!;
+    final l10n = AppLocalizations.of(context)!;
+
+    setState(() => _downloading = true);
+
+    try {
+      final repo = ref.read(documentRepositoryProvider);
+      final bytes = await repo.downloadBytes(doc.id);
+
+      await FilePicker.platform.saveFile(
+        fileName: doc.filename,
+        bytes: bytes,
+        type: FileType.custom,
+        allowedExtensions: [doc.fileType],
+      );
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.downloadSuccess)));
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.downloadError)));
+      }
+    } finally {
+      if (mounted) setState(() => _downloading = false);
     }
   }
 
@@ -76,7 +102,7 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
                 Text(
                   d.displayTitle,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: AppTokens.pageTitleSize,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -86,7 +112,7 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
                   Text(
                     d.filename,
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: AppTokens.metaSize,
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -96,22 +122,18 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
                   Text(
                     d.authors!,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTokens.bodySmallSize,
                       color: AppColors.textSecondary,
                     ),
                   ),
                 ],
                 if (d.url != null && d.url!.isNotEmpty) ...[
                   const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: () => launchUrl(Uri.parse(d.url!)),
-                    child: Text(
-                      d.url!,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.info,
-                        decoration: TextDecoration.underline,
-                      ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      onPressed: () => openExternalUrl(d.url!),
+                      child: Text(l10n.openLink),
                     ),
                   ),
                 ],
@@ -139,7 +161,7 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
                 Text(
                   _formatDate(d.createdAt),
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: AppTokens.metaSize,
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -152,7 +174,8 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
             child: AppButton.primary(
               label: l10n.download,
               icon: Icons.download,
-              onPressed: _download,
+              onPressed: _downloading ? null : _download,
+              isLoading: _downloading,
             ),
           ),
         ],
@@ -175,7 +198,7 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
           Text(
             label,
             style: const TextStyle(
-              fontSize: 11,
+              fontSize: AppTokens.microSize,
               color: AppColors.textSecondary,
             ),
           ),

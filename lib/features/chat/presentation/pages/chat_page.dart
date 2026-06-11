@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../bootstrap/providers.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../controllers/chat_controller.dart';
@@ -112,7 +113,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 Text(
                   l10n.chatTitle,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: AppTokens.pageTitleSize,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -121,7 +122,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 Text(
                   l10n.chatSubtitle,
                   style: const TextStyle(
-                    fontSize: 13,
+                    fontSize: AppTokens.metaSize,
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -157,7 +158,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             Text(
               l10n.chatEmptyTitle,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: AppTokens.sectionTitleSize,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -166,7 +167,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             Text(
               l10n.chatEmptySubtitle,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: AppTokens.bodySmallSize,
                 color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../bootstrap/providers.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/ui/components.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -65,7 +66,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
           Text(
             l10n.mySuggestions,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: AppTokens.pageTitleSize,
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
             ),
@@ -74,7 +75,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
           Text(
             '${state.suggestions.length} ${l10n.suggestionCountLabel}',
             style: const TextStyle(
-              fontSize: 13,
+              fontSize: AppTokens.metaSize,
               color: AppColors.textSecondary,
             ),
           ),
@@ -165,7 +166,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
               Text(
                 l10n.noSuggestions,
                 style: const TextStyle(
-                  fontSize: 17,
+                  fontSize: AppTokens.sectionTitleSize,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),
@@ -175,7 +176,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
               Text(
                 l10n.noSuggestionsSub,
                 style: const TextStyle(
-                  fontSize: 15,
+                  fontSize: AppTokens.bodySmallSize,
                   color: AppColors.textSecondary,
                 ),
                 textAlign: TextAlign.center,
@@ -215,7 +216,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
                         child: Text(
                           s.displayTitle,
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: AppTokens.bodySmallSize,
                             fontWeight: FontWeight.w600,
                             color: AppColors.textPrimary,
                           ),
@@ -241,7 +242,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
                           child: Text(
                             s.originalFilename!,
                             style: const TextStyle(
-                              fontSize: 12,
+                              fontSize: AppTokens.metaSize,
                               color: AppColors.textSecondary,
                             ),
                             maxLines: 1,
@@ -255,7 +256,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
                   Text(
                     _formatDate(s.createdAt),
                     style: const TextStyle(
-                      fontSize: 11,
+                      fontSize: AppTokens.microSize,
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -269,7 +270,9 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
                           icon: const Icon(Icons.delete_outline, size: 16),
                           label: Text(
                             l10n.delete,
-                            style: const TextStyle(fontSize: 12),
+                            style: const TextStyle(
+                              fontSize: AppTokens.metaSize,
+                            ),
                           ),
                           style: TextButton.styleFrom(
                             foregroundColor: AppColors.error,
@@ -311,7 +314,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
       child: Text(
         label,
         style: TextStyle(
-          fontSize: 11,
+          fontSize: AppTokens.microSize,
           fontWeight: FontWeight.w500,
           color: color,
         ),

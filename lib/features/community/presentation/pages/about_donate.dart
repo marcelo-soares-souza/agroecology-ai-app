@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../core/utils/external_link.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class AboutPage extends StatelessWidget {
@@ -34,7 +35,7 @@ class AboutPage extends StatelessWidget {
                     Text(
                       l10n.aboutPageTitle,
                       style: const TextStyle(
-                        fontSize: 26,
+                        fontSize: AppTokens.pageTitleSize,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
@@ -46,7 +47,7 @@ class AboutPage extends StatelessWidget {
                 Text(
                   l10n.aboutText1,
                   style: const TextStyle(
-                    fontSize: 17,
+                    fontSize: AppTokens.bodySize,
                     color: AppColors.textPrimary,
                     height: 1.6,
                   ),
@@ -97,7 +98,7 @@ class _AboutInfoBlock extends StatelessWidget {
             child: Text(
               text,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: AppTokens.bodySize,
                 color: AppColors.textSecondary,
                 height: 1.6,
               ),
@@ -112,16 +113,15 @@ class _AboutInfoBlock extends StatelessWidget {
 class DonatePage extends StatelessWidget {
   const DonatePage({super.key});
 
-  Future<void> _openKofi(BuildContext context, AppLocalizations l10n) async {
-    final uri = Uri.parse(AppConstants.kofiUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(l10n.donateError)));
-      }
+  Future<void> _openDonatePage(
+    BuildContext context,
+    AppLocalizations l10n,
+  ) async {
+    final opened = await openExternalUrl(AppConstants.donateUrl);
+    if (!opened && context.mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.donateError)));
     }
   }
 
@@ -141,7 +141,7 @@ class DonatePage extends StatelessWidget {
               Text(
                 l10n.donateTitle,
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: AppTokens.pageTitleSize,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -159,7 +159,7 @@ class DonatePage extends StatelessWidget {
                 Text(
                   l10n.donateText1,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: AppTokens.bodySize,
                     color: AppColors.textPrimary,
                     height: 1.6,
                   ),
@@ -168,7 +168,7 @@ class DonatePage extends StatelessWidget {
                 Text(
                   l10n.donateText2,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: AppTokens.bodySize,
                     color: AppColors.textSecondary,
                     height: 1.6,
                   ),
@@ -177,7 +177,7 @@ class DonatePage extends StatelessWidget {
                 Text(
                   l10n.donateText3,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: AppTokens.bodySize,
                     color: AppColors.textSecondary,
                     height: 1.6,
                   ),
@@ -188,7 +188,7 @@ class DonatePage extends StatelessWidget {
                   child: AppButton.primary(
                     label: l10n.donateButton,
                     icon: Icons.favorite,
-                    onPressed: () => _openKofi(context, l10n),
+                    onPressed: () => _openDonatePage(context, l10n),
                   ),
                 ),
               ],

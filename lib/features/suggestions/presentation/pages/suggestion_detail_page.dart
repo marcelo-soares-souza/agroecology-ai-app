@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../core/utils/external_link.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/document_suggestion.dart';
 
@@ -70,7 +72,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                       child: Text(
                         s.displayTitle,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: AppTokens.pageTitleSize,
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
@@ -85,16 +87,19 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                   Text(
                     s.authors!,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTokens.bodySmallSize,
                       color: AppColors.textSecondary,
                     ),
                   ),
                 ],
                 if (s.url != null && s.url!.isNotEmpty) ...[
                   const SizedBox(height: 8),
-                  Text(
-                    s.url!,
-                    style: const TextStyle(fontSize: 13, color: AppColors.info),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      onPressed: () => openExternalUrl(s.url!),
+                      child: Text(l10n.openLink),
+                    ),
                   ),
                 ],
                 if (s.originalFilename != null) ...[
@@ -110,7 +115,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                       Text(
                         '${l10n.filename}: ${s.originalFilename}',
                         style: const TextStyle(
-                          fontSize: 13,
+                          fontSize: AppTokens.metaSize,
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -121,7 +126,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                 Text(
                   _formatDate(s.createdAt),
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: AppTokens.metaSize,
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -137,7 +142,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                   Text(
                     l10n.commentLabel,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTokens.sectionTitleSize,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -146,7 +151,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                   Text(
                     s.userComment,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTokens.bodySmallSize,
                       color: AppColors.textSecondary,
                       height: 1.5,
                     ),
@@ -165,7 +170,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                   Text(
                     l10n.adminComment,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTokens.sectionTitleSize,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -181,7 +186,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                     child: Text(
                       s.adminComment!,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: AppTokens.bodySmallSize,
                         color: AppColors.textSecondary,
                         height: 1.5,
                       ),
@@ -206,7 +211,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                     child: Text(
                       l10n.resultingDocument,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: AppTokens.bodySmallSize,
                         fontWeight: FontWeight.w500,
                         color: AppColors.textPrimary,
                       ),
@@ -247,7 +252,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
       child: Text(
         s.status.name,
         style: TextStyle(
-          fontSize: 11,
+          fontSize: AppTokens.microSize,
           fontWeight: FontWeight.w500,
           color: color,
         ),
