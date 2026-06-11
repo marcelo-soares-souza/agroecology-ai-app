@@ -234,38 +234,39 @@ class ProfilePage extends ConsumerWidget {
               ),
             ],
             const SizedBox(height: 16),
-            AppCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    l10n.dataAndPrivacy,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+            if (!(auth.profile?.roles?.contains('admin') ?? false))
+              AppCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      l10n.dataAndPrivacy,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  AppButton(
-                    label: l10n.exportMyData,
-                    icon: Icons.download_outlined,
-                    width: double.infinity,
-                    isOutlined: true,
-                    onPressed: handleExport,
-                  ),
-                  const SizedBox(height: 8),
-                  AppButton(
-                    label: l10n.deleteMyAccount,
-                    icon: Icons.delete_outline,
-                    width: double.infinity,
-                    backgroundColor: const Color(0xFFfecaca),
-                    foregroundColor: AppColors.error,
-                    onPressed: handleDeleteRequest,
-                  ),
-                ],
+                    const SizedBox(height: 12),
+                    AppButton(
+                      label: l10n.exportMyData,
+                      icon: Icons.download_outlined,
+                      width: double.infinity,
+                      isOutlined: true,
+                      onPressed: handleExport,
+                    ),
+                    const SizedBox(height: 8),
+                    AppButton(
+                      label: l10n.deleteMyAccount,
+                      icon: Icons.delete_outline,
+                      width: double.infinity,
+                      backgroundColor: const Color(0xFFfecaca),
+                      foregroundColor: AppColors.error,
+                      onPressed: handleDeleteRequest,
+                    ),
+                  ],
+                ),
               ),
-            ),
           ],
         ],
       ),
