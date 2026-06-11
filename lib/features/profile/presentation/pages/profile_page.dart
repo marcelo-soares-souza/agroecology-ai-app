@@ -82,12 +82,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     Future<void> handleExport() async {
       try {
         await ref.read(authControllerProvider.notifier).exportMyData();
-        if (!context.mounted) return;
+        if (!mounted) return;
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(l10n.exportSuccess)));
       } catch (e) {
-        if (!context.mounted) return;
+        if (!mounted) return;
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(l10n.exportFailed)));
@@ -116,17 +116,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         ),
       );
 
-      if (confirmed == true && context.mounted) {
+      if (confirmed == true && mounted) {
         try {
           final message = await ref
               .read(authControllerProvider.notifier)
               .requestDeleteAccount();
-          if (!context.mounted) return;
+          if (!mounted) return;
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(message)));
         } catch (e) {
-          if (!context.mounted) return;
+          if (!mounted) return;
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(l10n.deleteAccountFailed)));
@@ -308,10 +308,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                               ),
                               const SizedBox(width: 8),
                               Expanded(
-                                child: Text(
-                                  s['title'] as String? ??
-                                      s['filename'] as String? ??
-                                      'Suggestion',
+                              child: Text(
+                                s['title'] as String? ??
+                                    s['filename'] as String? ??
+                                    l10n.untitled,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: AppTokens.metaSize,
@@ -528,14 +528,14 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
           .updateProfile(
             fullName: _nameController.text.trim(),
             about: _aboutController.text.trim().isEmpty
-                ? _aboutController.text.trim()
+                ? null
                 : _aboutController.text.trim(),
             link: _linkController.text.trim().isEmpty
                 ? null
                 : _linkController.text.trim(),
           );
       setState(() => _error = null);
-      if (mounted) context.pop();
+      if (mounted) context.go('/profile');
     } on AppException catch (e) {
       setState(() => _error = e.message);
     } catch (_) {

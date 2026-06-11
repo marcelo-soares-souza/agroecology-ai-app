@@ -186,7 +186,7 @@ class ChatController extends StateNotifier<ChatState> {
         _updateAssistantMessage(
           _lastAssistantMessage?.id ?? '',
           status: ChatMessageStatus.error,
-          error: result.error ?? 'An error occurred',
+          error: result.error ?? 'chatError',
         );
         state = state.copyWith(
           sendStatus: ChatSendStatus.error,

@@ -140,7 +140,7 @@ class ApiClient {
         error.type == DioExceptionType.receiveTimeout ||
         error.type == DioExceptionType.connectionError) {
       return NetworkException(
-        message: 'Connection error. Please check your network.',
+        message: 'connectionError',
         statusCode: error.response?.statusCode,
       );
     }
@@ -148,7 +148,7 @@ class ApiClient {
     final response = error.response;
     if (response != null) {
       final data = response.data;
-      String message = 'An error occurred';
+      String message = 'chatError';
 
       if (data is Map<String, dynamic>) {
         final detail = data['detail'];
@@ -174,7 +174,7 @@ class ApiClient {
       return AppException(message: message, statusCode: response.statusCode);
     }
 
-    return AppException(message: error.message ?? 'Unknown error');
+    return AppException(message: error.message ?? 'chatError');
   }
 
   Future<Map<String, dynamic>> getAuthenticated(

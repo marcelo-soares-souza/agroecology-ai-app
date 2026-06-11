@@ -235,14 +235,14 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    StatusBadge.active(label: user.status),
+                    StatusBadge.active(label: _resolveStatusLabel(user.status, l10n)),
                     const SizedBox(width: 8),
                     ...user.roles.map(
                       (r) => Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: r == 'admin'
-                            ? StatusBadge.admin()
-                            : StatusBadge.info(label: r),
+                            ? StatusBadge.admin(label: l10n.roleAdmin)
+                            : StatusBadge.info(label: _resolveRoleLabel(r, l10n)),
                       ),
                     ),
                   ],
@@ -382,7 +382,7 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                               child: Text(
                                 s['title'] as String? ??
                                     s['filename'] as String? ??
-                                    'Suggestion',
+                                    l10n.untitled,
                                 style: const TextStyle(
                                   fontSize: AppTokens.metaSize,
                                   color: AppColors.textPrimary,
@@ -437,5 +437,22 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
     } catch (_) {
       return iso;
     }
+  }
+
+  String _resolveStatusLabel(String status, AppLocalizations l10n) {
+    return switch (status) {
+      'active' => l10n.statusActive,
+      'pending' => l10n.statusPending,
+      'suspended' => l10n.statusSuspended,
+      'deleted' => l10n.statusDeleted,
+      _ => status,
+    };
+  }
+
+  String _resolveRoleLabel(String role, AppLocalizations l10n) {
+    return switch (role) {
+      'user' => l10n.roleUser,
+      _ => role,
+    };
   }
 }

@@ -10,6 +10,7 @@ String? _resolveError(AppLocalizations l10n, String? key) {
   return switch (key) {
     'requestTimeout' => l10n.requestTimeout,
     'chatError' => l10n.chatError,
+    'connectionError' => l10n.connectionError,
     _ => key,
   };
 }

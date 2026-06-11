@@ -26,6 +26,8 @@ String _resolveError(AppLocalizations l10n, String message) {
     'deleteAccountFailed' => l10n.deleteAccountFailed,
     'passwordResetSuccess' => l10n.passwordResetSuccess,
     'resetLinkSent' => l10n.resetLinkSent,
+    'connectionError' => l10n.connectionError,
+    'chatError' => l10n.chatError,
     _ => message,
   };
 }
@@ -694,7 +696,9 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
-    final registrationSucceeded = auth.errorMessage == 'registrationSuccess';
+    final isSuccessMessage = auth.errorMessage == 'registrationSuccess' ||
+        auth.errorMessage == 'passwordResetSuccess' ||
+        auth.errorMessage == 'resetLinkSent';
 
     ref.listen(authControllerProvider, (prev, next) {
       if (next.errorMessage == 'registrationSuccess') {
@@ -746,31 +750,31 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: registrationSucceeded
-                            ? const Color(0xFFdcfce7)
-                            : const Color(0xFFfecaca),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            registrationSucceeded
-                                ? Icons.check_circle_outline
-                                : Icons.error_outline,
-                            size: 18,
-                            color: registrationSucceeded
-                                ? const Color(0xFF16a34a)
-                                : const Color(0xFFdc2626),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              _resolveError(l10n, auth.errorMessage!),
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: registrationSucceeded
-                                    ? const Color(0xFF166534)
-                                    : const Color(0xFF991b1b),
+                      color: isSuccessMessage
+                          ? const Color(0xFFdcfce7)
+                          : const Color(0xFFfecaca),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          isSuccessMessage
+                              ? Icons.check_circle_outline
+                              : Icons.error_outline,
+                          size: 18,
+                          color: isSuccessMessage
+                              ? const Color(0xFF16a34a)
+                              : const Color(0xFFdc2626),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _resolveError(l10n, auth.errorMessage!),
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: isSuccessMessage
+                                  ? const Color(0xFF166534)
+                                  : const Color(0xFF991b1b),
                               ),
                             ),
                           ),
