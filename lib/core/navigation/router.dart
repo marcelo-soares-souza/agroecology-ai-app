@@ -185,6 +185,8 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       final isPublicRoute =
           state.uri.path == '/about' ||
           state.uri.path == '/donate' ||
+          state.uri.path == '/privacy' ||
+          state.uri.path == '/terms' ||
           state.uri.path == '/community' ||
           state.uri.path.startsWith('/community/') ||
           state.uri.path == '/documents' ||
@@ -196,7 +198,12 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
         return '/login';
       }
 
-      if (auth.isLoading && !auth.isAuthenticated) return '/splash';
+      if (auth.isLoading &&
+          !auth.isAuthenticated &&
+          !isAuthRoute &&
+          !isPublicRoute) {
+        return '/splash';
+      }
 
       if (auth.isAuthenticated && isAuthRoute) return '/chat';
 

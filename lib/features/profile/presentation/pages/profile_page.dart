@@ -234,7 +234,7 @@ class ProfilePage extends ConsumerWidget {
               ),
             ],
             const SizedBox(height: 16),
-            if (!(auth.profile?.roles?.contains('admin') ?? false))
+            if (!(auth.profile?.roles.contains('admin') ?? false))
               AppCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
