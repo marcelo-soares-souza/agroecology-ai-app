@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -267,8 +268,9 @@ class _SourceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final documentId = source.metadata?.documentId;
 
-    return Container(
+    final card = Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppColors.primary50,
@@ -321,6 +323,14 @@ class _SourceCard extends StatelessWidget {
                     ),
                   ),
                 ),
+              if (documentId != null && documentId.isNotEmpty) ...[
+                const SizedBox(width: 4),
+                const Icon(
+                  Icons.chevron_right,
+                  size: 16,
+                  color: AppColors.primary,
+                ),
+              ],
             ],
           ),
           const SizedBox(height: 4),
@@ -337,5 +347,14 @@ class _SourceCard extends StatelessWidget {
         ],
       ),
     );
+
+    if (documentId != null && documentId.isNotEmpty) {
+      return GestureDetector(
+        onTap: () => context.push('/documents/$documentId'),
+        child: card,
+      );
+    }
+
+    return card;
   }
 }
