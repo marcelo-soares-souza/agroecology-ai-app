@@ -12,6 +12,7 @@
 ### Changed
 
 - Document detail page layout: static inline PDF preview replaces interactive swipe, reducing gesture conflicts. Fullscreen navigation moved to a dedicated primary-styled button below the preview.
+- Knowledge Base banner now shows only the real count of indexed documents, removing the progress bar and total count.
 
 ### Dependencies
 

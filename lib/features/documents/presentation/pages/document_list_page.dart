@@ -136,7 +136,6 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
     }
 
     final indexed = docs.where((d) => d.ingested).length;
-    final total = docs.length;
 
     return RefreshIndicator(
       onRefresh: _load,
@@ -164,24 +163,12 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        indexed == total
-                            ? l10n.allIndexed
-                            : l10n.indexedCount(indexed, total),
+                        l10n.indexedDocsCount(indexed),
                         style: const TextStyle(
                           fontSize: AppTokens.metaSize,
                           fontWeight: FontWeight.w500,
                           color: AppColors.primary700,
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    SizedBox(
-                      width: 80,
-                      child: LinearProgressIndicator(
-                        value: total > 0 ? indexed / total : 0,
-                        backgroundColor: AppColors.primary100,
-                        color: AppColors.primary,
-                        minHeight: 4,
                       ),
                     ),
                   ],

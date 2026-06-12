@@ -448,6 +448,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get allIndexed => 'Todos los archivos indexados';
 
   @override
+  String indexedDocsCount(int count) {
+    return '$count documentos indexados';
+  }
+
+  @override
   String get documentDetail => 'Detalle del Documento';
 
   @override

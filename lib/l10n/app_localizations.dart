@@ -930,6 +930,12 @@ abstract class AppLocalizations {
   /// **'All files indexed'**
   String get allIndexed;
 
+  /// No description provided for @indexedDocsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} indexed documents'**
+  String indexedDocsCount(int count);
+
   /// No description provided for @documentDetail.
   ///
   /// In en, this message translates to:

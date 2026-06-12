@@ -169,6 +169,14 @@
     }
   },
   "allIndexed": "Todos os arquivos indexados",
+  "indexedDocsCount": "{count} documentos indexados",
+  "@indexedDocsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "documentDetail": "Detalhe do Documento",
   "download": "Baixar",
   "downloadError": "Erro ao baixar o documento",
