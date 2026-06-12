@@ -461,8 +461,9 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
-            child: Form(
-              key: _formKey,
+            child: AutofillGroup(
+              child: Form(
+                key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -550,6 +551,7 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
+                    autofillHints: const [AutofillHints.password],
                     decoration: InputDecoration(
                       labelText: l10n.passwordLabel,
                       hintText: l10n.passwordHint,
@@ -623,6 +625,7 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                   ),
                 ],
               ),
+            ),
             ),
           ),
         ),
@@ -1078,8 +1081,9 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                TextFormField(
-                  controller: _emailController,
+                  TextFormField(
+                    controller: _emailController,
+                    autofillHints: const [AutofillHints.email],
                   decoration: InputDecoration(
                     labelText: l10n.emailLabel,
                     hintText: l10n.emailHint,
