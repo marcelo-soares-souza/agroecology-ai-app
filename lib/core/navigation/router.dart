@@ -534,6 +534,7 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                   ],
                   TextFormField(
                     controller: _emailController,
+                    autofillHints: const [AutofillHints.email],
                     decoration: InputDecoration(
                       labelText: l10n.emailLabel,
                       hintText: l10n.emailHint,
@@ -716,7 +717,8 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
       child: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
-          child: Form(
+          child: AutofillGroup(
+            child: Form(
             key: _formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -788,6 +790,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                   ],
                   TextFormField(
                     controller: _nameController,
+                    autofillHints: const [AutofillHints.name],
                     decoration: InputDecoration(
                       labelText: l10n.fullNameLabel,
                       hintText: l10n.fullNameHint,
@@ -807,6 +810,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _emailController,
+                    autofillHints: const [AutofillHints.email],
                     decoration: InputDecoration(
                       labelText: l10n.emailLabel,
                       hintText: l10n.emailHint,
@@ -824,6 +828,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
+                    autofillHints: const [AutofillHints.newPassword],
                     decoration: InputDecoration(
                       labelText: l10n.passwordLabel,
                       hintText: l10n.newPasswordHint,
@@ -1019,6 +1024,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                 ],
               ),
             ),
+            ),
           ),
         ),
     );
@@ -1176,7 +1182,8 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
-        child: Form(
+        child: AutofillGroup(
+          child: Form(
           key: _formKey,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1220,6 +1227,7 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                   const SizedBox(height: 24),
                   TextFormField(
                     controller: _tokenController,
+                    autofillHints: const [AutofillHints.oneTimeCode],
                     decoration: InputDecoration(
                       labelText: l10n.resetTokenLabel,
                       hintText: l10n.resetTokenHint,
@@ -1236,6 +1244,7 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
+                    autofillHints: const [AutofillHints.newPassword],
                     decoration: InputDecoration(
                       labelText: l10n.newPasswordLabel,
                       hintText: l10n.newPasswordHint,
@@ -1287,6 +1296,7 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                 ),
               ],
             ),
+          ),
           ),
         ),
     );

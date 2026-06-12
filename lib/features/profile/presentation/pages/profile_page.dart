@@ -560,7 +560,8 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Form(
+        child: AutofillGroup(
+          child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -624,6 +625,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
               const SizedBox(height: 24),
               TextFormField(
                 controller: _nameController,
+                autofillHints: const [AutofillHints.name],
                 decoration: InputDecoration(
                   labelText: l10n.fullNameLabel,
                   prefixIcon: const Icon(Icons.person_outline),
@@ -660,6 +662,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _linkController,
+                autofillHints: const [AutofillHints.url],
                 decoration: InputDecoration(
                   labelText: l10n.linkLabel,
                   hintText: l10n.linkHint,
@@ -686,6 +689,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
               ),
             ],
           ),
+        ),
         ),
       ),
     );
