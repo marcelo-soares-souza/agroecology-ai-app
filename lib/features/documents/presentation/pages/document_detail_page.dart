@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -24,6 +28,10 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
   String? _error;
   bool _downloading = false;
 
+  String? _pdfFilePath;
+  bool _pdfLoading = false;
+  String? _pdfError;
+
   @override
   void initState() {
     super.initState();
@@ -38,8 +46,40 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
         _document = doc;
         _error = null;
       });
+      if (doc.fileType == 'pdf') {
+        _loadPdf();
+      }
     } catch (e) {
       setState(() => _error = e.toString());
+    }
+  }
+
+  Future<void> _loadPdf() async {
+    if (_document == null) return;
+
+    setState(() {
+      _pdfLoading = true;
+      _pdfError = null;
+    });
+
+    try {
+      final repo = ref.read(documentRepositoryProvider);
+      final bytes = await repo.downloadBytes(_document!.id);
+      final tempDir = Directory.systemTemp;
+      final tempFile = File('${tempDir.path}/${_document!.id}.pdf');
+      await tempFile.writeAsBytes(bytes);
+
+      if (!mounted) return;
+      setState(() {
+        _pdfFilePath = tempFile.path;
+        _pdfLoading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _pdfError = e.toString();
+        _pdfLoading = false;
+      });
     }
   }
 
@@ -174,7 +214,7 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
               ],
             ),
           ),
-          const SizedBox(height: 16),
+           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             child: AppButton.primary(
@@ -184,7 +224,62 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
               isLoading: _downloading,
             ),
           ),
+          if (d.fileType == 'pdf') ...[
+            const SizedBox(height: 16),
+            _buildPdfPreview(),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: AppButton.primary(
+                label: l10n.viewDocument,
+                icon: Icons.open_in_full,
+                onPressed:
+                    _pdfFilePath != null
+                        ? () => context.push('/documents/${d.id}/view')
+                        : null,
+              ),
+            ),
+          ],
         ],
+      ),
+    );
+  }
+
+  Widget _buildPdfPreview() {
+    if (_pdfLoading) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(32),
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    if (_pdfError != null) {
+      return ErrorState(message: _pdfError!, onRetry: _loadPdf);
+    }
+
+    if (_pdfFilePath == null) {
+      return const SizedBox.shrink();
+    }
+
+    return AppCard(
+      padding: EdgeInsets.zero,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppTokens.cardRadius),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.6,
+          child: PDFView(
+            filePath: _pdfFilePath!,
+            enableSwipe: false,
+            swipeHorizontal: false,
+            autoSpacing: false,
+            pageFling: false,
+            onError: (error) {
+              setState(() => _pdfError = error.toString());
+            },
+          ),
+        ),
       ),
     );
   }

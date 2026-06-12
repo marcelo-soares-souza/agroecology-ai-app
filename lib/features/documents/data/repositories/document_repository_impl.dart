@@ -35,4 +35,9 @@ class DocumentRepositoryImpl implements DocumentRepository {
   String getDownloadUrl(String id) {
     return _remote.downloadUrl(id);
   }
+
+  @override
+  String getViewUrl(String id) {
+    return _remote.viewUrl(id);
+  }
 }

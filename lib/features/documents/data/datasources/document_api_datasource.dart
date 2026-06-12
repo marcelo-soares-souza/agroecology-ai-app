@@ -39,4 +39,8 @@ class DocumentApiDataSource {
   String downloadUrl(String id) {
     return '$_apiBaseUrl/api/v1/documents/$id/download';
   }
+
+  String viewUrl(String id) {
+    return '$_apiBaseUrl/api/v1/documents/$id/view';
+  }
 }

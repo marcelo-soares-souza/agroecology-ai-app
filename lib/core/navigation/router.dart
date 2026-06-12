@@ -16,6 +16,7 @@ import '../../features/suggestions/presentation/pages/suggestion_list_page.dart'
 import '../../features/suggestions/presentation/pages/suggestion_detail_page.dart';
 import '../../features/documents/presentation/pages/document_list_page.dart';
 import '../../features/documents/presentation/pages/document_detail_page.dart';
+import '../../features/documents/presentation/pages/document_pdf_view_page.dart';
 import '../ui/app_scaffold.dart';
 
 String _resolveError(AppLocalizations l10n, String message) {
@@ -174,6 +175,16 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
                   final id = state.pathParameters['id']!;
                   return DocumentDetailPage(id: id);
                 },
+                routes: [
+                  GoRoute(
+                    path: 'view',
+                    name: 'documents-pdf-view',
+                    builder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return DocumentPdfViewPage(id: id);
+                    },
+                  ),
+                ],
               ),
             ],
           ),

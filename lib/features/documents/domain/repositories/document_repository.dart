@@ -7,4 +7,5 @@ abstract class DocumentRepository {
   Future<DocumentRecord> getOne(String id);
   Future<Uint8List> downloadBytes(String id);
   String getDownloadUrl(String id);
+  String getViewUrl(String id);
 }
