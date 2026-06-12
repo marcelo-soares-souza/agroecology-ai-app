@@ -1074,11 +1074,12 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+        child: AutofillGroup(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
                 Text(
                   l10n.resetLinkInstruction,
                   style: const TextStyle(
@@ -1087,9 +1088,9 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                  TextFormField(
-                    controller: _emailController,
-                    autofillHints: const [AutofillHints.email],
+                TextFormField(
+                  controller: _emailController,
+                  autofillHints: const [AutofillHints.email],
                   decoration: InputDecoration(
                     labelText: l10n.emailLabel,
                     hintText: l10n.emailHint,
@@ -1130,6 +1131,7 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
             ),
           ),
         ),
+      ),
     );
   }
 
