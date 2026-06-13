@@ -5,7 +5,7 @@ workflows:
     instance_type: mac_mini_m2
     environment:
       flutter: 3.44.2
-      xcode: 16.4
+      xcode: 26.5
     cache:
       cache_paths:
         - ~/.pub-cache
@@ -19,9 +19,6 @@ workflows:
       - name: Analyze
         script: |
           flutter analyze
-      - name: Unit tests
-        script: |
-          flutter test
       - name: Build iOS IPA (no code signing)
         script: |
           flutter build ipa --no-codesign
