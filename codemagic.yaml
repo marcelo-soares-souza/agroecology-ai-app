@@ -16,6 +16,11 @@ workflows:
       - name: Install dependencies
         script: |
           flutter pub get
+      - name: Verify iOS workspace and scheme
+        script: |
+          test -d ios/Runner.xcworkspace
+          test -f ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme
+          xcodebuild -list -workspace ios/Runner.xcworkspace
       - name: Analyze
         script: |
           flutter analyze
