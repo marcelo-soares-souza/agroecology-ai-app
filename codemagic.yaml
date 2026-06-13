@@ -1,62 +1,29 @@
 workflows:
-  ios-testflight:
-    name: iOS TestFlight
-    max_build_duration: 120
+  flutter-ios:
+    name: Flutter CI (iOS)
+    max_build_duration: 30
     instance_type: mac_mini_m2
-    integrations:
-      app_store_connect: codemagic
     environment:
-      flutter: stable
-      xcode: latest
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: org.agroecologymap.agroecologyMapAi
-      vars:
-        API_BASE_URL: https://ai.agroecologymap.org
-        BUNDLE_ID: org.agroecologymap.agroecologyMapAi
-        APP_STORE_APPLE_ID: ""
+      flutter: 3.44.2
+      xcode: 16.4
     cache:
       cache_paths:
         - ~/.pub-cache
-        - ~/Library/Caches/org.swift.swiftpm
+        - build
+        - ios/Pods
+        - ~/Library/Caches/CocoaPods
     scripts:
-      - name: Get Flutter packages
+      - name: Install dependencies
         script: |
           flutter pub get
-      - name: Set up iOS code signing
-        script: |
-          xcode-project use-profiles
-      - name: Flutter analyze
+      - name: Analyze
         script: |
           flutter analyze
-      - name: Flutter unit tests
+      - name: Unit tests
         script: |
           flutter test
-        ignore_failure: true
-      - name: Build iOS IPA
+      - name: Build iOS IPA (no code signing)
         script: |
-          PUBSPEC_BUILD_NUMBER=$(grep '^version:' pubspec.yaml | sed 's/.*+//')
-          BUILD_NUMBER=$PROJECT_BUILD_NUMBER
-
-          if [ -n "$APP_STORE_APPLE_ID" ]; then
-            LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo 0)
-            BUILD_NUMBER=$((LATEST_BUILD_NUMBER + 1))
-          fi
-
-          if [ "$BUILD_NUMBER" -lt "$PUBSPEC_BUILD_NUMBER" ]; then
-            BUILD_NUMBER=$PUBSPEC_BUILD_NUMBER
-          fi
-
-          flutter build ipa --release \
-            --build-number=$BUILD_NUMBER \
-            --dart-define=API_BASE_URL=$API_BASE_URL \
-            --export-options-plist=/Users/builder/export_options.plist
+          flutter build ipa --no-codesign
     artifacts:
       - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-      - flutter_drive.log
-    publishing:
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: true
-        submit_to_app_store: false
