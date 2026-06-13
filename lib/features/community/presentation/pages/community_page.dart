@@ -19,12 +19,21 @@ class CommunityListPage extends ConsumerStatefulWidget {
 
 class _CommunityListPageState extends ConsumerState<CommunityListPage> {
   List<PublicUser>? _users;
+  List<PublicUser> _filtered = [];
   String? _error;
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
     _load();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   Future<void> _load() async {
@@ -34,16 +43,72 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
       setState(() {
         _users = users;
         _error = null;
+        _applyFilter();
       });
     } catch (e) {
       setState(() => _error = e.toString());
     }
   }
 
+  void _applyFilter() {
+    if (_users == null) return;
+    final q = _searchQuery.toLowerCase();
+    setState(() {
+      _filtered = _users!
+          .where(
+            (u) =>
+                u.fullName.toLowerCase().contains(q) ||
+                u.slug.toLowerCase().contains(q),
+          )
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    return Column(
+      children: [
+        _buildSearchBar(l10n),
+        Expanded(child: _buildContent(l10n)),
+      ],
+    );
+  }
+
+  Widget _buildSearchBar(AppLocalizations l10n) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
+        border: Border(
+          bottom: BorderSide(color: AppColors.primary100, width: 1),
+        ),
+      ),
+      child: TextField(
+        controller: _searchController,
+        decoration: InputDecoration(
+          hintText: l10n.searchCommunity,
+          prefixIcon: const Icon(Icons.search, size: 20),
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 10,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: AppColors.primary200),
+          ),
+        ),
+        onChanged: (v) {
+          _searchQuery = v;
+          _applyFilter();
+        },
+      ),
+    );
+  }
+
+  Widget _buildContent(AppLocalizations l10n) {
     if (_error != null) {
       return ErrorState(message: _error!, onRetry: _load);
     }
@@ -67,14 +132,22 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
       );
     }
 
+    if (_filtered.isEmpty) {
+      return EmptyState(
+        icon: Icons.person_search,
+        title: l10n.searchNoResults,
+        subtitle: '',
+      );
+    }
+
     return RefreshIndicator(
       onRefresh: _load,
       color: AppColors.primary,
       child: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: _users!.length,
+        itemCount: _filtered.length,
         itemBuilder: (context, index) {
-          final user = _users![index];
+          final user = _filtered[index];
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: AppCard(
@@ -361,35 +434,85 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                   ),
                   const SizedBox(height: 12),
                   ..._suggestions!.map((s) {
+                    final authors = s['authors'] as String?;
+                    final fileType = _formatFileType(s['file_type'] as String?);
+                    final fileSize = _formatFileSize(s['file_size'] as int?);
+                    final ingested = s['ingested'] as bool? ?? false;
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary50,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: AppColors.primary200),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.description_outlined,
-                              size: 18,
-                              color: AppColors.primary,
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                s['title'] as String? ??
-                                    s['filename'] as String? ??
-                                    l10n.untitled,
-                                style: const TextStyle(
-                                  fontSize: AppTokens.metaSize,
-                                  color: AppColors.textPrimary,
-                                ),
+                      child: GestureDetector(
+                        onTap: () {
+                          final docId = s['document_id'];
+                          if (docId != null) {
+                            context.push('/documents/$docId');
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary50,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: AppColors.primary200),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 1),
+                                    child: Icon(
+                                      Icons.description_outlined,
+                                      size: 18,
+                                      color: AppColors.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      s['title'] as String? ??
+                                          s['original_filename'] as String? ??
+                                          l10n.untitled,
+                                      style: const TextStyle(
+                                        fontSize: AppTokens.metaSize,
+                                        color: AppColors.textPrimary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              if (authors != null && authors.isNotEmpty) ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  authors,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: AppTokens.microSize,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ],
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  if (fileType.isNotEmpty)
+                                    _docBadge(fileType, AppColors.info),
+                                  if (fileType.isNotEmpty && fileSize.isNotEmpty)
+                                    const SizedBox(width: 6),
+                                  if (fileSize.isNotEmpty)
+                                    _docBadge(fileSize, AppColors.textSecondary),
+                                  if ((fileType.isNotEmpty || fileSize.isNotEmpty) && (s['document_id'] != null || ingested))
+                                    const SizedBox(width: 6),
+                                  _docBadge(
+                                    ingested ? l10n.ingested : l10n.notIngested,
+                                    ingested ? AppColors.success : AppColors.warning,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -399,6 +522,40 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
             ),
           ],
         ],
+      ),
+    );
+  }
+
+  String _formatFileType(String? ft) {
+    return switch (ft) {
+      'pdf' => 'PDF',
+      'md' => 'Markdown',
+      'txt' => 'Text',
+      _ => ft ?? '',
+    };
+  }
+
+  String _formatFileSize(int? bytes) {
+    if (bytes == null) return '';
+    if (bytes < 1024) return '${bytes}B';
+    if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)}KB';
+    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)}MB';
+  }
+
+  Widget _docBadge(String label, Color textColor) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: AppColors.primary50,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: AppTokens.microSize,
+          fontWeight: FontWeight.w500,
+          color: textColor,
+        ),
       ),
     );
   }

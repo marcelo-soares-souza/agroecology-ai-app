@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.1
+
+### Added
+
+- **Community Search Bar**: search field on the community list page, filtering users by name and slug in real-time (client-side).
+- **Enhanced Suggestion Items**: approved suggestion items on profile and community detail pages now display authors, file type, file size, and ingested/indexed status — matching the knowledge base document list layout.
+- **Localization**: added `searchCommunity` and `searchNoResults` i18n keys for all 4 languages (en, pt, es, fr).
+
+### Changed
+
+- **Clickable Suggestions**: tapping an approved suggestion on a user profile or community detail now navigates to the public document detail page (`/documents/:id`) instead of the authenticated suggestion detail page.
+- **Icon Alignment**: document icon in suggestion list items is now vertically aligned with the title text.
+
 ## 1.1.0
 
 ### Added

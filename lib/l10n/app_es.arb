@@ -215,5 +215,7 @@
   "statusDeleted": "eliminado",
   "roleAdmin": "admin",
   "roleUser": "usuario",
-  "loggedOut": "Has cerrado sesión."
+  "loggedOut": "Has cerrado sesión.",
+  "searchCommunity": "Buscar comunidad...",
+  "searchNoResults": "Ningún miembro coincidente"
 }

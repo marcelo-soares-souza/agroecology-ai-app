@@ -15,7 +15,7 @@ void main() async {
 
   const defines = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:8000',
+    defaultValue: Environment.defaultApiBaseUrl,
   );
 
   final environment = Environment(apiBaseUrl: defines);

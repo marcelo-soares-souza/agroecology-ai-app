@@ -290,36 +290,86 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     ),
                     const SizedBox(height: 12),
                     ..._suggestions!.map((s) {
+                      final authors = s['authors'] as String?;
+                      final fileType = _formatFileType(s['file_type'] as String?);
+                      final fileSize = _formatFileSize(s['file_size'] as int?);
+                      final ingested = s['ingested'] as bool? ?? false;
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary50,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.primary200),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.description_outlined,
-                                size: 18,
-                                color: AppColors.primary,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                              child: Text(
-                                s['title'] as String? ??
-                                    s['filename'] as String? ??
-                                    l10n.untitled,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: AppTokens.metaSize,
-                                    color: AppColors.textPrimary,
-                                  ),
+                        child: GestureDetector(
+                          onTap: () {
+                            final docId = s['document_id'];
+                            if (docId != null) {
+                              context.push('/documents/$docId');
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary50,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: AppColors.primary200),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(top: 1),
+                                      child: Icon(
+                                        Icons.description_outlined,
+                                        size: 18,
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        s['title'] as String? ??
+                                            s['original_filename'] as String? ??
+                                            l10n.untitled,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: AppTokens.metaSize,
+                                          color: AppColors.textPrimary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                if (authors != null && authors.isNotEmpty) ...[
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    authors,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: AppTokens.microSize,
+                                      color: AppColors.textSecondary,
+                                    ),
+                                  ),
+                                ],
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    if (fileType.isNotEmpty)
+                                      _docBadge(fileType, AppColors.info),
+                                    if (fileType.isNotEmpty && fileSize.isNotEmpty)
+                                      const SizedBox(width: 6),
+                                    if (fileSize.isNotEmpty)
+                                      _docBadge(fileSize, AppColors.textSecondary),
+                                    if ((fileType.isNotEmpty || fileSize.isNotEmpty) && (s['document_id'] != null || ingested))
+                                      const SizedBox(width: 6),
+                                    _docBadge(
+                                      ingested ? l10n.ingested : l10n.notIngested,
+                                      ingested ? AppColors.success : AppColors.warning,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -363,6 +413,40 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             ),
           ],
         ],
+      ),
+    );
+  }
+
+  String _formatFileType(String? ft) {
+    return switch (ft) {
+      'pdf' => 'PDF',
+      'md' => 'Markdown',
+      'txt' => 'Text',
+      _ => ft ?? '',
+    };
+  }
+
+  String _formatFileSize(int? bytes) {
+    if (bytes == null) return '';
+    if (bytes < 1024) return '${bytes}B';
+    if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)}KB';
+    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)}MB';
+  }
+
+  Widget _docBadge(String label, Color textColor) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: AppColors.primary50,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: AppTokens.microSize,
+          fontWeight: FontWeight.w500,
+          color: textColor,
+        ),
       ),
     );
   }

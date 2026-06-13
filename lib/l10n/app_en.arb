@@ -215,5 +215,7 @@
   "statusDeleted": "deleted",
   "roleAdmin": "admin",
   "roleUser": "user",
-  "loggedOut": "You have been logged out."
+  "loggedOut": "You have been logged out.",
+  "searchCommunity": "Search community...",
+  "searchNoResults": "No matching members"
 }

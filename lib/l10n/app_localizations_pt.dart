@@ -573,4 +573,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get loggedOut => 'Você saiu da sua conta.';
+
+  @override
+  String get searchCommunity => 'Buscar comunidade...';
+
+  @override
+  String get searchNoResults => 'Nenhum membro correspondente';
 }

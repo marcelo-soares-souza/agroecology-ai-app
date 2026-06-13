@@ -1169,6 +1169,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You have been logged out.'**
   String get loggedOut;
+
+  /// No description provided for @searchCommunity.
+  ///
+  /// In en, this message translates to:
+  /// **'Search community...'**
+  String get searchCommunity;
+
+  /// No description provided for @searchNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching members'**
+  String get searchNoResults;
 }
 
 class _AppLocalizationsDelegate

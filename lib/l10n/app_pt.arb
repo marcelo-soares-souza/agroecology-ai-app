@@ -215,5 +215,7 @@
   "statusDeleted": "excluído",
   "roleAdmin": "admin",
   "roleUser": "usuário",
-  "loggedOut": "Você saiu da sua conta."
+  "loggedOut": "Você saiu da sua conta.",
+  "searchCommunity": "Buscar comunidade...",
+  "searchNoResults": "Nenhum membro correspondente"
 }

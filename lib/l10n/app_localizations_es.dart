@@ -574,4 +574,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get loggedOut => 'Has cerrado sesión.';
+
+  @override
+  String get searchCommunity => 'Buscar comunidad...';
+
+  @override
+  String get searchNoResults => 'Ningún miembro coincidente';
 }

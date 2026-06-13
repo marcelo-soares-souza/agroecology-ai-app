@@ -573,4 +573,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get loggedOut => 'Vous avez été déconnecté.';
+
+  @override
+  String get searchCommunity => 'Rechercher la communauté...';
+
+  @override
+  String get searchNoResults => 'Aucun membre correspondant';
 }

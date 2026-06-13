@@ -570,4 +570,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loggedOut => 'You have been logged out.';
+
+  @override
+  String get searchCommunity => 'Search community...';
+
+  @override
+  String get searchNoResults => 'No matching members';
 }

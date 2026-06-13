@@ -215,5 +215,7 @@
   "statusDeleted": "supprimé",
   "roleAdmin": "admin",
   "roleUser": "utilisateur",
-  "loggedOut": "Vous avez été déconnecté."
+  "loggedOut": "Vous avez été déconnecté.",
+  "searchCommunity": "Rechercher la communauté...",
+  "searchNoResults": "Aucun membre correspondant"
 }
