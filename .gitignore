@@ -27,6 +27,11 @@ ios/Flutter/app.flx
 ios/Flutter/App.framework
 ios/Runner/GeneratedPluginRegistrant.*
 ios/*.xcworkspace/
+!ios/Runner.xcworkspace/
+!ios/Runner.xcworkspace/contents.xcworkspacedata
+!ios/Runner.xcworkspace/xcshareddata/
+!ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+!ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
 ios/Podfile.lock
 
 # macOS
