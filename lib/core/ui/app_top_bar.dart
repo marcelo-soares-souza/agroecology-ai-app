@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 
 class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
@@ -11,6 +12,8 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return AppBar(
       leading: onMenuTap != null
           ? IconButton(icon: const Icon(Icons.menu), onPressed: onMenuTap)
@@ -21,9 +24,9 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               Image.asset('assets/logo.png', width: 28, height: 28),
               const SizedBox(width: 8),
-              const Text(
-                'Agroecology Map AI',
-                style: TextStyle(
+              Text(
+                l10n.appName,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: AppColors.primary,

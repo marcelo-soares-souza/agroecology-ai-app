@@ -204,6 +204,16 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
                   ],
                 ),
                 const SizedBox(height: 8),
+                InfoCallout(
+                  icon: Icons.search_outlined,
+                  title: d.ingested
+                      ? l10n.documentIndexedTitle
+                      : l10n.documentNotIndexedTitle,
+                  body: d.ingested
+                      ? l10n.documentIndexedBody
+                      : l10n.documentNotIndexedBody,
+                ),
+                const SizedBox(height: 12),
                 Text(
                   _formatDate(d.createdAt),
                   style: const TextStyle(
@@ -214,7 +224,7 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
               ],
             ),
           ),
-           const SizedBox(height: 16),
+          const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             child: AppButton.primary(
@@ -233,10 +243,9 @@ class _DocumentDetailPageState extends ConsumerState<DocumentDetailPage> {
               child: AppButton.primary(
                 label: l10n.viewDocument,
                 icon: Icons.open_in_full,
-                onPressed:
-                    _pdfFilePath != null
-                        ? () => context.push('/documents/${d.id}/view')
-                        : null,
+                onPressed: _pdfFilePath != null
+                    ? () => context.push('/documents/${d.id}/view')
+                    : null,
               ),
             ),
           ],

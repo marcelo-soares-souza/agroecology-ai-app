@@ -117,7 +117,7 @@ abstract class AppLocalizations {
   /// No description provided for @signInWelcome.
   ///
   /// In en, this message translates to:
-  /// **'Welcome back to Agroecology Map AI'**
+  /// **'Sign in to ask sourced questions, continue your history, and contribute to the agroecology knowledge base.'**
   String get signInWelcome;
 
   /// No description provided for @signInButton.
@@ -138,6 +138,12 @@ abstract class AppLocalizations {
   /// **'your@email.com'**
   String get emailHint;
 
+  /// No description provided for @emailHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your account email to receive confirmations and important notices.'**
+  String get emailHelper;
+
   /// No description provided for @emailRequired.
   ///
   /// In en, this message translates to:
@@ -155,6 +161,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your password'**
   String get passwordHint;
+
+  /// No description provided for @passwordHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password protects access to your history and profile.'**
+  String get passwordHelper;
+
+  /// No description provided for @passwordVisibilityTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Show or hide the typed password.'**
+  String get passwordVisibilityTooltip;
 
   /// No description provided for @passwordRequired.
   ///
@@ -179,6 +197,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'At least 8 characters'**
   String get newPasswordHint;
+
+  /// No description provided for @newPasswordHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a unique password with at least 8 characters.'**
+  String get newPasswordHelper;
 
   /// No description provided for @forgotPassword.
   ///
@@ -207,7 +231,7 @@ abstract class AppLocalizations {
   /// No description provided for @createAccountSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Join the Agroecology Map AI community'**
+  /// **'Create an account to suggest documents, keep a public profile, and strengthen an open knowledge base.'**
   String get createAccountSubtitle;
 
   /// No description provided for @fullNameLabel.
@@ -221,6 +245,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your name'**
   String get fullNameHint;
+
+  /// No description provided for @fullNameHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'This name appears on your profile and helps the community recognize your contributions.'**
+  String get fullNameHelper;
 
   /// No description provided for @fullNameRequired.
   ///
@@ -245,6 +275,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your answer to the question above'**
   String get answerHint;
+
+  /// No description provided for @answerHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'This simple step helps protect the community from automated signups.'**
+  String get answerHelper;
 
   /// No description provided for @answerRequired.
   ///
@@ -273,8 +309,14 @@ abstract class AppLocalizations {
   /// No description provided for @resetLinkInstruction.
   ///
   /// In en, this message translates to:
-  /// **'Enter your email and we\'ll send you a reset link.'**
+  /// **'Enter your account email to receive a secure reset link.'**
   String get resetLinkInstruction;
+
+  /// No description provided for @resetEmailHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'We send the link only if the email is registered.'**
+  String get resetEmailHelper;
 
   /// No description provided for @sendResetLink.
   ///
@@ -323,6 +365,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Paste the token from your email'**
   String get resetTokenHint;
+
+  /// No description provided for @resetTokenHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the exact token received by email before setting the new password.'**
+  String get resetTokenHelper;
 
   /// No description provided for @tokenRequired.
   ///
@@ -411,7 +459,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeIntro.
   ///
   /// In en, this message translates to:
-  /// **'Query agroecological knowledge, explore documents, and follow the community in a free software AI platform.'**
+  /// **'Ask questions with traceable sources, explore curated documents, and help the community grow an open agroecology knowledge base.'**
   String get homeIntro;
 
   /// No description provided for @localePt.
@@ -447,7 +495,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Ask questions about agroecology'**
+  /// **'Ask in natural language and get answers grounded in curated documents, with sources you can verify.'**
   String get chatSubtitle;
 
   /// No description provided for @newChat.
@@ -456,11 +504,41 @@ abstract class AppLocalizations {
   /// **'New chat'**
   String get newChat;
 
+  /// No description provided for @newChatTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Clears the current conversation and starts a new question from scratch.'**
+  String get newChatTooltip;
+
   /// No description provided for @askPlaceholder.
   ///
   /// In en, this message translates to:
   /// **'Ask a question...'**
   String get askPlaceholder;
+
+  /// No description provided for @sendQuestionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Send your question to the knowledge base.'**
+  String get sendQuestionTooltip;
+
+  /// No description provided for @chatGuidanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'For better answers'**
+  String get chatGuidanceTitle;
+
+  /// No description provided for @chatGuidanceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Include context, territory, crop, observed issue, or goal. The AI searches relevant passages and shows sources when available.'**
+  String get chatGuidanceBody;
+
+  /// No description provided for @chatSourcesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Answers prioritize indexed knowledge-base documents. Always check the sources before making technical decisions.'**
+  String get chatSourcesTooltip;
 
   /// No description provided for @thinking.
   ///
@@ -495,7 +573,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatEmptySubtitle.
   ///
   /// In en, this message translates to:
-  /// **'The AI answers from the knowledge base,\nkeeping sources traceable.'**
+  /// **'Try asking about management, soil, seeds, agroforestry, public policy, or community practices.'**
   String get chatEmptySubtitle;
 
   /// No description provided for @chatError.
@@ -509,6 +587,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get profileTitle;
+
+  /// No description provided for @profileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show who you are, connect your contributions, and keep control of your data.'**
+  String get profileSubtitle;
 
   /// No description provided for @profileNotAuth.
   ///
@@ -527,6 +611,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Profile'**
   String get editProfile;
+
+  /// No description provided for @editProfileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the information that helps others understand your connection with agroecology.'**
+  String get editProfileSubtitle;
+
+  /// No description provided for @profileVisibilityTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Active profiles may appear in the community. Edit only information you want to make public.'**
+  String get profileVisibilityTooltip;
 
   /// No description provided for @joined.
   ///
@@ -591,8 +687,26 @@ abstract class AppLocalizations {
   /// No description provided for @aboutHint.
   ///
   /// In en, this message translates to:
-  /// **'Tell the community about yourself'**
+  /// **'Share your work, territory, research, organization, or agroecological practice'**
   String get aboutHint;
+
+  /// No description provided for @aboutHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'A clear summary helps others understand your context and contributions.'**
+  String get aboutHelper;
+
+  /// No description provided for @linkHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a website, institutional profile, project, or public reference related to your work.'**
+  String get linkHelper;
+
+  /// No description provided for @avatarTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a profile image. Only the chosen image will be uploaded.'**
+  String get avatarTooltip;
 
   /// No description provided for @imageTooLarge.
   ///
@@ -618,6 +732,12 @@ abstract class AppLocalizations {
   /// **'Community'**
   String get communityTitle;
 
+  /// No description provided for @communitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find people and organizations contributing documents, practices, and agroecological knowledge.'**
+  String get communitySubtitle;
+
   /// No description provided for @communityEmpty.
   ///
   /// In en, this message translates to:
@@ -627,8 +747,14 @@ abstract class AppLocalizations {
   /// No description provided for @communityEmptySub.
   ///
   /// In en, this message translates to:
-  /// **'Be the first to join!'**
+  /// **'Create a profile and suggest documents to start building the network.'**
   String get communityEmptySub;
+
+  /// No description provided for @searchCommunityTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or public identifier.'**
+  String get searchCommunityTooltip;
 
   /// No description provided for @approvedSuggestions.
   ///
@@ -636,11 +762,35 @@ abstract class AppLocalizations {
   /// **'Approved Suggestions'**
   String get approvedSuggestions;
 
+  /// No description provided for @approvedSuggestionsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of documents suggested by this person that were approved for the knowledge base.'**
+  String get approvedSuggestionsTooltip;
+
   /// No description provided for @aboutPageTitle.
   ///
   /// In en, this message translates to:
   /// **'About'**
   String get aboutPageTitle;
+
+  /// No description provided for @aboutPageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A free software tool to research, verify, and strengthen agroecological knowledge.'**
+  String get aboutPageSubtitle;
+
+  /// No description provided for @aboutValueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Core value'**
+  String get aboutValueTitle;
+
+  /// No description provided for @aboutValueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The platform combines AI, curated documents, and community participation to make agroecological references easier to find and verify.'**
+  String get aboutValueBody;
 
   /// No description provided for @aboutText1.
   ///
@@ -678,11 +828,23 @@ abstract class AppLocalizations {
   /// **'My Suggestions'**
   String get mySuggestions;
 
+  /// No description provided for @suggestionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track submitted documents, review status, and materials that may enter the public knowledge base.'**
+  String get suggestionsSubtitle;
+
   /// No description provided for @knowledgeBase.
   ///
   /// In en, this message translates to:
   /// **'Knowledge Base'**
   String get knowledgeBase;
+
+  /// No description provided for @kbSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the documents that ground AI answers and see which ones are already indexed for search.'**
+  String get kbSubtitle;
 
   /// No description provided for @suggestDocument.
   ///
@@ -702,11 +864,35 @@ abstract class AppLocalizations {
   /// **'New Suggestion'**
   String get newSuggestion;
 
+  /// No description provided for @newSuggestionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send relevant materials to expand the coverage of the knowledge base.'**
+  String get newSuggestionSubtitle;
+
+  /// No description provided for @suggestionReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How review works'**
+  String get suggestionReviewTitle;
+
+  /// No description provided for @suggestionReviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The team checks relevance, quality, and fit before approving a document for public consultation.'**
+  String get suggestionReviewBody;
+
   /// No description provided for @selectPdf.
   ///
   /// In en, this message translates to:
   /// **'Select PDF file'**
   String get selectPdf;
+
+  /// No description provided for @pdfUploadTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a readable PDF, preferably with title, authorship, and useful content for consultation.'**
+  String get pdfUploadTooltip;
 
   /// No description provided for @pdfOnly.
   ///
@@ -735,8 +921,14 @@ abstract class AppLocalizations {
   /// No description provided for @commentHint.
   ///
   /// In en, this message translates to:
-  /// **'Why are you suggesting this document?'**
+  /// **'Explain why this document matters for agroecology'**
   String get commentHint;
+
+  /// No description provided for @commentHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Say where the material comes from, who it helps, and why it should enter the base.'**
+  String get commentHelper;
 
   /// No description provided for @commentRequired.
   ///
@@ -791,6 +983,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Suggest a document to help grow the knowledge base.'**
   String get noSuggestionsSub;
+
+  /// No description provided for @suggestionStatusTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending waits for review; approved enters the knowledge-base flow; rejected needs changes or does not fit.'**
+  String get suggestionStatusTooltip;
 
   /// No description provided for @allStatus.
   ///
@@ -870,6 +1068,12 @@ abstract class AppLocalizations {
   /// **'Search documents...'**
   String get searchDocuments;
 
+  /// No description provided for @searchDocumentsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by title, authorship, or filename.'**
+  String get searchDocumentsTooltip;
+
   /// No description provided for @indexedCount.
   ///
   /// In en, this message translates to:
@@ -888,11 +1092,41 @@ abstract class AppLocalizations {
   /// **'{count} indexed documents'**
   String indexedDocsCount(int count);
 
+  /// No description provided for @kbIndexedTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Indexed documents can already be found by chat. Non-indexed files can still be read manually.'**
+  String get kbIndexedTooltip;
+
   /// No description provided for @documentDetail.
   ///
   /// In en, this message translates to:
   /// **'Document Detail'**
   String get documentDetail;
+
+  /// No description provided for @documentIndexedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Available to AI'**
+  String get documentIndexedTitle;
+
+  /// No description provided for @documentIndexedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This document has been indexed and may be used to ground chat answers.'**
+  String get documentIndexedBody;
+
+  /// No description provided for @documentNotIndexedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not indexed yet'**
+  String get documentNotIndexedTitle;
+
+  /// No description provided for @documentNotIndexedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The file is available for reading, but it is not yet used in AI answers.'**
+  String get documentNotIndexedBody;
 
   /// No description provided for @download.
   ///
@@ -1013,6 +1247,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Data & Privacy'**
   String get dataAndPrivacy;
+
+  /// No description provided for @dataAndPrivacySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export your data when needed and request account deletion with email confirmation.'**
+  String get dataAndPrivacySubtitle;
 
   /// No description provided for @exportMyData.
   ///

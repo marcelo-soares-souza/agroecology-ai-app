@@ -75,7 +75,7 @@ class _AgroecologyMapAppState extends ConsumerState<AgroecologyMapApp> {
     final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(
-      title: 'Agroecology Map AI',
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       locale: _localeFromString(locale),

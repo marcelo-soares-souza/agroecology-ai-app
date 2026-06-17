@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_tokens.dart';
+import '../../../../core/ui/components.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../controllers/chat_controller.dart';
@@ -82,6 +83,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ),
         ChatComposer(
           hint: l10n.askPlaceholder,
+          sendTooltip: l10n.sendQuestionTooltip,
           enabled: !chatState.isSending,
           onSend: (text) {
             ref.read(chatControllerProvider.notifier).sendMessage(text);
@@ -97,24 +99,49 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     ChatState state,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
       decoration: const BoxDecoration(
         color: AppColors.surface,
         border: Border(
           bottom: BorderSide(color: AppColors.primary100, width: 1),
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Spacer(),
-          TextButton.icon(
-            onPressed: state.isSending
-                ? null
-                : () => ref.read(chatControllerProvider.notifier).clearChat(),
-            icon: const Icon(Icons.add, size: 10),
-            label: Text(
-              l10n.newChat,
-              style: const TextStyle(fontSize: 10),
+          PageIntro(
+            title: l10n.chatTitle,
+            subtitle: l10n.chatSubtitle,
+            icon: Icons.chat_bubble_outline,
+          ),
+          if (state.messages.isEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+              child: InfoCallout(
+                icon: Icons.travel_explore,
+                title: l10n.chatGuidanceTitle,
+                body: l10n.chatGuidanceBody,
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            child: Row(
+              children: [
+                HelpTooltip(message: l10n.chatSourcesTooltip),
+                const Spacer(),
+                Tooltip(
+                  message: l10n.newChatTooltip,
+                  triggerMode: TooltipTriggerMode.tap,
+                  child: TextButton.icon(
+                    onPressed: state.isSending
+                        ? null
+                        : () => ref
+                              .read(chatControllerProvider.notifier)
+                              .clearChat(),
+                    icon: const Icon(Icons.add, size: 16),
+                    label: Text(l10n.newChat),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

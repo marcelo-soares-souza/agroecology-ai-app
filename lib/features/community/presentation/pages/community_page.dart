@@ -70,6 +70,11 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
 
     return Column(
       children: [
+        PageIntro(
+          title: l10n.communityTitle,
+          subtitle: l10n.communitySubtitle,
+          icon: Icons.people_outline,
+        ),
         _buildSearchBar(l10n),
         Expanded(child: _buildContent(l10n)),
       ],
@@ -90,6 +95,14 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
         decoration: InputDecoration(
           hintText: l10n.searchCommunity,
           prefixIcon: const Icon(Icons.search, size: 20),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: HelpTooltip(message: l10n.searchCommunityTooltip),
+          ),
+          suffixIconConstraints: const BoxConstraints(
+            minWidth: 36,
+            minHeight: 36,
+          ),
           isDense: true,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 12,
@@ -180,33 +193,37 @@ class _CommunityListPageState extends ConsumerState<CommunityListPage> {
                     ),
                   ),
                   if (user.approvedSuggestionsCount > 0)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary100,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.lightbulb_outline,
-                            size: 14,
-                            color: AppColors.primary700,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${user.approvedSuggestionsCount}',
-                            style: const TextStyle(
-                              fontSize: AppTokens.microSize,
-                              fontWeight: FontWeight.w600,
+                    Tooltip(
+                      message: l10n.approvedSuggestionsTooltip,
+                      triggerMode: TooltipTriggerMode.tap,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary100,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.lightbulb_outline,
+                              size: 14,
                               color: AppColors.primary700,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 4),
+                            Text(
+                              '${user.approvedSuggestionsCount}',
+                              style: const TextStyle(
+                                fontSize: AppTokens.microSize,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primary700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                 ],
@@ -308,14 +325,20 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    StatusBadge.active(label: _resolveStatusLabel(user.status, l10n)),
+                    HelpTooltip(message: l10n.profileVisibilityTooltip),
+                    const SizedBox(width: 8),
+                    StatusBadge.active(
+                      label: _resolveStatusLabel(user.status, l10n),
+                    ),
                     const SizedBox(width: 8),
                     ...user.roles.map(
                       (r) => Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: r == 'admin'
                             ? StatusBadge.admin(label: l10n.roleAdmin)
-                            : StatusBadge.info(label: _resolveRoleLabel(r, l10n)),
+                            : StatusBadge.info(
+                                label: _resolveRoleLabel(r, l10n),
+                              ),
                       ),
                     ),
                   ],
@@ -430,6 +453,8 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                           color: AppColors.textPrimary,
                         ),
                       ),
+                      const Spacer(),
+                      HelpTooltip(message: l10n.approvedSuggestionsTooltip),
                     ],
                   ),
                   const SizedBox(height: 12),
@@ -499,15 +524,23 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                                 children: [
                                   if (fileType.isNotEmpty)
                                     _docBadge(fileType, AppColors.info),
-                                  if (fileType.isNotEmpty && fileSize.isNotEmpty)
+                                  if (fileType.isNotEmpty &&
+                                      fileSize.isNotEmpty)
                                     const SizedBox(width: 6),
                                   if (fileSize.isNotEmpty)
-                                    _docBadge(fileSize, AppColors.textSecondary),
-                                  if ((fileType.isNotEmpty || fileSize.isNotEmpty) && (s['document_id'] != null || ingested))
+                                    _docBadge(
+                                      fileSize,
+                                      AppColors.textSecondary,
+                                    ),
+                                  if ((fileType.isNotEmpty ||
+                                          fileSize.isNotEmpty) &&
+                                      (s['document_id'] != null || ingested))
                                     const SizedBox(width: 6),
                                   _docBadge(
                                     ingested ? l10n.ingested : l10n.notIngested,
-                                    ingested ? AppColors.success : AppColors.warning,
+                                    ingested
+                                        ? AppColors.success
+                                        : AppColors.warning,
                                   ),
                                 ],
                               ),

@@ -142,6 +142,7 @@ class AppButton extends StatelessWidget {
 class AppTextField extends StatelessWidget {
   final String? label;
   final String? hint;
+  final String? helperText;
   final String? errorText;
   final bool obscureText;
   final TextInputType? keyboardType;
@@ -158,6 +159,7 @@ class AppTextField extends StatelessWidget {
     super.key,
     this.label,
     this.hint,
+    this.helperText,
     this.errorText,
     this.obscureText = false,
     this.keyboardType,
@@ -178,6 +180,7 @@ class AppTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
+        helperText: helperText,
         errorText: errorText,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
@@ -189,6 +192,143 @@ class AppTextField extends StatelessWidget {
       maxLength: maxLength,
       onChanged: onChanged,
       validator: validator,
+    );
+  }
+}
+
+class PageIntro extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData? icon;
+
+  const PageIntro({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (icon != null) ...[
+            Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: AppColors.primary50,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: AppColors.primary, size: 22),
+            ),
+            const SizedBox(width: 12),
+          ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: AppTokens.pageTitleSize,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    fontSize: AppTokens.bodySmallSize,
+                    color: AppColors.textSecondary,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoCallout extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String body;
+
+  const InfoCallout({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.body,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.primary50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.primary100),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 20, color: AppColors.primary),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: AppTokens.metaSize,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primary700,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  body,
+                  style: const TextStyle(
+                    fontSize: AppTokens.metaSize,
+                    color: AppColors.textSecondary,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HelpTooltip extends StatelessWidget {
+  final String message;
+
+  const HelpTooltip({super.key, required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: message,
+      triggerMode: TooltipTriggerMode.tap,
+      showDuration: const Duration(seconds: 5),
+      child: const Icon(
+        Icons.info_outline,
+        size: 18,
+        color: AppColors.textSecondary,
+      ),
     );
   }
 }

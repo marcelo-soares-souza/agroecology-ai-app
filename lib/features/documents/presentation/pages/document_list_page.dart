@@ -70,6 +70,11 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
 
     return Column(
       children: [
+        PageIntro(
+          title: l10n.kbTitle,
+          subtitle: l10n.kbSubtitle,
+          icon: Icons.menu_book_outlined,
+        ),
         _buildSearchBar(l10n),
         Expanded(child: _buildContent(l10n)),
       ],
@@ -90,6 +95,14 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
         decoration: InputDecoration(
           hintText: l10n.searchDocuments,
           prefixIcon: const Icon(Icons.search, size: 20),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: HelpTooltip(message: l10n.searchDocumentsTooltip),
+          ),
+          suffixIconConstraints: const BoxConstraints(
+            minWidth: 36,
+            minHeight: 36,
+          ),
           isDense: true,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 12,
@@ -171,6 +184,7 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
                         ),
                       ),
                     ),
+                    HelpTooltip(message: l10n.kbIndexedTooltip),
                   ],
                 ),
               ),

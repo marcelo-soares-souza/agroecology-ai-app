@@ -71,7 +71,16 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
               color: AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 4),
+          Text(
+            l10n.suggestionsSubtitle,
+            style: const TextStyle(
+              fontSize: AppTokens.bodySmallSize,
+              color: AppColors.textSecondary,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 8),
           Text(
             '${state.suggestions.length} ${l10n.suggestionCountLabel}',
             style: const TextStyle(
@@ -225,7 +234,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      _buildStatusBadge(s),
+                      _buildStatusBadge(s, l10n),
                     ],
                   ),
                   if (s.originalFilename != null) ...[
@@ -290,7 +299,7 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
     );
   }
 
-  Widget _buildStatusBadge(DocumentSuggestion s) {
+  Widget _buildStatusBadge(DocumentSuggestion s, AppLocalizations l10n) {
     final color = s.isApproved
         ? AppColors.success
         : s.isRejected
@@ -303,20 +312,28 @@ class _SuggestionListPageState extends ConsumerState<SuggestionListPage> {
         ? const Color(0xFFfecaca)
         : AppColors.primary100;
 
-    final label = s.status.name;
+    final label = s.isApproved
+        ? l10n.statusApproved
+        : s.isRejected
+        ? l10n.statusRejected
+        : l10n.statusPending;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: AppTokens.microSize,
-          fontWeight: FontWeight.w500,
-          color: color,
+    return Tooltip(
+      message: l10n.suggestionStatusTooltip,
+      triggerMode: TooltipTriggerMode.tap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: AppTokens.microSize,
+            fontWeight: FontWeight.w500,
+            color: color,
+          ),
         ),
       ),
     );

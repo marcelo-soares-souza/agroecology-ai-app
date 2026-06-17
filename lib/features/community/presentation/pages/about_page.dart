@@ -17,6 +17,12 @@ class AboutPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          PageIntro(
+            title: l10n.aboutPageTitle,
+            subtitle: l10n.aboutPageSubtitle,
+            icon: Icons.info_outline,
+          ),
+          const SizedBox(height: 4),
           AppCard(
             padding: const EdgeInsets.all(24),
             child: Column(
@@ -54,6 +60,12 @@ class AboutPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
+          InfoCallout(
+            icon: Icons.verified_outlined,
+            title: l10n.aboutValueTitle,
+            body: l10n.aboutValueBody,
+          ),
+          const SizedBox(height: 12),
           _AboutInfoBlock(
             icon: Icons.auto_awesome_outlined,
             text: l10n.aboutText2,

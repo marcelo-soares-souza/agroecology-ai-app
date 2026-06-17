@@ -4,12 +4,14 @@ import '../../../../core/theme/app_theme.dart';
 
 class ChatComposer extends StatefulWidget {
   final String hint;
+  final String sendTooltip;
   final bool enabled;
   final ValueChanged<String> onSend;
 
   const ChatComposer({
     super.key,
     required this.hint,
+    required this.sendTooltip,
     required this.enabled,
     required this.onSend,
   });
@@ -104,6 +106,7 @@ class _ChatComposerState extends State<ChatComposer> {
               shape: BoxShape.circle,
             ),
             child: IconButton(
+              tooltip: widget.sendTooltip,
               icon: const Icon(
                 Icons.send_rounded,
                 size: 18,

@@ -129,6 +129,18 @@ class _SuggestionCreatePageState extends ConsumerState<SuggestionCreatePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          PageIntro(
+            title: l10n.newSuggestion,
+            subtitle: l10n.newSuggestionSubtitle,
+            icon: Icons.lightbulb_outline,
+          ),
+          const SizedBox(height: 4),
+          InfoCallout(
+            icon: Icons.fact_check_outlined,
+            title: l10n.suggestionReviewTitle,
+            body: l10n.suggestionReviewBody,
+          ),
+          const SizedBox(height: 16),
           if (_error != null) ...[
             Container(
               padding: const EdgeInsets.all(12),
@@ -158,52 +170,56 @@ class _SuggestionCreatePageState extends ConsumerState<SuggestionCreatePage> {
             ),
             const SizedBox(height: 16),
           ],
-          GestureDetector(
-            onTap: _pickFile,
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: AppColors.primary50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: _filePath != null
-                      ? AppColors.success
-                      : AppColors.primary200,
-                  width: 2,
-                  strokeAlign: BorderSide.strokeAlignInside,
-                ),
-              ),
-              child: Column(
-                children: [
-                  Icon(
-                    _filePath != null
-                        ? Icons.check_circle
-                        : Icons.cloud_upload_outlined,
-                    size: 36,
+          Tooltip(
+            message: l10n.pdfUploadTooltip,
+            triggerMode: TooltipTriggerMode.tap,
+            child: GestureDetector(
+              onTap: _pickFile,
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: AppColors.primary50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
                     color: _filePath != null
                         ? AppColors.success
-                        : AppColors.primary,
+                        : AppColors.primary200,
+                    width: 2,
+                    strokeAlign: BorderSide.strokeAlignInside,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _fileName ?? l10n.selectPdf,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                ),
+                child: Column(
+                  children: [
+                    Icon(
+                      _filePath != null
+                          ? Icons.check_circle
+                          : Icons.cloud_upload_outlined,
+                      size: 36,
                       color: _filePath != null
                           ? AppColors.success
-                          : AppColors.textSecondary,
+                          : AppColors.primary,
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    l10n.pdfOnly,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.textSecondary,
+                    const SizedBox(height: 8),
+                    Text(
+                      _fileName ?? l10n.selectPdf,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: _filePath != null
+                            ? AppColors.success
+                            : AppColors.textSecondary,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 4),
+                    Text(
+                      l10n.pdfOnly,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -213,6 +229,7 @@ class _SuggestionCreatePageState extends ConsumerState<SuggestionCreatePage> {
             decoration: InputDecoration(
               labelText: l10n.commentLabel,
               hintText: l10n.commentHint,
+              helperText: l10n.commentHelper,
               prefixIcon: const Icon(Icons.chat_outlined),
             ),
             maxLines: 4,

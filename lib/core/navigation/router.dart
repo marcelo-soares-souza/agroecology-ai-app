@@ -60,7 +60,8 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       GoRoute(
         path: '/register',
         name: 'register',
-        builder: (context, state) => const _AuthScaffold(child: _RegisterPage()),
+        builder: (context, state) =>
+            const _AuthScaffold(child: _RegisterPage()),
       ),
       GoRoute(
         path: '/forgot-password',
@@ -239,10 +240,7 @@ class _ShellPage extends ConsumerWidget {
   final Widget child;
   final VoidCallback onLogout;
 
-  const _ShellPage({
-    required this.child,
-    required this.onLogout,
-  });
+  const _ShellPage({required this.child, required this.onLogout});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -457,7 +455,8 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
-    final isSuccessMessage = auth.errorMessage == 'registrationSuccess' ||
+    final isSuccessMessage =
+        auth.errorMessage == 'registrationSuccess' ||
         auth.errorMessage == 'passwordResetSuccess' ||
         auth.errorMessage == 'resetLinkSent';
 
@@ -469,169 +468,174 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
             child: AutofillGroup(
               child: Form(
                 key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Center(
-                    child: Image.asset(
-                      'assets/logo.png',
-                      width: 64,
-                      height: 64,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    l10n.signIn,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1c1917),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    l10n.signInWelcome,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF78716c),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 32),
-                  if (auth.errorMessage != null) ...[
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: isSuccessMessage
-                            ? const Color(0xFFdcfce7)
-                            : const Color(0xFFfecaca),
-                        borderRadius: BorderRadius.circular(12),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        'assets/logo.png',
+                        width: 64,
+                        height: 64,
                       ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            isSuccessMessage
-                                ? Icons.check_circle_outline
-                                : Icons.error_outline,
-                            size: 18,
-                            color: isSuccessMessage
-                                ? const Color(0xFF16a34a)
-                                : const Color(0xFFdc2626),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              _resolveError(l10n, auth.errorMessage!),
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: isSuccessMessage
-                                    ? const Color(0xFF166534)
-                                    : const Color(0xFF991b1b),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      l10n.signIn,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF1c1917),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.signInWelcome,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF78716c),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 32),
+                    if (auth.errorMessage != null) ...[
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: isSuccessMessage
+                              ? const Color(0xFFdcfce7)
+                              : const Color(0xFFfecaca),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              isSuccessMessage
+                                  ? Icons.check_circle_outline
+                                  : Icons.error_outline,
+                              size: 18,
+                              color: isSuccessMessage
+                                  ? const Color(0xFF16a34a)
+                                  : const Color(0xFFdc2626),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                _resolveError(l10n, auth.errorMessage!),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: isSuccessMessage
+                                      ? const Color(0xFF166534)
+                                      : const Color(0xFF991b1b),
+                                ),
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    TextFormField(
+                      controller: _emailController,
+                      autofillHints: const [AutofillHints.email],
+                      decoration: InputDecoration(
+                        labelText: l10n.emailLabel,
+                        hintText: l10n.emailHint,
+                        helperText: l10n.emailHelper,
+                        prefixIcon: const Icon(Icons.email_outlined),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return l10n.emailRequired;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _passwordController,
+                      autofillHints: const [AutofillHints.password],
+                      decoration: InputDecoration(
+                        labelText: l10n.passwordLabel,
+                        hintText: l10n.passwordHint,
+                        helperText: l10n.passwordHelper,
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        suffixIcon: IconButton(
+                          tooltip: l10n.passwordVisibilityTooltip,
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
-                        ],
+                          onPressed: () {
+                            setState(
+                              () => _obscurePassword = !_obscurePassword,
+                            );
+                          },
+                        ),
+                      ),
+                      obscureText: _obscurePassword,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (_) => _handleLogin(),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return l10n.passwordRequired;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () => context.push('/forgot-password'),
+                        child: Text(l10n.forgotPassword),
                       ),
                     ),
                     const SizedBox(height: 16),
-                  ],
-                  TextFormField(
-                    controller: _emailController,
-                    autofillHints: const [AutofillHints.email],
-                    decoration: InputDecoration(
-                      labelText: l10n.emailLabel,
-                      hintText: l10n.emailHint,
-                      prefixIcon: const Icon(Icons.email_outlined),
+                    ElevatedButton(
+                      onPressed: auth.isLoading ? null : _handleLogin,
+                      child: auth.isLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Text(l10n.signInButton),
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return l10n.emailRequired;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _passwordController,
-                    autofillHints: const [AutofillHints.password],
-                    decoration: InputDecoration(
-                      labelText: l10n.passwordLabel,
-                      hintText: l10n.passwordHint,
-                      prefixIcon: const Icon(Icons.lock_outline),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() => _obscurePassword = !_obscurePassword);
-                        },
-                      ),
-                    ),
-                    obscureText: _obscurePassword,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (_) => _handleLogin(),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return l10n.passwordRequired;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () => context.push('/forgot-password'),
-                      child: Text(l10n.forgotPassword),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: auth.isLoading ? null : _handleLogin,
-                    child: auth.isLoading
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : Text(l10n.signInButton),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        l10n.noAccount,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF78716c),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => context.push('/register'),
-                        child: Text(
-                          l10n.register,
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          l10n.noAccount,
                           style: const TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFFd97706),
+                            color: Color(0xFF78716c),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        GestureDetector(
+                          onTap: () => context.push('/register'),
+                          child: Text(
+                            l10n.register,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFFd97706),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
             ),
           ),
         ),
@@ -705,7 +709,8 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final auth = ref.watch(authControllerProvider);
-    final isSuccessMessage = auth.errorMessage == 'registrationSuccess' ||
+    final isSuccessMessage =
+        auth.errorMessage == 'registrationSuccess' ||
         auth.errorMessage == 'passwordResetSuccess' ||
         auth.errorMessage == 'resetLinkSent';
 
@@ -724,16 +729,16 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
           padding: const EdgeInsets.all(24),
           child: AutofillGroup(
             child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/logo.png',
-                    width: 64,
-                    height: 64,
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      'assets/logo.png',
+                      width: 64,
+                      height: 64,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -760,31 +765,31 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                      color: isSuccessMessage
-                          ? const Color(0xFFdcfce7)
-                          : const Color(0xFFfecaca),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          isSuccessMessage
-                              ? Icons.check_circle_outline
-                              : Icons.error_outline,
-                          size: 18,
-                          color: isSuccessMessage
-                              ? const Color(0xFF16a34a)
-                              : const Color(0xFFdc2626),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            _resolveError(l10n, auth.errorMessage!),
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: isSuccessMessage
-                                  ? const Color(0xFF166534)
-                                  : const Color(0xFF991b1b),
+                        color: isSuccessMessage
+                            ? const Color(0xFFdcfce7)
+                            : const Color(0xFFfecaca),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            isSuccessMessage
+                                ? Icons.check_circle_outline
+                                : Icons.error_outline,
+                            size: 18,
+                            color: isSuccessMessage
+                                ? const Color(0xFF16a34a)
+                                : const Color(0xFFdc2626),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              _resolveError(l10n, auth.errorMessage!),
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: isSuccessMessage
+                                    ? const Color(0xFF166534)
+                                    : const Color(0xFF991b1b),
                               ),
                             ),
                           ),
@@ -799,6 +804,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     decoration: InputDecoration(
                       labelText: l10n.fullNameLabel,
                       hintText: l10n.fullNameHint,
+                      helperText: l10n.fullNameHelper,
                       prefixIcon: const Icon(Icons.person_outline),
                     ),
                     textInputAction: TextInputAction.next,
@@ -819,6 +825,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     decoration: InputDecoration(
                       labelText: l10n.emailLabel,
                       hintText: l10n.emailHint,
+                      helperText: l10n.emailHelper,
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     keyboardType: TextInputType.emailAddress,
@@ -837,8 +844,10 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     decoration: InputDecoration(
                       labelText: l10n.passwordLabel,
                       hintText: l10n.newPasswordHint,
+                      helperText: l10n.newPasswordHelper,
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
+                        tooltip: l10n.passwordVisibilityTooltip,
                         icon: Icon(
                           _obscurePassword
                               ? Icons.visibility_off
@@ -896,6 +905,7 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                       decoration: InputDecoration(
                         labelText: l10n.answerLabel,
                         hintText: l10n.answerHint,
+                        helperText: l10n.answerHelper,
                         prefixIcon: const Icon(Icons.edit_outlined),
                       ),
                       textInputAction: TextInputAction.done,
@@ -1029,9 +1039,9 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                 ],
               ),
             ),
-            ),
           ),
         ),
+      ),
     );
   }
 
@@ -1099,6 +1109,7 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
                   decoration: InputDecoration(
                     labelText: l10n.emailLabel,
                     hintText: l10n.emailHint,
+                    helperText: l10n.resetEmailHelper,
                     prefixIcon: const Icon(Icons.email_outlined),
                   ),
                   keyboardType: TextInputType.emailAddress,
@@ -1153,7 +1164,9 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
       );
     } catch (_) {}
 
-    ref.read(authControllerProvider.notifier).showSuccessMessage('resetLinkSent');
+    ref
+        .read(authControllerProvider.notifier)
+        .showSuccessMessage('resetLinkSent');
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) context.go('/login');
     });
@@ -1191,8 +1204,8 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
         padding: const EdgeInsets.all(24),
         child: AutofillGroup(
           child: Form(
-          key: _formKey,
-          child: Column(
+            key: _formKey,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
@@ -1204,81 +1217,84 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
                 ),
                 if (_error != null) ...[
                   const SizedBox(height: 16),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFfecaca),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.error_outline,
-                            size: 18,
-                            color: Color(0xFFdc2626),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              _error!,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: Color(0xFF991b1b),
-                              ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFfecaca),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          size: 18,
+                          color: Color(0xFFdc2626),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _error!,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Color(0xFF991b1b),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 24),
-                  TextFormField(
-                    controller: _tokenController,
-                    autofillHints: const [AutofillHints.oneTimeCode],
-                    decoration: InputDecoration(
-                      labelText: l10n.resetTokenLabel,
-                      hintText: l10n.resetTokenHint,
-                      prefixIcon: const Icon(Icons.key),
-                    ),
-                    textInputAction: TextInputAction.next,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return l10n.tokenRequired;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _passwordController,
-                    autofillHints: const [AutofillHints.newPassword],
-                    decoration: InputDecoration(
-                      labelText: l10n.newPasswordLabel,
-                      hintText: l10n.newPasswordHint,
-                      prefixIcon: const Icon(Icons.lock_outline),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
                         ),
-                        onPressed: () {
-                          setState(() => _obscurePassword = !_obscurePassword);
-                        },
-                      ),
+                      ],
                     ),
-                    obscureText: _obscurePassword,
-                    textInputAction: TextInputAction.done,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return l10n.passwordRequired;
-                      }
-                      if (value.length < 8) {
-                        return l10n.passwordMinLength;
-                      }
-                      return null;
-                    },
                   ),
+                ],
+                const SizedBox(height: 24),
+                TextFormField(
+                  controller: _tokenController,
+                  autofillHints: const [AutofillHints.oneTimeCode],
+                  decoration: InputDecoration(
+                    labelText: l10n.resetTokenLabel,
+                    hintText: l10n.resetTokenHint,
+                    helperText: l10n.resetTokenHelper,
+                    prefixIcon: const Icon(Icons.key),
+                  ),
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return l10n.tokenRequired;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _passwordController,
+                  autofillHints: const [AutofillHints.newPassword],
+                  decoration: InputDecoration(
+                    labelText: l10n.newPasswordLabel,
+                    hintText: l10n.newPasswordHint,
+                    helperText: l10n.newPasswordHelper,
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    suffixIcon: IconButton(
+                      tooltip: l10n.passwordVisibilityTooltip,
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        setState(() => _obscurePassword = !_obscurePassword);
+                      },
+                    ),
+                  ),
+                  obscureText: _obscurePassword,
+                  textInputAction: TextInputAction.done,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return l10n.passwordRequired;
+                    }
+                    if (value.length < 8) {
+                      return l10n.passwordMinLength;
+                    }
+                    return null;
+                  },
+                ),
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: _loading ? null : _handleSubmit,
@@ -1304,8 +1320,8 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
               ],
             ),
           ),
-          ),
         ),
+      ),
     );
   }
 

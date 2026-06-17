@@ -139,6 +139,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          PageIntro(
+            title: l10n.profileTitle,
+            subtitle: l10n.profileSubtitle,
+            icon: Icons.person_outline,
+          ),
+          const SizedBox(height: 4),
           AppCard(
             child: Column(
               children: [
@@ -166,6 +172,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    HelpTooltip(message: l10n.profileVisibilityTooltip),
+                    const SizedBox(width: 8),
                     StatusBadge.active(
                       label: resolveStatusLabel(
                         profile?.status ?? 'active',
@@ -291,7 +299,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     const SizedBox(height: 12),
                     ..._suggestions!.map((s) {
                       final authors = s['authors'] as String?;
-                      final fileType = _formatFileType(s['file_type'] as String?);
+                      final fileType = _formatFileType(
+                        s['file_type'] as String?,
+                      );
                       final fileSize = _formatFileSize(s['file_size'] as int?);
                       final ingested = s['ingested'] as bool? ?? false;
                       return Padding(
@@ -356,15 +366,25 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                   children: [
                                     if (fileType.isNotEmpty)
                                       _docBadge(fileType, AppColors.info),
-                                    if (fileType.isNotEmpty && fileSize.isNotEmpty)
+                                    if (fileType.isNotEmpty &&
+                                        fileSize.isNotEmpty)
                                       const SizedBox(width: 6),
                                     if (fileSize.isNotEmpty)
-                                      _docBadge(fileSize, AppColors.textSecondary),
-                                    if ((fileType.isNotEmpty || fileSize.isNotEmpty) && (s['document_id'] != null || ingested))
+                                      _docBadge(
+                                        fileSize,
+                                        AppColors.textSecondary,
+                                      ),
+                                    if ((fileType.isNotEmpty ||
+                                            fileSize.isNotEmpty) &&
+                                        (s['document_id'] != null || ingested))
                                       const SizedBox(width: 6),
                                     _docBadge(
-                                      ingested ? l10n.ingested : l10n.notIngested,
-                                      ingested ? AppColors.success : AppColors.warning,
+                                      ingested
+                                          ? l10n.ingested
+                                          : l10n.notIngested,
+                                      ingested
+                                          ? AppColors.success
+                                          : AppColors.warning,
                                     ),
                                   ],
                                 ),
@@ -389,6 +409,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    l10n.dataAndPrivacySubtitle,
+                    style: const TextStyle(
+                      fontSize: AppTokens.metaSize,
+                      color: AppColors.textSecondary,
+                      height: 1.4,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -646,134 +675,148 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
         padding: const EdgeInsets.all(16),
         child: AutofillGroup(
           child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Stack(
-                  children: [
-                    AppAvatar(size: 80, imageUrl: profile?.avatarUrl),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: GestureDetector(
-                        onTap: _pickAndUploadAvatar,
-                        child: Container(
-                          width: 32,
-                          height: 32,
-                          decoration: const BoxDecoration(
-                            color: AppColors.primary,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.camera_alt,
-                            size: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PageIntro(
+                  title: l10n.editProfile,
+                  subtitle: l10n.editProfileSubtitle,
+                  icon: Icons.edit_outlined,
                 ),
-              ),
-              if (_error != null) ...[
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFfecaca),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
+                const SizedBox(height: 4),
+                Center(
+                  child: Stack(
                     children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 18,
-                        color: AppColors.error,
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          _error!,
-                          style: const TextStyle(
-                            fontSize: AppTokens.metaSize,
-                            color: Color(0xFF991b1b),
+                      AppAvatar(size: 80, imageUrl: profile?.avatarUrl),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Tooltip(
+                          message: l10n.avatarTooltip,
+                          triggerMode: TooltipTriggerMode.tap,
+                          child: GestureDetector(
+                            onTap: _pickAndUploadAvatar,
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              decoration: const BoxDecoration(
+                                color: AppColors.primary,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.camera_alt,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-              const SizedBox(height: 24),
-              TextFormField(
-                controller: _nameController,
-                autofillHints: const [AutofillHints.name],
-                decoration: InputDecoration(
-                  labelText: l10n.fullNameLabel,
-                  prefixIcon: const Icon(Icons.person_outline),
-                ),
-                validator: (v) {
-                  if (v == null || v.trim().isEmpty) {
-                    return l10n.nameRequired;
-                  }
-                  if (v.length > 200) {
-                    return l10n.fullNameMaxLength;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _aboutController,
-                decoration: InputDecoration(
-                  labelText: l10n.about,
-                  hintText: l10n.aboutHint,
-                  prefixIcon: const Icon(Icons.info_outline),
-                  counterText: '${_aboutController.text.length}/4096',
-                ),
-                maxLines: 5,
-                maxLength: AppConstants.aboutMaxLength,
-                validator: (v) {
-                  if (v != null && v.length > AppConstants.aboutMaxLength) {
-                    return l10n.aboutMaxLength(AppConstants.aboutMaxLength);
-                  }
-                  return null;
-                },
-                onChanged: (_) => setState(() {}),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _linkController,
-                autofillHints: const [AutofillHints.url],
-                decoration: InputDecoration(
-                  labelText: l10n.linkLabel,
-                  hintText: l10n.linkHint,
-                  prefixIcon: const Icon(Icons.link),
-                ),
-                keyboardType: TextInputType.url,
-                validator: (v) {
-                  if (v != null && v.trim().isNotEmpty) {
-                    if (!v.startsWith('http://') && !v.startsWith('https://')) {
-                      return l10n.linkValidation;
+                if (_error != null) ...[
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFfecaca),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          size: 18,
+                          color: AppColors.error,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _error!,
+                            style: const TextStyle(
+                              fontSize: AppTokens.metaSize,
+                              color: Color(0xFF991b1b),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 24),
+                TextFormField(
+                  controller: _nameController,
+                  autofillHints: const [AutofillHints.name],
+                  decoration: InputDecoration(
+                    labelText: l10n.fullNameLabel,
+                    helperText: l10n.fullNameHelper,
+                    prefixIcon: const Icon(Icons.person_outline),
+                  ),
+                  validator: (v) {
+                    if (v == null || v.trim().isEmpty) {
+                      return l10n.nameRequired;
                     }
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: AppButton.primary(
-                  label: l10n.save,
-                  onPressed: _saving ? null : _save,
-                  isLoading: _saving,
+                    if (v.length > 200) {
+                      return l10n.fullNameMaxLength;
+                    }
+                    return null;
+                  },
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _aboutController,
+                  decoration: InputDecoration(
+                    labelText: l10n.about,
+                    hintText: l10n.aboutHint,
+                    helperText: l10n.aboutHelper,
+                    prefixIcon: const Icon(Icons.info_outline),
+                    counterText: '${_aboutController.text.length}/4096',
+                  ),
+                  maxLines: 5,
+                  maxLength: AppConstants.aboutMaxLength,
+                  validator: (v) {
+                    if (v != null && v.length > AppConstants.aboutMaxLength) {
+                      return l10n.aboutMaxLength(AppConstants.aboutMaxLength);
+                    }
+                    return null;
+                  },
+                  onChanged: (_) => setState(() {}),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _linkController,
+                  autofillHints: const [AutofillHints.url],
+                  decoration: InputDecoration(
+                    labelText: l10n.linkLabel,
+                    hintText: l10n.linkHint,
+                    helperText: l10n.linkHelper,
+                    prefixIcon: const Icon(Icons.link),
+                  ),
+                  keyboardType: TextInputType.url,
+                  validator: (v) {
+                    if (v != null && v.trim().isNotEmpty) {
+                      if (!v.startsWith('http://') &&
+                          !v.startsWith('https://')) {
+                        return l10n.linkValidation;
+                      }
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: AppButton.primary(
+                    label: l10n.save,
+                    onPressed: _saving ? null : _save,
+                    isLoading: _saving,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
         ),
       ),
     );

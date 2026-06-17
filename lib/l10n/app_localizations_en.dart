@@ -15,7 +15,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signIn => 'Sign In';
 
   @override
-  String get signInWelcome => 'Welcome back to Agroecology Map AI';
+  String get signInWelcome =>
+      'Sign in to ask sourced questions, continue your history, and contribute to the agroecology knowledge base.';
 
   @override
   String get signInButton => 'Sign In';
@@ -27,6 +28,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailHint => 'your@email.com';
 
   @override
+  String get emailHelper =>
+      'Use your account email to receive confirmations and important notices.';
+
+  @override
   String get emailRequired => 'Email is required';
 
   @override
@@ -34,6 +39,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passwordHint => 'Your password';
+
+  @override
+  String get passwordHelper =>
+      'Your password protects access to your history and profile.';
+
+  @override
+  String get passwordVisibilityTooltip => 'Show or hide the typed password.';
 
   @override
   String get passwordRequired => 'Password is required';
@@ -48,6 +60,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newPasswordHint => 'At least 8 characters';
 
   @override
+  String get newPasswordHelper =>
+      'Use a unique password with at least 8 characters.';
+
+  @override
   String get forgotPassword => 'Forgot password?';
 
   @override
@@ -60,13 +76,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createAccount => 'Create Account';
 
   @override
-  String get createAccountSubtitle => 'Join the Agroecology Map AI community';
+  String get createAccountSubtitle =>
+      'Create an account to suggest documents, keep a public profile, and strengthen an open knowledge base.';
 
   @override
   String get fullNameLabel => 'Full Name';
 
   @override
   String get fullNameHint => 'Your name';
+
+  @override
+  String get fullNameHelper =>
+      'This name appears on your profile and helps the community recognize your contributions.';
 
   @override
   String get fullNameRequired => 'Full name is required';
@@ -79,6 +100,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get answerHint => 'Your answer to the question above';
+
+  @override
+  String get answerHelper =>
+      'This simple step helps protect the community from automated signups.';
 
   @override
   String get answerRequired => 'Answer is required';
@@ -95,7 +120,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetLinkInstruction =>
-      'Enter your email and we\'ll send you a reset link.';
+      'Enter your account email to receive a secure reset link.';
+
+  @override
+  String get resetEmailHelper =>
+      'We send the link only if the email is registered.';
 
   @override
   String get sendResetLink => 'Send Reset Link';
@@ -121,6 +150,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetTokenHint => 'Paste the token from your email';
+
+  @override
+  String get resetTokenHelper =>
+      'Use the exact token received by email before setting the new password.';
 
   @override
   String get tokenRequired => 'Token is required';
@@ -167,7 +200,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeIntro =>
-      'Query agroecological knowledge, explore documents, and follow the community in a free software AI platform.';
+      'Ask questions with traceable sources, explore curated documents, and help the community grow an open agroecology knowledge base.';
 
   @override
   String get localePt => 'Português';
@@ -185,13 +218,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatTitle => 'Agroecology Chat';
 
   @override
-  String get chatSubtitle => 'Ask questions about agroecology';
+  String get chatSubtitle =>
+      'Ask in natural language and get answers grounded in curated documents, with sources you can verify.';
 
   @override
   String get newChat => 'New chat';
 
   @override
+  String get newChatTooltip =>
+      'Clears the current conversation and starts a new question from scratch.';
+
+  @override
   String get askPlaceholder => 'Ask a question...';
+
+  @override
+  String get sendQuestionTooltip => 'Send your question to the knowledge base.';
+
+  @override
+  String get chatGuidanceTitle => 'For better answers';
+
+  @override
+  String get chatGuidanceBody =>
+      'Include context, territory, crop, observed issue, or goal. The AI searches relevant passages and shows sources when available.';
+
+  @override
+  String get chatSourcesTooltip =>
+      'Answers prioritize indexed knowledge-base documents. Always check the sources before making technical decisions.';
 
   @override
   String get thinking => 'Thinking...';
@@ -210,13 +262,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatEmptySubtitle =>
-      'The AI answers from the knowledge base,\nkeeping sources traceable.';
+      'Try asking about management, soil, seeds, agroforestry, public policy, or community practices.';
 
   @override
   String get chatError => 'An error occurred';
 
   @override
   String get profileTitle => 'Profile';
+
+  @override
+  String get profileSubtitle =>
+      'Show who you are, connect your contributions, and keep control of your data.';
 
   @override
   String get profileNotAuth => 'Not authenticated';
@@ -226,6 +282,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editProfile => 'Edit Profile';
+
+  @override
+  String get editProfileSubtitle =>
+      'Update the information that helps others understand your connection with agroecology.';
+
+  @override
+  String get profileVisibilityTooltip =>
+      'Active profiles may appear in the community. Edit only information you want to make public.';
 
   @override
   String get joined => 'Joined';
@@ -260,7 +324,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get linkHint => 'https://example.com';
 
   @override
-  String get aboutHint => 'Tell the community about yourself';
+  String get aboutHint =>
+      'Share your work, territory, research, organization, or agroecological practice';
+
+  @override
+  String get aboutHelper =>
+      'A clear summary helps others understand your context and contributions.';
+
+  @override
+  String get linkHelper =>
+      'Add a website, institutional profile, project, or public reference related to your work.';
+
+  @override
+  String get avatarTooltip =>
+      'Select a profile image. Only the chosen image will be uploaded.';
 
   @override
   String imageTooLarge(int mb) {
@@ -277,16 +354,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get communityTitle => 'Community';
 
   @override
+  String get communitySubtitle =>
+      'Find people and organizations contributing documents, practices, and agroecological knowledge.';
+
+  @override
   String get communityEmpty => 'No community members yet';
 
   @override
-  String get communityEmptySub => 'Be the first to join!';
+  String get communityEmptySub =>
+      'Create a profile and suggest documents to start building the network.';
+
+  @override
+  String get searchCommunityTooltip => 'Search by name or public identifier.';
 
   @override
   String get approvedSuggestions => 'Approved Suggestions';
 
   @override
+  String get approvedSuggestionsTooltip =>
+      'Number of documents suggested by this person that were approved for the knowledge base.';
+
+  @override
   String get aboutPageTitle => 'About';
+
+  @override
+  String get aboutPageSubtitle =>
+      'A free software tool to research, verify, and strengthen agroecological knowledge.';
+
+  @override
+  String get aboutValueTitle => 'Core value';
+
+  @override
+  String get aboutValueBody =>
+      'The platform combines AI, curated documents, and community participation to make agroecological references easier to find and verify.';
 
   @override
   String get aboutText1 =>
@@ -311,7 +411,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mySuggestions => 'My Suggestions';
 
   @override
+  String get suggestionsSubtitle =>
+      'Track submitted documents, review status, and materials that may enter the public knowledge base.';
+
+  @override
   String get knowledgeBase => 'Knowledge Base';
+
+  @override
+  String get kbSubtitle =>
+      'Browse the documents that ground AI answers and see which ones are already indexed for search.';
 
   @override
   String get suggestDocument => 'Suggest Document';
@@ -323,7 +431,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newSuggestion => 'New Suggestion';
 
   @override
+  String get newSuggestionSubtitle =>
+      'Send relevant materials to expand the coverage of the knowledge base.';
+
+  @override
+  String get suggestionReviewTitle => 'How review works';
+
+  @override
+  String get suggestionReviewBody =>
+      'The team checks relevance, quality, and fit before approving a document for public consultation.';
+
+  @override
   String get selectPdf => 'Select PDF file';
+
+  @override
+  String get pdfUploadTooltip =>
+      'Upload a readable PDF, preferably with title, authorship, and useful content for consultation.';
 
   @override
   String get pdfOnly => 'Only PDF files are accepted';
@@ -340,7 +463,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentLabel => 'Comment';
 
   @override
-  String get commentHint => 'Why are you suggesting this document?';
+  String get commentHint => 'Explain why this document matters for agroecology';
+
+  @override
+  String get commentHelper =>
+      'Say where the material comes from, who it helps, and why it should enter the base.';
 
   @override
   String get commentRequired => 'A comment is required';
@@ -370,6 +497,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noSuggestionsSub =>
       'Suggest a document to help grow the knowledge base.';
+
+  @override
+  String get suggestionStatusTooltip =>
+      'Pending waits for review; approved enters the knowledge-base flow; rejected needs changes or does not fit.';
 
   @override
   String get allStatus => 'All';
@@ -411,6 +542,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchDocuments => 'Search documents...';
 
   @override
+  String get searchDocumentsTooltip =>
+      'Search by title, authorship, or filename.';
+
+  @override
   String indexedCount(int indexed, int total) {
     return '$indexed of $total indexed';
   }
@@ -424,7 +559,25 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get kbIndexedTooltip =>
+      'Indexed documents can already be found by chat. Non-indexed files can still be read manually.';
+
+  @override
   String get documentDetail => 'Document Detail';
+
+  @override
+  String get documentIndexedTitle => 'Available to AI';
+
+  @override
+  String get documentIndexedBody =>
+      'This document has been indexed and may be used to ground chat answers.';
+
+  @override
+  String get documentNotIndexedTitle => 'Not indexed yet';
+
+  @override
+  String get documentNotIndexedBody =>
+      'The file is available for reading, but it is not yet used in AI answers.';
 
   @override
   String get download => 'Download';
@@ -487,6 +640,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dataAndPrivacy => 'Data & Privacy';
+
+  @override
+  String get dataAndPrivacySubtitle =>
+      'Export your data when needed and request account deletion with email confirmation.';
 
   @override
   String get exportMyData => 'Export My Data';
