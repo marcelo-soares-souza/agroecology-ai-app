@@ -12,9 +12,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Agroecology Map AI';
 
   @override
-  String get betaLabel => 'BETA';
-
-  @override
   String get signIn => 'Sign In';
 
   @override
@@ -166,9 +163,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get drawerAbout => 'About';
 
   @override
-  String get drawerDonate => 'Donate';
-
-  @override
   String get drawerLogout => 'Logout';
 
   @override
@@ -309,27 +303,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aboutText4 =>
       'It is built for farmers, educators, researchers, extension workers, students, communities, and social movements that need practical agroecological references.';
-
-  @override
-  String get donateTitle => 'Donate';
-
-  @override
-  String get donateText1 =>
-      'Agroecology Map AI is maintained by volunteer work and free software.';
-
-  @override
-  String get donateText2 =>
-      'Donations help maintain and expand infrastructure, processing, storage, document indexing, and experiments with local models.';
-
-  @override
-  String get donateText3 =>
-      'Support strengthens an open platform, without paywalls, dedicated to communities, researchers, and farmers.';
-
-  @override
-  String get donateButton => 'Open donation page';
-
-  @override
-  String get donateError => 'Could not open the donation page.';
 
   @override
   String get retry => 'Retry';
@@ -488,7 +461,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyPolicyContent =>
-      'Agroecology Map AI is a free software platform for querying agroecological knowledge with AI.\n\nData We Collect:\n- Full name, email, and hashed password for account access\n- Preferred language/locale\n- Optional profile data: bio, external link, and avatar\n- Document suggestion comments and uploaded files, when you choose to submit them\n- IP address in transient request logs for security and debugging\n\nLocal Storage:\nThe app may store session data, consent choice, language preference, and recent chat history on your device.\n\nLocal AI Processing:\nAI models and embeddings run locally or on infrastructure controlled by the project. Questions, chat history, embeddings, and documents are not sent to external AI APIs.\n\nWe DO NOT collect advertising IDs, browsing history, background location, contacts, or sensitive personal data.\n\nData Sharing:\nWe do not sell, rent, trade, or share your personal data with advertisers, data brokers, external analytics services, or external AI providers. Donation links may open Ko-fi or Patreon, which use their own policies.\n\nYour Rights:\nYou can export your data, edit your profile, delete your account, request portability, and withdraw consent by stopping use or deleting your account.\n\nAccount Deletion:\nUse \'Delete My Account\' in your profile. A confirmation email is sent. Once confirmed, personal data is permanently anonymized and sessions are terminated.\n\nMobile Privacy:\nThe app does not request camera, microphone, contacts, or location access. Photo library access may be requested only when you choose a profile avatar; only the selected image is uploaded. The app has no third-party analytics SDKs and uses HTTPS.\n\nContact and DPO: contact@agroecologymap.org\nLicense: GPLv3 (Free Software)\nRepository: https://codeberg.org/agroecologymap';
+      'Agroecology Map AI is a free software platform for querying agroecological knowledge with AI.\n\nData We Collect:\n- Full name, email, and hashed password for account access\n- Preferred language/locale\n- Optional profile data: bio, external link, and avatar\n- Document suggestion comments and uploaded files, when you choose to submit them\n- IP address in transient request logs for security and debugging\n\nLocal Storage:\nThe app may store session data, language preference, and recent chat history on your device.\n\nLocal AI Processing:\nAI models and embeddings run locally or on infrastructure controlled by the project. Questions, chat history, embeddings, and documents are not sent to external AI APIs.\n\nWe DO NOT collect advertising IDs, browsing history, background location, contacts, payment information, or sensitive personal data.\n\nData Sharing:\nWe do not sell, rent, trade, or share your personal data with advertisers, data brokers, external analytics services, or external AI providers.\n\nYour Rights:\nYou can export your data, edit your profile, delete your account, request portability, and withdraw consent by stopping use or deleting your account.\n\nAccount Deletion:\nUse \'Delete My Account\' in your profile. A confirmation email is sent. Once confirmed, personal data is permanently anonymized and sessions are terminated.\n\nMobile Privacy:\nThe app does not request camera, microphone, contacts, or location access. Photo library access may be requested only when you choose a profile avatar; only the selected image is uploaded. The app has no third-party analytics SDKs and uses HTTPS.\n\nContact and DPO: contact@agroecologymap.org\nLicense: GPLv3 (Free Software)\nRepository: https://codeberg.org/agroecologymap';
 
   @override
   String get termsOfServiceTitle => 'Terms of Service';
@@ -539,19 +512,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountFailed => 'Failed to request account deletion';
-
-  @override
-  String get consentMessage =>
-      'This app does not use advertising cookies or third-party trackers. We use local storage for session, language, consent choice, and chat history on this device. By continuing, you acknowledge our';
-
-  @override
-  String get consentAnd => 'and';
-
-  @override
-  String get consentAccept => 'Accept';
-
-  @override
-  String get consentDecline => 'Decline';
 
   @override
   String get statusActive => 'active';

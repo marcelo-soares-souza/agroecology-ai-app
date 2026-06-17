@@ -12,9 +12,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appName => 'Agroecology Map AI';
 
   @override
-  String get betaLabel => 'BETA';
-
-  @override
   String get signIn => 'Entrar';
 
   @override
@@ -167,9 +164,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get drawerAbout => 'Sobre';
 
   @override
-  String get drawerDonate => 'Doar';
-
-  @override
   String get drawerLogout => 'Sair';
 
   @override
@@ -310,27 +304,6 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get aboutText4 =>
       'Ele é feito para agricultores, educadores, pesquisadores, extensionistas, estudantes, comunidades e movimentos sociais que precisam de referências agroecológicas práticas.';
-
-  @override
-  String get donateTitle => 'Doar';
-
-  @override
-  String get donateText1 =>
-      'Agroecology Map AI é mantido por trabalho voluntário e software livre.';
-
-  @override
-  String get donateText2 =>
-      'Doações ajudam a manter e expandir a infraestrutura, processamento, armazenamento, indexação de documentos e experimentos com modelos locais.';
-
-  @override
-  String get donateText3 =>
-      'O apoio fortalece uma plataforma aberta, sem paywall, voltada a comunidades, pesquisadores e agricultores.';
-
-  @override
-  String get donateButton => 'Abrir página de doação';
-
-  @override
-  String get donateError => 'Não foi possível abrir a página de doação.';
 
   @override
   String get retry => 'Tentar novamente';
@@ -490,7 +463,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get privacyPolicyContent =>
-      'O Agroecology Map AI é uma plataforma de software livre para consultar conhecimento agroecológico com IA.\n\nDados que Coletamos:\n- Nome completo, email e senha hash para acesso à conta\n- Idioma/localidade de preferência\n- Dados opcionais de perfil: sobre, link externo e avatar\n- Comentários e arquivos de sugestões de documentos, quando você decide enviá-los\n- Endereço IP em logs transitórios de requisição para segurança e depuração\n\nArmazenamento Local:\nO app pode armazenar dados de sessão, escolha de consentimento, idioma e histórico recente do chat no seu dispositivo.\n\nProcessamento Local de IA:\nModelos de IA e embeddings rodam localmente ou em infraestrutura controlada pelo projeto. Perguntas, histórico do chat, embeddings e documentos não são enviados para APIs externas de IA.\n\nNÃO coletamos IDs de publicidade, histórico de navegação, localização em segundo plano, contatos ou dados pessoais sensíveis.\n\nCompartilhamento:\nNão vendemos, alugamos, negociamos ou compartilhamos seus dados pessoais com anunciantes, corretores de dados, serviços externos de analytics ou provedores externos de IA. Links de doação podem abrir Ko-fi ou Patreon, que usam suas próprias políticas.\n\nSeus Direitos:\nVocê pode exportar seus dados, editar seu perfil, excluir sua conta, solicitar portabilidade e revogar consentimento parando de usar ou excluindo a conta.\n\nExclusão de Conta:\nUse \'Excluir Minha Conta\' no perfil. Um email de confirmação é enviado. Após confirmação, os dados pessoais são anonimizados permanentemente e as sessões são encerradas.\n\nPrivacidade Mobile:\nO app não solicita câmera, microfone, contatos ou localização. O acesso à galeria/fotos pode ser solicitado apenas quando você escolhe um avatar; somente a imagem selecionada é enviada. O app não usa SDKs de analytics de terceiros e usa HTTPS.\n\nContato e DPO: contact@agroecologymap.org\nLicença: GPLv3 (Software Livre)';
+      'O Agroecology Map AI é uma plataforma de software livre para consultar conhecimento agroecológico com IA.\n\nDados que Coletamos:\n- Nome completo, email e senha hash para acesso à conta\n- Idioma/localidade de preferência\n- Dados opcionais de perfil: sobre, link externo e avatar\n- Comentários e arquivos de sugestões de documentos, quando você decide enviá-los\n- Endereço IP em logs transitórios de requisição para segurança e depuração\n\nArmazenamento Local:\nO app pode armazenar dados de sessão, idioma e histórico recente do chat no seu dispositivo.\n\nProcessamento Local de IA:\nModelos de IA e embeddings rodam localmente ou em infraestrutura controlada pelo projeto. Perguntas, histórico do chat, embeddings e documentos não são enviados para APIs externas de IA.\n\nNÃO coletamos IDs de publicidade, histórico de navegação, localização em segundo plano, contatos, informações de pagamento ou dados pessoais sensíveis.\n\nCompartilhamento:\nNão vendemos, alugamos, negociamos ou compartilhamos seus dados pessoais com anunciantes, corretores de dados, serviços externos de analytics ou provedores externos de IA.\n\nSeus Direitos:\nVocê pode exportar seus dados, editar seu perfil, excluir sua conta, solicitar portabilidade e revogar consentimento parando de usar ou excluindo a conta.\n\nExclusão de Conta:\nUse \'Excluir Minha Conta\' no perfil. Um email de confirmação é enviado. Após confirmação, os dados pessoais são anonimizados permanentemente e as sessões são encerradas.\n\nPrivacidade Mobile:\nO app não solicita câmera, microfone, contatos ou localização. O acesso à galeria/fotos pode ser solicitado apenas quando você escolhe um avatar; somente a imagem selecionada é enviada. O app não usa SDKs de analytics de terceiros e usa HTTPS.\n\nContato e DPO: contact@agroecologymap.org\nLicença: GPLv3 (Software Livre)';
 
   @override
   String get termsOfServiceTitle => 'Termos de Serviço';
@@ -542,19 +515,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deleteAccountFailed => 'Falha ao solicitar exclusão da conta';
-
-  @override
-  String get consentMessage =>
-      'Este aplicativo não utiliza cookies de publicidade ou rastreadores de terceiros. Usamos armazenamento local para sessão, idioma, escolha de consentimento e histórico de chat neste dispositivo. Ao continuar, você reconhece nossa';
-
-  @override
-  String get consentAnd => 'e nossos';
-
-  @override
-  String get consentAccept => 'Aceitar';
-
-  @override
-  String get consentDecline => 'Recusar';
 
   @override
   String get statusActive => 'ativo';

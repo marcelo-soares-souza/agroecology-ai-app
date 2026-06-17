@@ -101,12 +101,6 @@ class AppDrawer extends StatelessWidget {
                     selected: currentRoute == '/terms',
                     onTap: () => _navigate(context, '/terms'),
                   ),
-                  _NavItem(
-                    icon: Icons.favorite_border,
-                    label: l10n.drawerDonate,
-                    selected: currentRoute == '/donate',
-                    onTap: () => _navigate(context, '/donate'),
-                  ),
                   const Divider(),
                   _LocaleSelector(
                     currentLocale: locale,

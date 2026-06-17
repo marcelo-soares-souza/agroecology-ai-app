@@ -12,9 +12,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appName => 'Agroecology Map AI';
 
   @override
-  String get betaLabel => 'BETA';
-
-  @override
   String get signIn => 'Iniciar Sesión';
 
   @override
@@ -168,9 +165,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get drawerAbout => 'Acerca de';
 
   @override
-  String get drawerDonate => 'Donar';
-
-  @override
   String get drawerLogout => 'Cerrar Sesión';
 
   @override
@@ -311,27 +305,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get aboutText4 =>
       'Está pensado para agricultores, educadores, investigadores, extensionistas, estudiantes, comunidades y movimientos sociales que necesitan referencias agroecológicas prácticas.';
-
-  @override
-  String get donateTitle => 'Donar';
-
-  @override
-  String get donateText1 =>
-      'Agroecology Map AI se mantiene con trabajo voluntario y software libre.';
-
-  @override
-  String get donateText2 =>
-      'Las donaciones ayudan a mantener y expandir la infraestructura, procesamiento, almacenamiento, indexación de documentos y experimentos con modelos locales.';
-
-  @override
-  String get donateText3 =>
-      'El apoyo fortalece una plataforma abierta, sin paywall, dedicada a comunidades, investigadores y agricultores.';
-
-  @override
-  String get donateButton => 'Abrir página de donación';
-
-  @override
-  String get donateError => 'No se pudo abrir la página de donación.';
 
   @override
   String get retry => 'Reintentar';
@@ -491,7 +464,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get privacyPolicyContent =>
-      'Agroecology Map AI es una plataforma de software libre para consultar conocimiento agroecológico con IA.\n\nDatos que recopilamos:\n- Nombre completo, email y contraseña con hash para acceso a la cuenta\n- Idioma o configuración regional preferida\n- Datos opcionales de perfil: bio, enlace externo y avatar\n- Comentarios y archivos de sugerencias de documentos, cuando decides enviarlos\n- Dirección IP en logs transitorios para seguridad y depuración\n\nAlmacenamiento local:\nLa app puede almacenar datos de sesión, elección de consentimiento, idioma e historial reciente del chat en tu dispositivo.\n\nProcesamiento local de IA:\nLos modelos de IA y embeddings se ejecutan localmente o en infraestructura controlada por el proyecto. Las preguntas, el historial del chat, los embeddings y los documentos no se envían a APIs externas de IA.\n\nNO recopilamos IDs publicitarios, historial de navegación, ubicación en segundo plano, contactos ni datos personales sensibles.\n\nCompartición:\nNo vendemos, alquilamos, negociamos ni compartimos tus datos personales con anunciantes, corredores de datos, servicios externos de analytics o proveedores externos de IA. Los enlaces de donación pueden abrir Ko-fi o Patreon, que usan sus propias políticas.\n\nTus derechos:\nPuedes exportar tus datos, editar tu perfil, eliminar tu cuenta, solicitar portabilidad y retirar el consentimiento dejando de usar o eliminando la cuenta.\n\nEliminación de cuenta:\nUsa \'Eliminar Mi Cuenta\' en el perfil. Se envía un email de confirmación. Después de confirmar, los datos personales se anonimizan permanentemente y las sesiones se terminan.\n\nPrivacidad móvil:\nLa app no solicita cámara, micrófono, contactos o ubicación. El acceso a la galería puede solicitarse solo cuando eliges un avatar; solo se envía la imagen seleccionada. La app no usa SDKs externos de analytics y usa HTTPS.\n\nContacto y DPO: contact@agroecologymap.org\nLicencia: GPLv3 (software libre)';
+      'Agroecology Map AI es una plataforma de software libre para consultar conocimiento agroecológico con IA.\n\nDatos que recopilamos:\n- Nombre completo, email y contraseña con hash para acceso a la cuenta\n- Idioma o configuración regional preferida\n- Datos opcionales de perfil: bio, enlace externo y avatar\n- Comentarios y archivos de sugerencias de documentos, cuando decides enviarlos\n- Dirección IP en logs transitorios para seguridad y depuración\n\nAlmacenamiento local:\nLa app puede almacenar datos de sesión, idioma e historial reciente del chat en tu dispositivo.\n\nProcesamiento local de IA:\nLos modelos de IA y embeddings se ejecutan localmente o en infraestructura controlada por el proyecto. Las preguntas, el historial del chat, los embeddings y los documentos no se envían a APIs externas de IA.\n\nNO recopilamos IDs publicitarios, historial de navegación, ubicación en segundo plano, contactos, información de pago ni datos personales sensibles.\n\nCompartición:\nNo vendemos, alquilamos, negociamos ni compartimos tus datos personales con anunciantes, corredores de datos, servicios externos de analytics o proveedores externos de IA.\n\nTus derechos:\nPuedes exportar tus datos, editar tu perfil, eliminar tu cuenta, solicitar portabilidad y retirar el consentimiento dejando de usar o eliminando la cuenta.\n\nEliminación de cuenta:\nUsa \'Eliminar Mi Cuenta\' en el perfil. Se envía un email de confirmación. Después de confirmar, los datos personales se anonimizan permanentemente y las sesiones se terminan.\n\nPrivacidad móvil:\nLa app no solicita cámara, micrófono, contactos o ubicación. El acceso a la galería puede solicitarse solo cuando eliges un avatar; solo se envía la imagen seleccionada. La app no usa SDKs externos de analytics y usa HTTPS.\n\nContacto y DPO: contact@agroecologymap.org\nLicencia: GPLv3 (software libre)';
 
   @override
   String get termsOfServiceTitle => 'Términos de Servicio';
@@ -543,19 +516,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deleteAccountFailed => 'Error al solicitar eliminación';
-
-  @override
-  String get consentMessage =>
-      'Esta app no utiliza cookies publicitarios ni rastreadores de terceros. Usamos almacenamiento local para sesión, idioma, elección de consentimiento e historial de chat en este dispositivo. Al continuar, reconoces nuestra';
-
-  @override
-  String get consentAnd => 'y nuestros';
-
-  @override
-  String get consentAccept => 'Aceptar';
-
-  @override
-  String get consentDecline => 'Rechazar';
 
   @override
   String get statusActive => 'activo';

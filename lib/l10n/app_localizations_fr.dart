@@ -12,9 +12,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appName => 'Agroecology Map AI';
 
   @override
-  String get betaLabel => 'BETA';
-
-  @override
   String get signIn => 'Se Connecter';
 
   @override
@@ -169,9 +166,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get drawerAbout => 'À Propos';
 
   @override
-  String get drawerDonate => 'Faire un Don';
-
-  @override
   String get drawerLogout => 'Déconnexion';
 
   @override
@@ -312,27 +306,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get aboutText4 =>
       'Il est conçu pour les agriculteurs, éducateurs, chercheurs, vulgarisateurs, étudiants, communautés et mouvements sociaux qui ont besoin de références agroécologiques pratiques.';
-
-  @override
-  String get donateTitle => 'Faire un Don';
-
-  @override
-  String get donateText1 =>
-      'Agroecology Map AI est maintenu par du travail bénévole et des logiciels libres.';
-
-  @override
-  String get donateText2 =>
-      'Les dons aident à maintenir et étendre l\'infrastructure, le traitement, le stockage, l\'indexation des documents et les expériences avec des modèles locaux.';
-
-  @override
-  String get donateText3 =>
-      'Le soutien renforce une plateforme ouverte, sans paywall, dédiée aux communautés, chercheurs et agriculteurs.';
-
-  @override
-  String get donateButton => 'Ouvrir la page de don';
-
-  @override
-  String get donateError => 'Impossible d\'ouvrir la page de don.';
 
   @override
   String get retry => 'Réessayer';
@@ -491,7 +464,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get privacyPolicyContent =>
-      'Agroecology Map AI est une plateforme de logiciel libre pour consulter des connaissances agroécologiques avec l\'IA.\n\nDonnées collectées :\n- Nom complet, email et mot de passe hashé pour l\'accès au compte\n- Langue ou locale préférée\n- Données de profil facultatives : bio, lien externe et avatar\n- Commentaires et fichiers de suggestions de documents, lorsque vous les envoyez\n- Adresse IP dans des logs transitoires pour la sécurité et le débogage\n\nStockage local :\nL\'app peut stocker les données de session, le choix de consentement, la langue et l\'historique récent du chat sur votre appareil.\n\nTraitement IA local :\nLes modèles d\'IA et les embeddings fonctionnent localement ou sur une infrastructure contrôlée par le projet. Les questions, l\'historique du chat, les embeddings et les documents ne sont pas envoyés à des API externes d\'IA.\n\nNous ne collectons pas d\'identifiants publicitaires, d\'historique de navigation, de localisation en arrière-plan, de contacts ni de données personnelles sensibles.\n\nPartage :\nNous ne vendons, louons, échangeons ni partageons vos données personnelles avec des annonceurs, courtiers de données, services d\'analytics externes ou fournisseurs externes d\'IA. Les liens de don peuvent ouvrir Ko-fi ou Patreon, qui appliquent leurs propres politiques.\n\nVos droits :\nVous pouvez exporter vos données, modifier votre profil, supprimer votre compte, demander la portabilité et retirer votre consentement en arrêtant l\'utilisation ou en supprimant le compte.\n\nSuppression du compte :\nUtilisez \'Supprimer Mon Compte\' dans le profil. Un email de confirmation est envoyé. Après confirmation, les données personnelles sont anonymisées définitivement et les sessions sont terminées.\n\nConfidentialité mobile :\nL\'app ne demande pas la caméra, le microphone, les contacts ou la localisation. L\'accès à la galerie peut être demandé seulement si vous choisissez un avatar ; seule l\'image sélectionnée est envoyée. L\'app n\'utilise pas de SDK d\'analytics tiers et utilise HTTPS.\n\nContact et DPO : contact@agroecologymap.org\nLicence : GPLv3 (logiciel libre)';
+      'Agroecology Map AI est une plateforme de logiciel libre pour consulter des connaissances agroécologiques avec l\'IA.\n\nDonnées collectées :\n- Nom complet, email et mot de passe hashé pour l\'accès au compte\n- Langue ou locale préférée\n- Données de profil facultatives : bio, lien externe et avatar\n- Commentaires et fichiers de suggestions de documents, lorsque vous les envoyez\n- Adresse IP dans des logs transitoires pour la sécurité et le débogage\n\nStockage local :\nL\'app peut stocker les données de session, la langue et l\'historique récent du chat sur votre appareil.\n\nTraitement IA local :\nLes modèles d\'IA et les embeddings fonctionnent localement ou sur une infrastructure contrôlée par le projet. Les questions, l\'historique du chat, les embeddings et les documents ne sont pas envoyés à des API externes d\'IA.\n\nNous ne collectons pas d\'identifiants publicitaires, d\'historique de navigation, de localisation en arrière-plan, de contacts, d\'informations de paiement ni de données personnelles sensibles.\n\nPartage :\nNous ne vendons, louons, échangeons ni partageons vos données personnelles avec des annonceurs, courtiers de données, services d\'analytics externes ou fournisseurs externes d\'IA.\n\nVos droits :\nVous pouvez exporter vos données, modifier votre profil, supprimer votre compte, demander la portabilité et retirer votre consentement en arrêtant l\'utilisation ou en supprimant le compte.\n\nSuppression du compte :\nUtilisez \'Supprimer Mon Compte\' dans le profil. Un email de confirmation est envoyé. Après confirmation, les données personnelles sont anonymisées définitivement et les sessions sont terminées.\n\nConfidentialité mobile :\nL\'app ne demande pas la caméra, le microphone, les contacts ou la localisation. L\'accès à la galerie peut être demandé seulement si vous choisissez un avatar ; seule l\'image sélectionnée est envoyée. L\'app n\'utilise pas de SDK d\'analytics tiers et utilise HTTPS.\n\nContact et DPO : contact@agroecologymap.org\nLicence : GPLv3 (logiciel libre)';
 
   @override
   String get termsOfServiceTitle => 'Conditions d\'utilisation';
@@ -542,19 +515,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteAccountFailed => 'Échec de la demande de suppression';
-
-  @override
-  String get consentMessage =>
-      'Cette app n\'utilise pas de cookies publicitaires ni de traceurs tiers. Nous utilisons le stockage local pour la session, la langue, le choix de consentement et l\'historique du chat sur cet appareil. En continuant, vous reconnaissez notre';
-
-  @override
-  String get consentAnd => 'et nos';
-
-  @override
-  String get consentAccept => 'Accepter';
-
-  @override
-  String get consentDecline => 'Refuser';
 
   @override
   String get statusActive => 'actif';

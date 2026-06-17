@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/ui/components.dart';
-import '../../../../core/utils/external_link.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class AboutPage extends StatelessWidget {
@@ -40,7 +38,6 @@ class AboutPage extends StatelessWidget {
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const StatusBadge(label: 'BETA'),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -102,96 +99,6 @@ class _AboutInfoBlock extends StatelessWidget {
                 color: AppColors.textSecondary,
                 height: 1.6,
               ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class DonatePage extends StatelessWidget {
-  const DonatePage({super.key});
-
-  Future<void> _openDonatePage(
-    BuildContext context,
-    AppLocalizations l10n,
-  ) async {
-    final opened = await openExternalUrl(AppConstants.donateUrl);
-    if (!opened && context.mounted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(l10n.donateError)));
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.favorite, size: 24, color: AppColors.error),
-              const SizedBox(width: 8),
-              Text(
-                l10n.donateTitle,
-                style: const TextStyle(
-                  fontSize: AppTokens.pageTitleSize,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          AppCard(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(Icons.eco, size: 32, color: AppColors.primary),
-                const SizedBox(height: 12),
-                Text(
-                  l10n.donateText1,
-                  style: const TextStyle(
-                    fontSize: AppTokens.bodySize,
-                    color: AppColors.textPrimary,
-                    height: 1.6,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  l10n.donateText2,
-                  style: const TextStyle(
-                    fontSize: AppTokens.bodySize,
-                    color: AppColors.textSecondary,
-                    height: 1.6,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  l10n.donateText3,
-                  style: const TextStyle(
-                    fontSize: AppTokens.bodySize,
-                    color: AppColors.textSecondary,
-                    height: 1.6,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: AppButton.primary(
-                    label: l10n.donateButton,
-                    icon: Icons.favorite,
-                    onPressed: () => _openDonatePage(context, l10n),
-                  ),
-                ),
-              ],
             ),
           ),
         ],

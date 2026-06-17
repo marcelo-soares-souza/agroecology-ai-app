@@ -108,12 +108,6 @@ abstract class AppLocalizations {
   /// **'Agroecology Map AI'**
   String get appName;
 
-  /// No description provided for @betaLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'BETA'**
-  String get betaLabel;
-
   /// No description provided for @signIn.
   ///
   /// In en, this message translates to:
@@ -408,12 +402,6 @@ abstract class AppLocalizations {
   /// **'About'**
   String get drawerAbout;
 
-  /// No description provided for @drawerDonate.
-  ///
-  /// In en, this message translates to:
-  /// **'Donate'**
-  String get drawerDonate;
-
   /// No description provided for @drawerLogout.
   ///
   /// In en, this message translates to:
@@ -677,42 +665,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'It is built for farmers, educators, researchers, extension workers, students, communities, and social movements that need practical agroecological references.'**
   String get aboutText4;
-
-  /// No description provided for @donateTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Donate'**
-  String get donateTitle;
-
-  /// No description provided for @donateText1.
-  ///
-  /// In en, this message translates to:
-  /// **'Agroecology Map AI is maintained by volunteer work and free software.'**
-  String get donateText1;
-
-  /// No description provided for @donateText2.
-  ///
-  /// In en, this message translates to:
-  /// **'Donations help maintain and expand infrastructure, processing, storage, document indexing, and experiments with local models.'**
-  String get donateText2;
-
-  /// No description provided for @donateText3.
-  ///
-  /// In en, this message translates to:
-  /// **'Support strengthens an open platform, without paywalls, dedicated to communities, researchers, and farmers.'**
-  String get donateText3;
-
-  /// No description provided for @donateButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Open donation page'**
-  String get donateButton;
-
-  /// No description provided for @donateError.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not open the donation page.'**
-  String get donateError;
 
   /// No description provided for @retry.
   ///
@@ -1011,7 +963,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicyContent.
   ///
   /// In en, this message translates to:
-  /// **'Agroecology Map AI is a free software platform for querying agroecological knowledge with AI.\n\nData We Collect:\n- Full name, email, and hashed password for account access\n- Preferred language/locale\n- Optional profile data: bio, external link, and avatar\n- Document suggestion comments and uploaded files, when you choose to submit them\n- IP address in transient request logs for security and debugging\n\nLocal Storage:\nThe app may store session data, consent choice, language preference, and recent chat history on your device.\n\nLocal AI Processing:\nAI models and embeddings run locally or on infrastructure controlled by the project. Questions, chat history, embeddings, and documents are not sent to external AI APIs.\n\nWe DO NOT collect advertising IDs, browsing history, background location, contacts, or sensitive personal data.\n\nData Sharing:\nWe do not sell, rent, trade, or share your personal data with advertisers, data brokers, external analytics services, or external AI providers. Donation links may open Ko-fi or Patreon, which use their own policies.\n\nYour Rights:\nYou can export your data, edit your profile, delete your account, request portability, and withdraw consent by stopping use or deleting your account.\n\nAccount Deletion:\nUse \'Delete My Account\' in your profile. A confirmation email is sent. Once confirmed, personal data is permanently anonymized and sessions are terminated.\n\nMobile Privacy:\nThe app does not request camera, microphone, contacts, or location access. Photo library access may be requested only when you choose a profile avatar; only the selected image is uploaded. The app has no third-party analytics SDKs and uses HTTPS.\n\nContact and DPO: contact@agroecologymap.org\nLicense: GPLv3 (Free Software)\nRepository: https://codeberg.org/agroecologymap'**
+  /// **'Agroecology Map AI is a free software platform for querying agroecological knowledge with AI.\n\nData We Collect:\n- Full name, email, and hashed password for account access\n- Preferred language/locale\n- Optional profile data: bio, external link, and avatar\n- Document suggestion comments and uploaded files, when you choose to submit them\n- IP address in transient request logs for security and debugging\n\nLocal Storage:\nThe app may store session data, language preference, and recent chat history on your device.\n\nLocal AI Processing:\nAI models and embeddings run locally or on infrastructure controlled by the project. Questions, chat history, embeddings, and documents are not sent to external AI APIs.\n\nWe DO NOT collect advertising IDs, browsing history, background location, contacts, payment information, or sensitive personal data.\n\nData Sharing:\nWe do not sell, rent, trade, or share your personal data with advertisers, data brokers, external analytics services, or external AI providers.\n\nYour Rights:\nYou can export your data, edit your profile, delete your account, request portability, and withdraw consent by stopping use or deleting your account.\n\nAccount Deletion:\nUse \'Delete My Account\' in your profile. A confirmation email is sent. Once confirmed, personal data is permanently anonymized and sessions are terminated.\n\nMobile Privacy:\nThe app does not request camera, microphone, contacts, or location access. Photo library access may be requested only when you choose a profile avatar; only the selected image is uploaded. The app has no third-party analytics SDKs and uses HTTPS.\n\nContact and DPO: contact@agroecologymap.org\nLicense: GPLv3 (Free Software)\nRepository: https://codeberg.org/agroecologymap'**
   String get privacyPolicyContent;
 
   /// No description provided for @termsOfServiceTitle.
@@ -1109,30 +1061,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to request account deletion'**
   String get deleteAccountFailed;
-
-  /// No description provided for @consentMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'This app does not use advertising cookies or third-party trackers. We use local storage for session, language, consent choice, and chat history on this device. By continuing, you acknowledge our'**
-  String get consentMessage;
-
-  /// No description provided for @consentAnd.
-  ///
-  /// In en, this message translates to:
-  /// **'and'**
-  String get consentAnd;
-
-  /// No description provided for @consentAccept.
-  ///
-  /// In en, this message translates to:
-  /// **'Accept'**
-  String get consentAccept;
-
-  /// No description provided for @consentDecline.
-  ///
-  /// In en, this message translates to:
-  /// **'Decline'**
-  String get consentDecline;
 
   /// No description provided for @statusActive.
   ///

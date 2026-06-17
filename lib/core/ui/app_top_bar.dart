@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
-import 'components.dart';
 
 class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onMenuTap;
@@ -30,8 +29,6 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
                   color: AppColors.primary,
                 ),
               ),
-              const SizedBox(width: 8),
-              const StatusBadge(label: 'BETA'),
             ],
           ),
       actions: actions ?? [],

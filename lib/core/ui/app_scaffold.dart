@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'app_top_bar.dart';
 import 'app_drawer.dart';
-import 'cookie_consent_banner.dart';
 
 class AppScaffold extends StatefulWidget {
   final Widget body;
@@ -60,16 +59,9 @@ class _AppScaffoldState extends State<AppScaffold> {
             )
           : null,
       body: SafeArea(top: false, child: widget.body),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const CookieConsentBanner(),
-            if (widget.bottomNavigationBar != null) widget.bottomNavigationBar!,
-          ],
-        ),
-      ),
+      bottomNavigationBar: widget.bottomNavigationBar == null
+          ? null
+          : SafeArea(top: false, child: widget.bottomNavigationBar!),
     );
   }
 }

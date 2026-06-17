@@ -8,7 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../../features/chat/presentation/pages/chat_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/community/presentation/pages/community_page.dart';
-import '../../features/community/presentation/pages/about_donate.dart';
+import '../../features/community/presentation/pages/about_page.dart';
 import '../../features/community/presentation/pages/privacy_policy_page.dart';
 import '../../features/community/presentation/pages/terms_of_service_page.dart';
 import '../../features/suggestions/presentation/pages/suggestion_create_page.dart';
@@ -129,11 +129,6 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
             builder: (context, state) => const AboutPage(),
           ),
           GoRoute(
-            path: '/donate',
-            name: 'donate',
-            builder: (context, state) => const DonatePage(),
-          ),
-          GoRoute(
             path: '/privacy',
             name: 'privacy',
             builder: (context, state) => const PrivacyPolicyPage(),
@@ -203,7 +198,6 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       final isPublicRoute =
           state.uri.path == '/' ||
           state.uri.path == '/about' ||
-          state.uri.path == '/donate' ||
           state.uri.path == '/privacy' ||
           state.uri.path == '/terms' ||
           state.uri.path == '/community' ||
