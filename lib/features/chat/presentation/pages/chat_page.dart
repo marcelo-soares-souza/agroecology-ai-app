@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/theme/app_tokens.dart';
-import '../../../../core/ui/components.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../controllers/chat_controller.dart';
@@ -68,7 +67,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
     return Column(
       children: [
-        _buildHeader(context, l10n, chatState),
+        _buildHeader(l10n, chatState),
         Expanded(
           child: messages.isEmpty
               ? _buildEmptyState(l10n)
@@ -93,11 +92,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     );
   }
 
-  Widget _buildHeader(
-    BuildContext context,
-    AppLocalizations l10n,
-    ChatState state,
-  ) {
+  Widget _buildHeader(AppLocalizations l10n, ChatState state) {
     return Container(
       decoration: const BoxDecoration(
         color: AppColors.surface,
@@ -108,25 +103,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PageIntro(
-            title: l10n.chatTitle,
-            subtitle: l10n.chatSubtitle,
-            icon: Icons.chat_bubble_outline,
-          ),
-          if (state.messages.isEmpty)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              child: InfoCallout(
-                icon: Icons.travel_explore,
-                title: l10n.chatGuidanceTitle,
-                body: l10n.chatGuidanceBody,
-              ),
-            ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Row(
               children: [
-                HelpTooltip(message: l10n.chatSourcesTooltip),
                 const Spacer(),
                 Tooltip(
                   message: l10n.newChatTooltip,
@@ -150,27 +130,28 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 
   Widget _buildEmptyState(AppLocalizations l10n) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.chat_bubble_outline,
-              size: 56,
+              size: 40,
               color: AppColors.primary200,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             Text(
               l10n.chatEmptyTitle,
               style: const TextStyle(
-                fontSize: AppTokens.sectionTitleSize,
+                fontSize: AppTokens.bodySize,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             Text(
               l10n.chatEmptySubtitle,
               style: const TextStyle(
