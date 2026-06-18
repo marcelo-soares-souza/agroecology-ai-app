@@ -66,8 +66,39 @@ class AuthApiDataSource {
   }
 
   Future<List<Map<String, dynamic>>> listActiveUsers() async {
-    final data = await _client.get('$_prefix/users') as List;
-    return data.cast<Map<String, dynamic>>();
+    const pageSize = 100;
+    final users = <Map<String, dynamic>>[];
+    var offset = 0;
+    int? total;
+
+    do {
+      final data = await _client.get(
+        '$_prefix/users',
+        queryParameters: {'limit': pageSize, 'offset': offset},
+      );
+
+      if (data is List) {
+        return data.cast<Map<String, dynamic>>();
+      }
+
+      if (data is! Map<String, dynamic>) {
+        return users;
+      }
+
+      final page = data['data'];
+      if (page is! List) {
+        return users;
+      }
+      if (page.isEmpty) {
+        return users;
+      }
+
+      users.addAll(page.cast<Map<String, dynamic>>());
+      total = data['total'] as int?;
+      offset += pageSize;
+    } while (total != null && users.length < total);
+
+    return users;
   }
 
   Future<Map<String, dynamic>> getUserBySlug(String slug) async {
