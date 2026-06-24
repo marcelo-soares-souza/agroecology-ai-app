@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +26,7 @@ String _resolveError(AppLocalizations l10n, String message) {
     'loginFailed' => l10n.loginFailed,
     'registrationSuccess' => l10n.registrationSuccess,
     'registrationFailed' => l10n.registrationFailed,
+    'authRateLimited' => l10n.authRateLimited,
     'deleteAccountFailed' => l10n.deleteAccountFailed,
     'passwordResetSuccess' => l10n.passwordResetSuccess,
     'resetLinkSent' => l10n.resetLinkSent,
@@ -38,6 +41,140 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 class AuthChangeNotifier extends ChangeNotifier {
   void notify() => notifyListeners();
+}
+
+class _AuthRateLimitPanel extends StatefulWidget {
+  final DateTime blockedUntil;
+  final VoidCallback onRetry;
+
+  const _AuthRateLimitPanel({
+    required this.blockedUntil,
+    required this.onRetry,
+  });
+
+  @override
+  State<_AuthRateLimitPanel> createState() => _AuthRateLimitPanelState();
+}
+
+class _AuthRateLimitPanelState extends State<_AuthRateLimitPanel> {
+  late int _remainingSeconds;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _remainingSeconds = _calculateRemainingSeconds();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!mounted) return;
+      setState(() => _remainingSeconds = _calculateRemainingSeconds());
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant _AuthRateLimitPanel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.blockedUntil != widget.blockedUntil) {
+      _remainingSeconds = _calculateRemainingSeconds();
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final canRetry = _remainingSeconds <= 0;
+
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Container(
+                  width: 64,
+                  height: 64,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFfee2e2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.shield_outlined,
+                    color: Color(0xFFdc2626),
+                    size: 32,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                l10n.authRateLimitTitle,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF1c1917),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                l10n.authRateLimitDescription,
+                style: const TextStyle(fontSize: 14, color: Color(0xFF78716c)),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.schedule_outlined,
+                    size: 18,
+                    color: Color(0xFFd97706),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    canRetry
+                        ? l10n.authRateLimitRetryAvailable
+                        : l10n.authRateLimitRetryIn(
+                            _formatDuration(_remainingSeconds),
+                          ),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF1c1917),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: canRetry ? widget.onRetry : null,
+                child: Text(l10n.authRateLimitTryAgain),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  int _calculateRemainingSeconds() {
+    final diff = widget.blockedUntil.toUtc().difference(DateTime.now().toUtc());
+    return diff.inSeconds < 0 ? 0 : diff.inSeconds;
+  }
+
+  String _formatDuration(int totalSeconds) {
+    final minutes = totalSeconds ~/ 60;
+    final seconds = totalSeconds % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
 }
 
 GoRouter createRouter(AuthChangeNotifier authNotifier) {
@@ -214,7 +351,7 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
 
       if (isSplash) {
         if (auth.isLoading) return null;
-        return '/';
+        return auth.isAuthenticated ? '/chat' : '/';
       }
 
       if (auth.isLoading &&
@@ -226,6 +363,8 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       }
 
       if (auth.isAuthenticated && isAuthRoute) return '/chat';
+
+      if (auth.isAuthenticated && state.uri.path == '/') return '/chat';
 
       if (!auth.isAuthenticated && requiresAuth) {
         return '/login';
@@ -459,6 +598,19 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
         auth.errorMessage == 'registrationSuccess' ||
         auth.errorMessage == 'passwordResetSuccess' ||
         auth.errorMessage == 'resetLinkSent';
+
+    if (auth.authBlockedUntil != null) {
+      return Scaffold(
+        body: SafeArea(
+          child: _AuthRateLimitPanel(
+            blockedUntil: auth.authBlockedUntil!,
+            onRetry: () {
+              ref.read(authControllerProvider.notifier).clearAuthRateLimit();
+            },
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -722,6 +874,18 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
         });
       }
     });
+
+    if (auth.authBlockedUntil != null) {
+      return SafeArea(
+        child: _AuthRateLimitPanel(
+          blockedUntil: auth.authBlockedUntil!,
+          onRetry: () {
+            ref.read(authControllerProvider.notifier).clearAuthRateLimit();
+            _loadChallenge();
+          },
+        ),
+      );
+    }
 
     return SafeArea(
       child: Center(

@@ -52,6 +52,19 @@
   "loginFailed": "Login failed. Please try again.",
   "registrationSuccess": "Registration successful. Check your email to confirm your account.",
   "registrationFailed": "Registration failed. Please try again.",
+  "authRateLimited": "Too many attempts failed. Wait before trying again.",
+  "authRateLimitTitle": "Access temporarily blocked",
+  "authRateLimitDescription": "Too many attempts failed. Wait for the indicated time before trying again.",
+  "authRateLimitRetryIn": "Try again in {time}.",
+  "@authRateLimitRetryIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "authRateLimitRetryAvailable": "You can try again now.",
+  "authRateLimitTryAgain": "Try again",
   "connectionError": "Connection error. Please check your network.",
   "drawerHome": "Home",
   "drawerChat": "Chat",
@@ -216,6 +229,23 @@
   "fileSize": "File Size",
   "ingested": "Indexed",
   "notIngested": "Not indexed",
+  "documentAccessRestrictedTitle": "Full PDF restricted",
+  "documentAccessRestrictedBody": "The license metadata restricts full PDF access, so download and preview are not available.",
+  "academicMetadataTitle": "Academic Metadata",
+  "doiField": "DOI",
+  "publicationYear": "Publication year",
+  "citations": "Citations",
+  "references": "References",
+  "venue": "Venue",
+  "publisher": "Publisher",
+  "matchConfidence": "Match confidence",
+  "sourceUrl": "Source",
+  "openAccessUrl": "Open access",
+  "abstract": "Abstract",
+  "topics": "Topics",
+  "keywords": "Keywords",
+  "license": "License",
+  "funder": "Funder",
   "drawerPrivacy": "Privacy Policy",
   "drawerTerms": "Terms of Service",
   "privacyPolicyTitle": "Privacy Policy",

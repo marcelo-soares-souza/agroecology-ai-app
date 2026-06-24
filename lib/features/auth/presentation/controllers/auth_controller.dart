@@ -13,12 +13,14 @@ class AuthState {
   final AuthSession? session;
   final User? profile;
   final String? errorMessage;
+  final DateTime? authBlockedUntil;
 
   const AuthState({
     this.status = AuthStatus.unknown,
     this.session,
     this.profile,
     this.errorMessage,
+    this.authBlockedUntil,
   });
 
   bool get isAuthenticated => status == AuthStatus.authenticated;
@@ -30,14 +32,19 @@ class AuthState {
     AuthSession? session,
     User? profile,
     String? errorMessage,
+    DateTime? authBlockedUntil,
     bool clearError = false,
     bool clearSession = false,
+    bool clearRateLimit = false,
   }) {
     return AuthState(
       status: status ?? this.status,
       session: clearSession ? null : (session ?? this.session),
       profile: profile ?? this.profile,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
+      authBlockedUntil: clearRateLimit
+          ? null
+          : (authBlockedUntil ?? this.authBlockedUntil),
     );
   }
 }
@@ -71,7 +78,11 @@ class AuthController extends StateNotifier<AuthState> {
   }
 
   Future<void> login(String email, String password) async {
-    state = state.copyWith(status: AuthStatus.restoring, clearError: true);
+    state = state.copyWith(
+      status: AuthStatus.restoring,
+      clearError: true,
+      clearRateLimit: true,
+    );
 
     try {
       final session = await _authRepository.login(
@@ -81,6 +92,12 @@ class AuthController extends StateNotifier<AuthState> {
       state = state.copyWith(
         status: AuthStatus.authenticated,
         session: session,
+      );
+    } on RateLimitException catch (e) {
+      state = state.copyWith(
+        status: AuthStatus.unauthenticated,
+        errorMessage: e.message,
+        authBlockedUntil: e.blockedUntil,
       );
     } on AppException catch (e) {
       state = state.copyWith(
@@ -105,7 +122,11 @@ class AuthController extends StateNotifier<AuthState> {
     bool tosAccepted = false,
     String locale = 'pt-BR',
   }) async {
-    state = state.copyWith(status: AuthStatus.restoring, clearError: true);
+    state = state.copyWith(
+      status: AuthStatus.restoring,
+      clearError: true,
+      clearRateLimit: true,
+    );
 
     try {
       await _authRepository.register(
@@ -121,6 +142,12 @@ class AuthController extends StateNotifier<AuthState> {
       state = state.copyWith(
         status: AuthStatus.unauthenticated,
         errorMessage: 'registrationSuccess',
+      );
+    } on RateLimitException catch (e) {
+      state = state.copyWith(
+        status: AuthStatus.unauthenticated,
+        errorMessage: e.message,
+        authBlockedUntil: e.blockedUntil,
       );
     } on AppException catch (e) {
       state = state.copyWith(
@@ -146,6 +173,10 @@ class AuthController extends StateNotifier<AuthState> {
       clearSession: true,
       profile: null,
     );
+  }
+
+  void clearAuthRateLimit() {
+    state = state.copyWith(clearError: true, clearRateLimit: true);
   }
 
   Future<User> fetchProfile() async {

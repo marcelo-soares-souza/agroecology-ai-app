@@ -52,6 +52,19 @@
   "loginFailed": "Échec de connexion. Veuillez réessayer.",
   "registrationSuccess": "Inscription réussie. Vérifiez votre email pour confirmer votre compte.",
   "registrationFailed": "Échec de l'inscription. Veuillez réessayer.",
+  "authRateLimited": "Trop de tentatives ont échoué. Attendez avant de réessayer.",
+  "authRateLimitTitle": "Accès temporairement bloqué",
+  "authRateLimitDescription": "Trop de tentatives ont échoué. Attendez le délai indiqué avant de réessayer.",
+  "authRateLimitRetryIn": "Réessayez dans {time}.",
+  "@authRateLimitRetryIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "authRateLimitRetryAvailable": "Vous pouvez réessayer maintenant.",
+  "authRateLimitTryAgain": "Réessayer",
   "connectionError": "Erreur de connexion. Vérifiez votre réseau.",
   "drawerHome": "Accueil",
   "drawerChat": "Chat",
@@ -216,6 +229,23 @@
   "fileSize": "Taille",
   "ingested": "Indexé",
   "notIngested": "Non indexé",
+  "documentAccessRestrictedTitle": "PDF complet restreint",
+  "documentAccessRestrictedBody": "Les métadonnées de licence restreignent l'accès au PDF complet, donc le téléchargement et l'aperçu ne sont pas disponibles.",
+  "academicMetadataTitle": "Métadonnées Académiques",
+  "doiField": "DOI",
+  "publicationYear": "Année de publication",
+  "citations": "Citations",
+  "references": "Références",
+  "venue": "Revue ou événement",
+  "publisher": "Éditeur",
+  "matchConfidence": "Confiance de correspondance",
+  "sourceUrl": "Source",
+  "openAccessUrl": "Accès ouvert",
+  "abstract": "Résumé",
+  "topics": "Sujets",
+  "keywords": "Mots-clés",
+  "license": "Licence",
+  "funder": "Financeur",
   "drawerPrivacy": "Politique de confidentialité",
   "drawerTerms": "Conditions d'utilisation",
   "privacyPolicyTitle": "Politique de confidentialité",

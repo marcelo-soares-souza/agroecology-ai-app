@@ -181,6 +181,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get registrationFailed => 'Error de registro. Intenta de nuevo.';
 
   @override
+  String get authRateLimited =>
+      'Demasiados intentos fallaron. Espera antes de intentarlo de nuevo.';
+
+  @override
+  String get authRateLimitTitle => 'Acceso bloqueado temporalmente';
+
+  @override
+  String get authRateLimitDescription =>
+      'Demasiados intentos fallaron. Espera el tiempo indicado antes de intentarlo de nuevo.';
+
+  @override
+  String authRateLimitRetryIn(String time) {
+    return 'Inténtalo de nuevo en $time.';
+  }
+
+  @override
+  String get authRateLimitRetryAvailable => 'Ya puedes intentarlo de nuevo.';
+
+  @override
+  String get authRateLimitTryAgain => 'Intentar de nuevo';
+
+  @override
   String get connectionError => 'Error de conexión. Verifica tu red.';
 
   @override
@@ -605,6 +627,58 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get notIngested => 'No indexado';
+
+  @override
+  String get documentAccessRestrictedTitle => 'PDF completo restringido';
+
+  @override
+  String get documentAccessRestrictedBody =>
+      'Los metadatos de licencia restringen el acceso al PDF completo, por lo que descarga y vista previa no están disponibles.';
+
+  @override
+  String get academicMetadataTitle => 'Metadatos Académicos';
+
+  @override
+  String get doiField => 'DOI';
+
+  @override
+  String get publicationYear => 'Año de publicación';
+
+  @override
+  String get citations => 'Citas';
+
+  @override
+  String get references => 'Referencias';
+
+  @override
+  String get venue => 'Revista o evento';
+
+  @override
+  String get publisher => 'Editorial';
+
+  @override
+  String get matchConfidence => 'Confianza de coincidencia';
+
+  @override
+  String get sourceUrl => 'Fuente';
+
+  @override
+  String get openAccessUrl => 'Acceso abierto';
+
+  @override
+  String get abstract => 'Resumen';
+
+  @override
+  String get topics => 'Temas';
+
+  @override
+  String get keywords => 'Palabras clave';
+
+  @override
+  String get license => 'Licencia';
+
+  @override
+  String get funder => 'Financiador';
 
   @override
   String get drawerPrivacy => 'Política de Privacidad';

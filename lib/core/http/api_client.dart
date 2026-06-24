@@ -68,8 +68,12 @@ class ApiClient {
         if (_isRefreshing) {
           final completer = Completer<void>();
           _refreshQueue.add(completer);
-          await completer.future;
-          return _retryRequest(error, handler);
+          try {
+            await completer.future;
+            return _retryRequest(error, handler);
+          } catch (_) {
+            return handler.next(error);
+          }
         }
 
         _isRefreshing = true;
@@ -112,6 +116,7 @@ class ApiClient {
   bool _isPublicAuthEndpoint(String path) {
     return path == '/api/v1/auth/login' ||
         path == '/api/v1/auth/register' ||
+        path == '/api/v1/auth/refresh' ||
         path == '/api/v1/auth/human-challenge' ||
         path == '/api/v1/auth/confirm-email' ||
         path == '/api/v1/auth/confirm-email/resend' ||
@@ -154,6 +159,25 @@ class ApiClient {
         final detail = data['detail'];
         if (detail is String) {
           message = detail;
+        } else if (detail is Map<String, dynamic>) {
+          final code = detail['code'] as String?;
+          if (response.statusCode == 429 && code == 'auth_rate_limited') {
+            final retryAfterSeconds =
+                (detail['retry_after_seconds'] as num?)?.toInt() ??
+                _retryAfterFromHeader(response) ??
+                0;
+            final blockedUntil = _parseBlockedUntil(
+              detail['blocked_until'] as String?,
+              retryAfterSeconds,
+            );
+            return RateLimitException(
+              message: 'authRateLimited',
+              statusCode: response.statusCode,
+              retryAfterSeconds: retryAfterSeconds,
+              blockedUntil: blockedUntil,
+            );
+          }
+          message = detail['message'] as String? ?? message;
         } else if (detail is List) {
           for (final item in detail) {
             if (item is Map<String, dynamic>) {
@@ -182,6 +206,18 @@ class ApiClient {
     }
 
     return AppException(message: error.message ?? 'chatError');
+  }
+
+  int? _retryAfterFromHeader(Response<dynamic> response) {
+    final value = response.headers.value('retry-after');
+    if (value == null || value.isEmpty) return null;
+    return int.tryParse(value);
+  }
+
+  DateTime _parseBlockedUntil(String? value, int retryAfterSeconds) {
+    final parsed = value == null ? null : DateTime.tryParse(value);
+    if (parsed != null) return parsed;
+    return DateTime.now().toUtc().add(Duration(seconds: retryAfterSeconds));
   }
 
   Future<Map<String, dynamic>> getAuthenticated(

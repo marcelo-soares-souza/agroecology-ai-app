@@ -6,6 +6,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/document_record.dart';
 
 class DocumentPdfViewPage extends ConsumerStatefulWidget {
@@ -34,6 +35,16 @@ class _DocumentPdfViewPageState extends ConsumerState<DocumentPdfViewPage> {
     try {
       final repo = ref.read(documentRepositoryProvider);
       final doc = await repo.getOne(widget.id);
+      if (!doc.fullFileAvailable || doc.fileType != 'pdf') {
+        if (!mounted) return;
+        setState(() {
+          _document = doc;
+          _error = AppLocalizations.of(context)!.documentAccessRestrictedBody;
+          _loading = false;
+        });
+        return;
+      }
+
       final bytes = await repo.downloadBytes(doc.id);
       final tempDir = Directory.systemTemp;
       final tempFile = File('${tempDir.path}/${doc.id}.pdf');
@@ -57,9 +68,7 @@ class _DocumentPdfViewPageState extends ConsumerState<DocumentPdfViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_document?.displayTitle ?? ''),
-      ),
+      appBar: AppBar(title: Text(_document?.displayTitle ?? '')),
       body: _buildBody(),
     );
   }

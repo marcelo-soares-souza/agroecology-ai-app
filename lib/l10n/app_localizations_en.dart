@@ -178,6 +178,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registrationFailed => 'Registration failed. Please try again.';
 
   @override
+  String get authRateLimited =>
+      'Too many attempts failed. Wait before trying again.';
+
+  @override
+  String get authRateLimitTitle => 'Access temporarily blocked';
+
+  @override
+  String get authRateLimitDescription =>
+      'Too many attempts failed. Wait for the indicated time before trying again.';
+
+  @override
+  String authRateLimitRetryIn(String time) {
+    return 'Try again in $time.';
+  }
+
+  @override
+  String get authRateLimitRetryAvailable => 'You can try again now.';
+
+  @override
+  String get authRateLimitTryAgain => 'Try again';
+
+  @override
   String get connectionError => 'Connection error. Please check your network.';
 
   @override
@@ -599,6 +621,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notIngested => 'Not indexed';
+
+  @override
+  String get documentAccessRestrictedTitle => 'Full PDF restricted';
+
+  @override
+  String get documentAccessRestrictedBody =>
+      'The license metadata restricts full PDF access, so download and preview are not available.';
+
+  @override
+  String get academicMetadataTitle => 'Academic Metadata';
+
+  @override
+  String get doiField => 'DOI';
+
+  @override
+  String get publicationYear => 'Publication year';
+
+  @override
+  String get citations => 'Citations';
+
+  @override
+  String get references => 'References';
+
+  @override
+  String get venue => 'Venue';
+
+  @override
+  String get publisher => 'Publisher';
+
+  @override
+  String get matchConfidence => 'Match confidence';
+
+  @override
+  String get sourceUrl => 'Source';
+
+  @override
+  String get openAccessUrl => 'Open access';
+
+  @override
+  String get abstract => 'Abstract';
+
+  @override
+  String get topics => 'Topics';
+
+  @override
+  String get keywords => 'Keywords';
+
+  @override
+  String get license => 'License';
+
+  @override
+  String get funder => 'Funder';
 
   @override
   String get drawerPrivacy => 'Privacy Policy';

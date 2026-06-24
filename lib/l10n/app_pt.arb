@@ -52,6 +52,19 @@
   "loginFailed": "Falha no login. Tente novamente.",
   "registrationSuccess": "Cadastro realizado. Verifique seu email para confirmar sua conta.",
   "registrationFailed": "Falha no cadastro. Tente novamente.",
+  "authRateLimited": "Muitas tentativas falharam. Aguarde antes de tentar novamente.",
+  "authRateLimitTitle": "Acesso temporariamente bloqueado",
+  "authRateLimitDescription": "Muitas tentativas falharam. Aguarde o tempo indicado antes de tentar novamente.",
+  "authRateLimitRetryIn": "Tente novamente em {time}.",
+  "@authRateLimitRetryIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "authRateLimitRetryAvailable": "Você já pode tentar novamente.",
+  "authRateLimitTryAgain": "Tentar novamente",
   "connectionError": "Erro de conexão. Verifique sua rede.",
   "drawerHome": "Início",
   "drawerChat": "Chat",
@@ -216,6 +229,23 @@
   "fileSize": "Tamanho",
   "ingested": "Indexado",
   "notIngested": "Não indexado",
+  "documentAccessRestrictedTitle": "PDF completo restrito",
+  "documentAccessRestrictedBody": "Os metadados de licença restringem o acesso ao PDF completo, então download e preview não estão disponíveis.",
+  "academicMetadataTitle": "Metadados Acadêmicos",
+  "doiField": "DOI",
+  "publicationYear": "Ano de publicação",
+  "citations": "Citações",
+  "references": "Referências",
+  "venue": "Periódico ou evento",
+  "publisher": "Editora",
+  "matchConfidence": "Confiança da correspondência",
+  "sourceUrl": "Fonte",
+  "openAccessUrl": "Acesso aberto",
+  "abstract": "Resumo",
+  "topics": "Tópicos",
+  "keywords": "Palavras-chave",
+  "license": "Licença",
+  "funder": "Financiador",
   "drawerPrivacy": "Política de Privacidade",
   "drawerTerms": "Termos de Serviço",
   "privacyPolicyTitle": "Política de Privacidade",

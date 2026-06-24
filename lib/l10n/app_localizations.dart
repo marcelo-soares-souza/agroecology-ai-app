@@ -414,6 +414,42 @@ abstract class AppLocalizations {
   /// **'Registration failed. Please try again.'**
   String get registrationFailed;
 
+  /// No description provided for @authRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts failed. Wait before trying again.'**
+  String get authRateLimited;
+
+  /// No description provided for @authRateLimitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Access temporarily blocked'**
+  String get authRateLimitTitle;
+
+  /// No description provided for @authRateLimitDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts failed. Wait for the indicated time before trying again.'**
+  String get authRateLimitDescription;
+
+  /// No description provided for @authRateLimitRetryIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again in {time}.'**
+  String authRateLimitRetryIn(String time);
+
+  /// No description provided for @authRateLimitRetryAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'You can try again now.'**
+  String get authRateLimitRetryAvailable;
+
+  /// No description provided for @authRateLimitTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get authRateLimitTryAgain;
+
   /// No description provided for @connectionError.
   ///
   /// In en, this message translates to:
@@ -1169,6 +1205,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not indexed'**
   String get notIngested;
+
+  /// No description provided for @documentAccessRestrictedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Full PDF restricted'**
+  String get documentAccessRestrictedTitle;
+
+  /// No description provided for @documentAccessRestrictedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The license metadata restricts full PDF access, so download and preview are not available.'**
+  String get documentAccessRestrictedBody;
+
+  /// No description provided for @academicMetadataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic Metadata'**
+  String get academicMetadataTitle;
+
+  /// No description provided for @doiField.
+  ///
+  /// In en, this message translates to:
+  /// **'DOI'**
+  String get doiField;
+
+  /// No description provided for @publicationYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Publication year'**
+  String get publicationYear;
+
+  /// No description provided for @citations.
+  ///
+  /// In en, this message translates to:
+  /// **'Citations'**
+  String get citations;
+
+  /// No description provided for @references.
+  ///
+  /// In en, this message translates to:
+  /// **'References'**
+  String get references;
+
+  /// No description provided for @venue.
+  ///
+  /// In en, this message translates to:
+  /// **'Venue'**
+  String get venue;
+
+  /// No description provided for @publisher.
+  ///
+  /// In en, this message translates to:
+  /// **'Publisher'**
+  String get publisher;
+
+  /// No description provided for @matchConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Match confidence'**
+  String get matchConfidence;
+
+  /// No description provided for @sourceUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get sourceUrl;
+
+  /// No description provided for @openAccessUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Open access'**
+  String get openAccessUrl;
+
+  /// No description provided for @abstract.
+  ///
+  /// In en, this message translates to:
+  /// **'Abstract'**
+  String get abstract;
+
+  /// No description provided for @topics.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics'**
+  String get topics;
+
+  /// No description provided for @keywords.
+  ///
+  /// In en, this message translates to:
+  /// **'Keywords'**
+  String get keywords;
+
+  /// No description provided for @license.
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get license;
+
+  /// No description provided for @funder.
+  ///
+  /// In en, this message translates to:
+  /// **'Funder'**
+  String get funder;
 
   /// No description provided for @drawerPrivacy.
   ///

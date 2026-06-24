@@ -20,6 +20,18 @@ class ForbiddenException extends AppException {
   const ForbiddenException({required super.message, super.statusCode});
 }
 
+class RateLimitException extends AppException {
+  final int retryAfterSeconds;
+  final DateTime blockedUntil;
+
+  const RateLimitException({
+    required super.message,
+    required this.retryAfterSeconds,
+    required this.blockedUntil,
+    super.statusCode,
+  });
+}
+
 class ChatException extends AppException {
   const ChatException({required super.message, super.statusCode});
 }
