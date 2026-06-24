@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.1.3
+
+### Added
+
+- **Academic Document Metadata**: document detail pages now display available academic metadata, including DOI, publication year, citation and reference counts, venue, publisher, confidence, source URLs, open access URLs, abstract, topics, keywords, license, and funder information.
+- **Restrictive License Handling**: documents with restrictive publisher license URLs now hide full PDF download, inline preview, and fullscreen PDF viewing when full-file access is not allowed.
+- **Localized Document Access Messages**: added localized labels and messages for restricted full-file access and academic metadata fields.
+
+### Changed
+
+- **Session Restore Navigation**: reopening the app with a valid saved session now routes directly to Chat instead of the landing page.
+- **Token Refresh Flow**: token refresh handling is more robust for concurrent authenticated requests and avoids retrying refresh on the refresh endpoint itself.
+- **Document PDF Access Guard**: direct PDF view navigation now verifies document type and full-file availability before loading the file.
+
+### Fixed
+
+- Prevented restricted PDFs from being previewed or opened directly from document detail screens.
+- Prevented queued requests from surfacing unhandled refresh errors when token renewal fails.
+
 ## 1.1.1
 
 ### Added
