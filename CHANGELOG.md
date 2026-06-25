@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.2.0
+
+### Added
+
+- **Account Lifecycle Flows**: added mobile routes and screens for email confirmation, confirmation resend, password reset with token deep links, and account deletion confirmation links.
+- **GDPR/LGPD Data Controls**: added profile actions to export personal data and request account deletion with email confirmation, plus localized privacy and terms content describing collected data, local storage, AI processing, retention, and user rights.
+- **Suggestion Management Parity**: users can now create richer document suggestions with title, authors, reference URL, and comments; edit pending suggestions; replace suggestion PDFs; view uploaded PDFs; and delete their own pending suggestions.
+- **Public Profiles and Contributions**: added public profile routing by slug and public approved-suggestion lists, aligned with the backend public user contract.
+- **Document Browsing Improvements**: added paginated document listing support with search metadata handling and improved document detail/download behavior.
+- **Localized UX Coverage**: expanded English, Portuguese, Spanish, and French strings for auth flows, suggestions, profile editing, privacy, terms, export, deletion, and document actions.
+- **Updated App Icons**: regenerated Android and iOS launcher icons from the new Agroecology Map AI logo assets.
+
+### Changed
+
+- **Backend Contract Alignment**: `getUserBySlug` now consumes the backend `PublicUser` response instead of the private `User` response, avoiding use of private-only fields on public community pages.
+- **Login Layout**: moved the "Forgot password?" link to the bottom of the login screen, below the account registration prompt.
+- **Auth API Integration**: centralized password reset, email confirmation, confirmation resend, logout, data export, and account deletion calls through the auth repository/controller.
+- **Mobile Privacy Posture**: disabled Android cleartext traffic and removed unused iOS camera/location permission declarations; photo-library access remains limited to explicit avatar selection.
+- **Chat Source Handling**: improved source-card rendering and document-link behavior for chat answers.
+
+### Fixed
+
+- Fixed the public profile crash risk caused by treating public user responses as full private user records.
+- Fixed auth redirects so confirmation and deletion links can complete without being forced back into the authenticated shell.
+- Fixed suggestion editing to allow only pending suggestions and to validate PDF replacement size/type before upload.
+- Fixed document and suggestion list handling for paginated backend responses.
+
 ## 1.1.3
 
 ### Added

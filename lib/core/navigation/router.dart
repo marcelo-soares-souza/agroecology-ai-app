@@ -792,14 +792,6 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 8),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () => context.push('/forgot-password'),
-                        child: Text(l10n.forgotPassword),
-                      ),
-                    ),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: auth.isLoading ? null : _handleLogin,
@@ -837,6 +829,13 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 8),
+                    Center(
+                      child: TextButton(
+                        onPressed: () => context.push('/forgot-password'),
+                        child: Text(l10n.forgotPassword),
+                      ),
                     ),
                   ],
                 ),
