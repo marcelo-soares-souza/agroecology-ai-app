@@ -37,10 +37,6 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>This app may use the camera to take a profile photo.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app may use your location to suggest files and folders.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to your photo library to set your profile avatar.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
