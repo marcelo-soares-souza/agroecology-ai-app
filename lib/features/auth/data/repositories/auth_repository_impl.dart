@@ -179,9 +179,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User> getUserBySlug(String slug) async {
+  Future<PublicUser> getUserBySlug(String slug) async {
     final data = await _remote.getUserBySlug(slug);
-    return _mapUser(data);
+    return _mapPublicUser(data);
   }
 
   @override

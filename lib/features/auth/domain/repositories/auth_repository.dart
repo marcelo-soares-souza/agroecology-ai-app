@@ -28,7 +28,7 @@ abstract class AuthRepository {
   Future<User> updateMyProfile({String? fullName, String? about, String? link});
   Future<User> uploadAvatar(String filePath);
   Future<List<PublicUser>> listActiveUsers();
-  Future<User> getUserBySlug(String slug);
+  Future<PublicUser> getUserBySlug(String slug);
   Future<AuthSession?> restoreSession();
   Future<Map<String, dynamic>> exportMyData();
   Future<String> requestDeleteAccount();

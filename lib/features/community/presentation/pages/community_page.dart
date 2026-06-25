@@ -247,7 +247,7 @@ class CommunityDetailPage extends ConsumerStatefulWidget {
 }
 
 class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
-  User? _user;
+  PublicUser? _user;
   List<Map<String, dynamic>>? _suggestions;
   String? _error;
 
@@ -321,28 +321,20 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                     color: AppColors.textSecondary,
                   ),
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    HelpTooltip(message: l10n.profileVisibilityTooltip),
-                    const SizedBox(width: 8),
-                    StatusBadge.active(
-                      label: _resolveStatusLabel(user.status, l10n),
-                    ),
-                    const SizedBox(width: 8),
-                    ...user.roles
-                        .where((r) => r != 'admin')
-                        .map(
-                          (r) => Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: StatusBadge.info(
-                              label: _resolveRoleLabel(r, l10n),
-                            ),
-                          ),
-                        ),
-                  ],
-                ),
+                if (user.approvedSuggestionsCount > 0) ...[
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HelpTooltip(message: l10n.profileVisibilityTooltip),
+                      const SizedBox(width: 8),
+                      StatusBadge.info(
+                        label:
+                            '${l10n.approvedSuggestions}: ${user.approvedSuggestionsCount}',
+                      ),
+                    ],
+                  ),
+                ],
                 if (isOwnProfile) ...[
                   const SizedBox(height: 16),
                   SizedBox(
@@ -357,53 +349,34 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
               ],
             ),
           ),
-          const SizedBox(height: 16),
-          AppCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (user.link != null && user.link!.isNotEmpty) ...[
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.link,
-                        size: 18,
-                        color: AppColors.textSecondary,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        l10n.linkLabel,
-                        style: const TextStyle(
-                          fontSize: AppTokens.metaSize,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: () => openExternalUrl(user.link!),
-                        child: Text(l10n.openLink),
-                      ),
-                    ],
+          if (user.link != null && user.link!.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            AppCard(
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.link,
+                    size: 18,
+                    color: AppColors.textSecondary,
                   ),
-                  const Divider(height: 24),
-                ],
-                _infoRow(
-                  Icons.calendar_today,
-                  l10n.joined,
-                  _formatDate(user.createdAt),
-                ),
-                if (user.lastLoginAt != null) ...[
-                  const Divider(height: 24),
-                  _infoRow(
-                    Icons.login,
-                    l10n.lastLogin,
-                    _formatDate(user.lastLoginAt!),
+                  const SizedBox(width: 8),
+                  Text(
+                    l10n.linkLabel,
+                    style: const TextStyle(
+                      fontSize: AppTokens.metaSize,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => openExternalUrl(user.link!),
+                    child: Text(l10n.openLink),
                   ),
                 ],
-              ],
+              ),
             ),
-          ),
+          ],
           if (user.about != null && user.about!.isNotEmpty) ...[
             const SizedBox(height: 16),
             AppCard(
@@ -591,58 +564,5 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
         ),
       ),
     );
-  }
-
-  Widget _infoRow(IconData icon, String label, String value) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: AppColors.textSecondary),
-        const SizedBox(width: 8),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textSecondary,
-          ),
-        ),
-        const SizedBox(width: 4),
-        Expanded(
-          child: Text(
-            value,
-            style: const TextStyle(fontSize: 13, color: AppColors.textPrimary),
-            textAlign: TextAlign.right,
-          ),
-        ),
-      ],
-    );
-  }
-
-  String _formatDate(String iso) {
-    try {
-      final dt = DateTime.parse(iso);
-      return '${dt.day.toString().padLeft(2, '0')}/'
-          '${dt.month.toString().padLeft(2, '0')}/'
-          '${dt.year}';
-    } catch (_) {
-      return iso;
-    }
-  }
-
-  String _resolveStatusLabel(String status, AppLocalizations l10n) {
-    return switch (status) {
-      'active' => l10n.statusActive,
-      'pending' => l10n.statusPending,
-      'suspended' => l10n.statusSuspended,
-      'deleted' => l10n.statusDeleted,
-      _ => status,
-    };
-  }
-
-  String _resolveRoleLabel(String role, AppLocalizations l10n) {
-    return switch (role) {
-      'user' => l10n.roleUser,
-      _ => role,
-    };
   }
 }
