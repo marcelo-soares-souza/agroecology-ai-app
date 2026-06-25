@@ -15,6 +15,13 @@ abstract class AuthRepository {
     String locale = 'pt-BR',
   });
 
+  Future<String> confirmEmail(String token);
+  Future<String> resendConfirmation(String email);
+  Future<String> requestPasswordReset(String email);
+  Future<String> confirmPasswordReset({
+    required String token,
+    required String newPassword,
+  });
   Future<AuthSession> refreshSession(String refreshToken);
   Future<void> logout({bool revokeRemote = true});
   Future<User> getMe();

@@ -331,16 +331,16 @@ class _CommunityDetailPageState extends ConsumerState<CommunityDetailPage> {
                       label: _resolveStatusLabel(user.status, l10n),
                     ),
                     const SizedBox(width: 8),
-                    ...user.roles.map(
-                      (r) => Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: r == 'admin'
-                            ? StatusBadge.admin(label: l10n.roleAdmin)
-                            : StatusBadge.info(
-                                label: _resolveRoleLabel(r, l10n),
-                              ),
-                      ),
-                    ),
+                    ...user.roles
+                        .where((r) => r != 'admin')
+                        .map(
+                          (r) => Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: StatusBadge.info(
+                              label: _resolveRoleLabel(r, l10n),
+                            ),
+                          ),
+                        ),
                   ],
                 ),
                 if (isOwnProfile) ...[

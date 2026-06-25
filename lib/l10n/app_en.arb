@@ -41,6 +41,19 @@
   "newPassword": "New Password",
   "passwordResetSuccess": "Password reset successfully.",
   "goToSignIn": "Go to Sign In",
+  "confirmingEmail": "Confirming your email...",
+  "emailConfirmationTitle": "Email Confirmation",
+  "emailConfirmedTitle": "Email Confirmed",
+  "emailConfirmationFailed": "Failed to confirm email.",
+  "missingToken": "The confirmation token is missing.",
+  "resendConfirmationTitle": "Resend Confirmation",
+  "resendConfirmationInstruction": "Enter your account email to receive a new confirmation link.",
+  "resendConfirmationButton": "Resend Confirmation",
+  "resendConfirmationSentTitle": "Confirmation Sent",
+  "resendConfirmationSentBody": "If the email exists and still needs confirmation, a new link was sent.",
+  "resendConfirmationFailed": "Failed to resend confirmation.",
+  "deleteAccountConfirming": "Confirming account deletion...",
+  "accountDeletedTitle": "Account Deleted",
   "resetTokenInstruction": "Enter the reset token from your email and your new password.",
   "resetTokenLabel": "Reset Token",
   "resetTokenHint": "Paste the token from your email",
@@ -155,6 +168,16 @@
   "suggestionCountLabel": "suggestions",
   "newSuggestion": "New Suggestion",
   "newSuggestionSubtitle": "Send relevant materials to expand the coverage of the knowledge base.",
+  "editSuggestion": "Edit Suggestion",
+  "editSuggestionSubtitle": "Pending suggestions can be adjusted before review.",
+  "suggestionTitleLabel": "Title",
+  "suggestionTitleHint": "Document title",
+  "suggestionTitleHelper": "Optional, but it helps reviewers identify the material.",
+  "suggestionAuthorsLabel": "Authors",
+  "suggestionAuthorsHint": "Authors or organization",
+  "suggestionAuthorsHelper": "Optional authorship, institution, collective, or publisher.",
+  "suggestionUrlLabel": "Reference URL",
+  "suggestionUrlHelper": "Optional source, publication page, DOI page, or institutional link.",
   "suggestionReviewTitle": "How review works",
   "suggestionReviewBody": "The team checks relevance, quality, and fit before approving a document for public consultation.",
   "selectPdf": "Select PDF file",
@@ -189,7 +212,13 @@
   "untitled": "Untitled",
   "filename": "Filename",
   "suggestionDetail": "Suggestion Detail",
-  "adminComment": "Admin Comment",
+  "suggestionNotFound": "Suggestion not found.",
+  "suggestionNotEditable": "Only pending suggestions can be edited.",
+  "currentFile": "Current file",
+  "replacePdf": "Replace PDF",
+  "noFileSelected": "No file selected",
+  "attachedPdf": "Attached PDF",
+  "reviewComment": "Review Comment",
   "resultingDocument": "Resulting Document",
   "viewDocument": "View Document",
   "kbTitle": "Knowledge Base",
@@ -217,6 +246,21 @@
     }
   },
   "kbIndexedTooltip": "Indexed documents can already be found by chat. Non-indexed files can still be read manually.",
+  "documentPageSummary": "{loaded} of {total} loaded · {indexed} indexed",
+  "@documentPageSummary": {
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "indexed": {
+        "type": "int"
+      }
+    }
+  },
+  "loadMore": "Load more",
   "documentDetail": "Document Detail",
   "documentIndexedTitle": "Available to AI",
   "documentIndexedBody": "This document has been indexed and may be used to ground chat answers.",
@@ -271,7 +315,6 @@
   "statusActive": "active",
   "statusSuspended": "suspended",
   "statusDeleted": "deleted",
-  "roleAdmin": "admin",
   "roleUser": "user",
   "loggedOut": "You have been logged out.",
   "searchCommunity": "Search community...",

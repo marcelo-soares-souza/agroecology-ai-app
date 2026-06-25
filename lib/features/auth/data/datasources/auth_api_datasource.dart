@@ -23,6 +23,41 @@ class AuthApiDataSource {
     return MessageResponse.fromJson(data);
   }
 
+  Future<MessageResponse> confirmEmail(String token) async {
+    final data = await _client.post(
+      '$_prefix/confirm-email',
+      data: {'token': token},
+    );
+    return MessageResponse.fromJson(data);
+  }
+
+  Future<MessageResponse> resendConfirmation(String email) async {
+    final data = await _client.post(
+      '$_prefix/confirm-email/resend',
+      data: {'email': email},
+    );
+    return MessageResponse.fromJson(data);
+  }
+
+  Future<MessageResponse> requestPasswordReset(String email) async {
+    final data = await _client.post(
+      '$_prefix/password-reset/request',
+      data: {'email': email},
+    );
+    return MessageResponse.fromJson(data);
+  }
+
+  Future<MessageResponse> confirmPasswordReset({
+    required String token,
+    required String newPassword,
+  }) async {
+    final data = await _client.post(
+      '$_prefix/password-reset/confirm',
+      data: {'token': token, 'new_password': newPassword},
+    );
+    return MessageResponse.fromJson(data);
+  }
+
   Future<TokenResponse> login(Map<String, dynamic> body) async {
     final data = await _client.post('$_prefix/login', data: body);
     return TokenResponse.fromJson(data);

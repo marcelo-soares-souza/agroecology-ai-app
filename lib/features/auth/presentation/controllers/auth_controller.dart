@@ -213,6 +213,28 @@ class AuthController extends StateNotifier<AuthState> {
     return await _authRepository.exportMyData();
   }
 
+  Future<String> confirmEmail(String token) async {
+    return await _authRepository.confirmEmail(token);
+  }
+
+  Future<String> resendConfirmation(String email) async {
+    return await _authRepository.resendConfirmation(email);
+  }
+
+  Future<String> requestPasswordReset(String email) async {
+    return await _authRepository.requestPasswordReset(email);
+  }
+
+  Future<String> confirmPasswordReset({
+    required String token,
+    required String newPassword,
+  }) async {
+    return await _authRepository.confirmPasswordReset(
+      token: token,
+      newPassword: newPassword,
+    );
+  }
+
   Future<String> requestDeleteAccount() async {
     return await _authRepository.requestDeleteAccount();
   }

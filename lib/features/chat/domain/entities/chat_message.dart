@@ -142,7 +142,7 @@ class SourceMetadata {
   });
 
   String get displayName {
-    return title ?? source?.split('/').last ?? 'Unknown source';
+    return title ?? source?.split('/').last ?? '';
   }
 
   Map<String, dynamic> toJson() {

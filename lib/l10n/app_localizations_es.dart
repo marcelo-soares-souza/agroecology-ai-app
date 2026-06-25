@@ -145,6 +145,48 @@ class AppLocalizationsEs extends AppLocalizations {
   String get goToSignIn => 'Ir a Iniciar Sesión';
 
   @override
+  String get confirmingEmail => 'Confirmando tu email...';
+
+  @override
+  String get emailConfirmationTitle => 'Confirmación de Email';
+
+  @override
+  String get emailConfirmedTitle => 'Email Confirmado';
+
+  @override
+  String get emailConfirmationFailed => 'No se pudo confirmar el email.';
+
+  @override
+  String get missingToken => 'Falta el token de confirmación.';
+
+  @override
+  String get resendConfirmationTitle => 'Reenviar Confirmación';
+
+  @override
+  String get resendConfirmationInstruction =>
+      'Ingresa el email de tu cuenta para recibir un nuevo enlace de confirmación.';
+
+  @override
+  String get resendConfirmationButton => 'Reenviar Confirmación';
+
+  @override
+  String get resendConfirmationSentTitle => 'Confirmación Enviada';
+
+  @override
+  String get resendConfirmationSentBody =>
+      'Si el email existe y aún necesita confirmación, se envió un nuevo enlace.';
+
+  @override
+  String get resendConfirmationFailed => 'No se pudo reenviar la confirmación.';
+
+  @override
+  String get deleteAccountConfirming =>
+      'Confirmando eliminación de la cuenta...';
+
+  @override
+  String get accountDeletedTitle => 'Cuenta Eliminada';
+
+  @override
   String get resetTokenInstruction =>
       'Ingresa el token de restablecimiento de tu email y tu nueva contraseña.';
 
@@ -462,6 +504,40 @@ class AppLocalizationsEs extends AppLocalizations {
       'Envía materiales relevantes para ampliar la cobertura de la base de conocimiento.';
 
   @override
+  String get editSuggestion => 'Editar Sugerencia';
+
+  @override
+  String get editSuggestionSubtitle =>
+      'Las sugerencias pendientes pueden ajustarse antes de la revisión.';
+
+  @override
+  String get suggestionTitleLabel => 'Título';
+
+  @override
+  String get suggestionTitleHint => 'Título del documento';
+
+  @override
+  String get suggestionTitleHelper =>
+      'Opcional, pero ayuda a identificar el material.';
+
+  @override
+  String get suggestionAuthorsLabel => 'Autores';
+
+  @override
+  String get suggestionAuthorsHint => 'Autores u organización';
+
+  @override
+  String get suggestionAuthorsHelper =>
+      'Autoría, institución, colectivo o editorial, si corresponde.';
+
+  @override
+  String get suggestionUrlLabel => 'URL de referencia';
+
+  @override
+  String get suggestionUrlHelper =>
+      'Fuente opcional, página de publicación, DOI o enlace institucional.';
+
+  @override
   String get suggestionReviewTitle => 'Cómo funciona la revisión';
 
   @override
@@ -552,7 +628,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get suggestionDetail => 'Detalle de la Sugerencia';
 
   @override
-  String get adminComment => 'Comentario del Admin';
+  String get suggestionNotFound => 'Sugerencia no encontrada.';
+
+  @override
+  String get suggestionNotEditable =>
+      'Solo las sugerencias pendientes pueden editarse.';
+
+  @override
+  String get currentFile => 'Archivo actual';
+
+  @override
+  String get replacePdf => 'Reemplazar PDF';
+
+  @override
+  String get noFileSelected => 'Ningún archivo seleccionado';
+
+  @override
+  String get attachedPdf => 'PDF adjunto';
+
+  @override
+  String get reviewComment => 'Comentario de revisión';
 
   @override
   String get resultingDocument => 'Documento Resultante';
@@ -589,6 +684,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get kbIndexedTooltip =>
       'Los documentos indexados ya pueden encontrarse en el chat. Los archivos no indexados aún pueden leerse manualmente.';
+
+  @override
+  String documentPageSummary(int loaded, int total, int indexed) {
+    return '$loaded de $total cargados · $indexed indexados';
+  }
+
+  @override
+  String get loadMore => 'Cargar más';
 
   @override
   String get documentDetail => 'Detalle del Documento';
@@ -760,9 +863,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get statusDeleted => 'eliminado';
-
-  @override
-  String get roleAdmin => 'admin';
 
   @override
   String get roleUser => 'usuario';

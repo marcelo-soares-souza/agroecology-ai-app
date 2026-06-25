@@ -41,6 +41,19 @@
   "newPassword": "Nueva Contraseña",
   "passwordResetSuccess": "Contraseña restablecida con éxito.",
   "goToSignIn": "Ir a Iniciar Sesión",
+  "confirmingEmail": "Confirmando tu email...",
+  "emailConfirmationTitle": "Confirmación de Email",
+  "emailConfirmedTitle": "Email Confirmado",
+  "emailConfirmationFailed": "No se pudo confirmar el email.",
+  "missingToken": "Falta el token de confirmación.",
+  "resendConfirmationTitle": "Reenviar Confirmación",
+  "resendConfirmationInstruction": "Ingresa el email de tu cuenta para recibir un nuevo enlace de confirmación.",
+  "resendConfirmationButton": "Reenviar Confirmación",
+  "resendConfirmationSentTitle": "Confirmación Enviada",
+  "resendConfirmationSentBody": "Si el email existe y aún necesita confirmación, se envió un nuevo enlace.",
+  "resendConfirmationFailed": "No se pudo reenviar la confirmación.",
+  "deleteAccountConfirming": "Confirmando eliminación de la cuenta...",
+  "accountDeletedTitle": "Cuenta Eliminada",
   "resetTokenInstruction": "Ingresa el token de restablecimiento de tu email y tu nueva contraseña.",
   "resetTokenLabel": "Token de Restablecimiento",
   "resetTokenHint": "Pega el token de tu email",
@@ -155,6 +168,16 @@
   "suggestionCountLabel": "sugerencias",
   "newSuggestion": "Nueva Sugerencia",
   "newSuggestionSubtitle": "Envía materiales relevantes para ampliar la cobertura de la base de conocimiento.",
+  "editSuggestion": "Editar Sugerencia",
+  "editSuggestionSubtitle": "Las sugerencias pendientes pueden ajustarse antes de la revisión.",
+  "suggestionTitleLabel": "Título",
+  "suggestionTitleHint": "Título del documento",
+  "suggestionTitleHelper": "Opcional, pero ayuda a identificar el material.",
+  "suggestionAuthorsLabel": "Autores",
+  "suggestionAuthorsHint": "Autores u organización",
+  "suggestionAuthorsHelper": "Autoría, institución, colectivo o editorial, si corresponde.",
+  "suggestionUrlLabel": "URL de referencia",
+  "suggestionUrlHelper": "Fuente opcional, página de publicación, DOI o enlace institucional.",
   "suggestionReviewTitle": "Cómo funciona la revisión",
   "suggestionReviewBody": "El equipo evalúa relevancia, calidad y adecuación antes de aprobar el documento para consulta pública.",
   "selectPdf": "Seleccionar archivo PDF",
@@ -189,7 +212,13 @@
   "untitled": "Sin título",
   "filename": "Nombre del archivo",
   "suggestionDetail": "Detalle de la Sugerencia",
-  "adminComment": "Comentario del Admin",
+  "suggestionNotFound": "Sugerencia no encontrada.",
+  "suggestionNotEditable": "Solo las sugerencias pendientes pueden editarse.",
+  "currentFile": "Archivo actual",
+  "replacePdf": "Reemplazar PDF",
+  "noFileSelected": "Ningún archivo seleccionado",
+  "attachedPdf": "PDF adjunto",
+  "reviewComment": "Comentario de revisión",
   "resultingDocument": "Documento Resultante",
   "viewDocument": "Ver Documento",
   "kbTitle": "Base de Conocimiento",
@@ -217,6 +246,21 @@
     }
   },
   "kbIndexedTooltip": "Los documentos indexados ya pueden encontrarse en el chat. Los archivos no indexados aún pueden leerse manualmente.",
+  "documentPageSummary": "{loaded} de {total} cargados · {indexed} indexados",
+  "@documentPageSummary": {
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "indexed": {
+        "type": "int"
+      }
+    }
+  },
+  "loadMore": "Cargar más",
   "documentDetail": "Detalle del Documento",
   "documentIndexedTitle": "Disponible para la IA",
   "documentIndexedBody": "Este documento ya fue indexado y puede usarse para fundamentar respuestas en el chat.",
@@ -271,7 +315,6 @@
   "statusActive": "activo",
   "statusSuspended": "suspendido",
   "statusDeleted": "eliminado",
-  "roleAdmin": "admin",
   "roleUser": "usuario",
   "loggedOut": "Has cerrado sesión.",
   "searchCommunity": "Buscar comunidad...",

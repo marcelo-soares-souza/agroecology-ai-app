@@ -144,6 +144,49 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goToSignIn => 'Aller à la Connexion';
 
   @override
+  String get confirmingEmail => 'Confirmation de votre email...';
+
+  @override
+  String get emailConfirmationTitle => 'Confirmation d\'Email';
+
+  @override
+  String get emailConfirmedTitle => 'Email Confirmé';
+
+  @override
+  String get emailConfirmationFailed => 'Impossible de confirmer l\'email.';
+
+  @override
+  String get missingToken => 'Le jeton de confirmation est manquant.';
+
+  @override
+  String get resendConfirmationTitle => 'Renvoyer la Confirmation';
+
+  @override
+  String get resendConfirmationInstruction =>
+      'Entrez l\'email de votre compte pour recevoir un nouveau lien de confirmation.';
+
+  @override
+  String get resendConfirmationButton => 'Renvoyer la Confirmation';
+
+  @override
+  String get resendConfirmationSentTitle => 'Confirmation Envoyée';
+
+  @override
+  String get resendConfirmationSentBody =>
+      'Si l\'email existe et nécessite encore une confirmation, un nouveau lien a été envoyé.';
+
+  @override
+  String get resendConfirmationFailed =>
+      'Impossible de renvoyer la confirmation.';
+
+  @override
+  String get deleteAccountConfirming =>
+      'Confirmation de la suppression du compte...';
+
+  @override
+  String get accountDeletedTitle => 'Compte Supprimé';
+
+  @override
   String get resetTokenInstruction =>
       'Entrez le jeton de réinitialisation de votre email et votre nouveau mot de passe.';
 
@@ -462,6 +505,40 @@ class AppLocalizationsFr extends AppLocalizations {
       'Envoyez des contenus pertinents pour élargir la couverture de la base de connaissances.';
 
   @override
+  String get editSuggestion => 'Modifier la Suggestion';
+
+  @override
+  String get editSuggestionSubtitle =>
+      'Les suggestions en attente peuvent être ajustées avant révision.';
+
+  @override
+  String get suggestionTitleLabel => 'Titre';
+
+  @override
+  String get suggestionTitleHint => 'Titre du document';
+
+  @override
+  String get suggestionTitleHelper =>
+      'Facultatif, mais utile pour identifier le document.';
+
+  @override
+  String get suggestionAuthorsLabel => 'Auteurs';
+
+  @override
+  String get suggestionAuthorsHint => 'Auteurs ou organisation';
+
+  @override
+  String get suggestionAuthorsHelper =>
+      'Auteur, institution, collectif ou éditeur, le cas échéant.';
+
+  @override
+  String get suggestionUrlLabel => 'URL de référence';
+
+  @override
+  String get suggestionUrlHelper =>
+      'Source facultative, page de publication, DOI ou lien institutionnel.';
+
+  @override
   String get suggestionReviewTitle => 'Fonctionnement de la révision';
 
   @override
@@ -552,7 +629,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suggestionDetail => 'Détail de la Suggestion';
 
   @override
-  String get adminComment => 'Commentaire Admin';
+  String get suggestionNotFound => 'Suggestion introuvable.';
+
+  @override
+  String get suggestionNotEditable =>
+      'Seules les suggestions en attente peuvent être modifiées.';
+
+  @override
+  String get currentFile => 'Fichier actuel';
+
+  @override
+  String get replacePdf => 'Remplacer le PDF';
+
+  @override
+  String get noFileSelected => 'Aucun fichier sélectionné';
+
+  @override
+  String get attachedPdf => 'PDF joint';
+
+  @override
+  String get reviewComment => 'Commentaire de révision';
 
   @override
   String get resultingDocument => 'Document Résultant';
@@ -589,6 +685,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get kbIndexedTooltip =>
       'Les documents indexés peuvent déjà être trouvés par le chat. Les fichiers non indexés restent lisibles manuellement.';
+
+  @override
+  String documentPageSummary(int loaded, int total, int indexed) {
+    return '$loaded sur $total chargés · $indexed indexés';
+  }
+
+  @override
+  String get loadMore => 'Charger plus';
 
   @override
   String get documentDetail => 'Détail du Document';
@@ -758,9 +862,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get statusDeleted => 'supprimé';
-
-  @override
-  String get roleAdmin => 'admin';
 
   @override
   String get roleUser => 'utilisateur';

@@ -142,6 +142,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goToSignIn => 'Go to Sign In';
 
   @override
+  String get confirmingEmail => 'Confirming your email...';
+
+  @override
+  String get emailConfirmationTitle => 'Email Confirmation';
+
+  @override
+  String get emailConfirmedTitle => 'Email Confirmed';
+
+  @override
+  String get emailConfirmationFailed => 'Failed to confirm email.';
+
+  @override
+  String get missingToken => 'The confirmation token is missing.';
+
+  @override
+  String get resendConfirmationTitle => 'Resend Confirmation';
+
+  @override
+  String get resendConfirmationInstruction =>
+      'Enter your account email to receive a new confirmation link.';
+
+  @override
+  String get resendConfirmationButton => 'Resend Confirmation';
+
+  @override
+  String get resendConfirmationSentTitle => 'Confirmation Sent';
+
+  @override
+  String get resendConfirmationSentBody =>
+      'If the email exists and still needs confirmation, a new link was sent.';
+
+  @override
+  String get resendConfirmationFailed => 'Failed to resend confirmation.';
+
+  @override
+  String get deleteAccountConfirming => 'Confirming account deletion...';
+
+  @override
+  String get accountDeletedTitle => 'Account Deleted';
+
+  @override
   String get resetTokenInstruction =>
       'Enter the reset token from your email and your new password.';
 
@@ -457,6 +498,40 @@ class AppLocalizationsEn extends AppLocalizations {
       'Send relevant materials to expand the coverage of the knowledge base.';
 
   @override
+  String get editSuggestion => 'Edit Suggestion';
+
+  @override
+  String get editSuggestionSubtitle =>
+      'Pending suggestions can be adjusted before review.';
+
+  @override
+  String get suggestionTitleLabel => 'Title';
+
+  @override
+  String get suggestionTitleHint => 'Document title';
+
+  @override
+  String get suggestionTitleHelper =>
+      'Optional, but it helps reviewers identify the material.';
+
+  @override
+  String get suggestionAuthorsLabel => 'Authors';
+
+  @override
+  String get suggestionAuthorsHint => 'Authors or organization';
+
+  @override
+  String get suggestionAuthorsHelper =>
+      'Optional authorship, institution, collective, or publisher.';
+
+  @override
+  String get suggestionUrlLabel => 'Reference URL';
+
+  @override
+  String get suggestionUrlHelper =>
+      'Optional source, publication page, DOI page, or institutional link.';
+
+  @override
   String get suggestionReviewTitle => 'How review works';
 
   @override
@@ -546,7 +621,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suggestionDetail => 'Suggestion Detail';
 
   @override
-  String get adminComment => 'Admin Comment';
+  String get suggestionNotFound => 'Suggestion not found.';
+
+  @override
+  String get suggestionNotEditable => 'Only pending suggestions can be edited.';
+
+  @override
+  String get currentFile => 'Current file';
+
+  @override
+  String get replacePdf => 'Replace PDF';
+
+  @override
+  String get noFileSelected => 'No file selected';
+
+  @override
+  String get attachedPdf => 'Attached PDF';
+
+  @override
+  String get reviewComment => 'Review Comment';
 
   @override
   String get resultingDocument => 'Resulting Document';
@@ -583,6 +676,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get kbIndexedTooltip =>
       'Indexed documents can already be found by chat. Non-indexed files can still be read manually.';
+
+  @override
+  String documentPageSummary(int loaded, int total, int indexed) {
+    return '$loaded of $total loaded · $indexed indexed';
+  }
+
+  @override
+  String get loadMore => 'Load more';
 
   @override
   String get documentDetail => 'Document Detail';
@@ -752,9 +853,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusDeleted => 'deleted';
-
-  @override
-  String get roleAdmin => 'admin';
 
   @override
   String get roleUser => 'user';

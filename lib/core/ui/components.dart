@@ -406,14 +406,6 @@ class StatusBadge extends StatelessWidget {
     );
   }
 
-  factory StatusBadge.admin({String label = 'admin'}) {
-    return StatusBadge(
-      label: label,
-      backgroundColor: const Color(0xFFfef3c7),
-      textColor: const Color(0xFF92400e),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(

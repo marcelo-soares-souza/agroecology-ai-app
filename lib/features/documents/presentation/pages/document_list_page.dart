@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../bootstrap/providers.dart';
-import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/ui/components.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/document_record.dart';
+
+const _documentPageSize = 50;
 
 class DocumentListPage extends ConsumerStatefulWidget {
   const DocumentListPage({super.key});
@@ -17,50 +21,79 @@ class DocumentListPage extends ConsumerStatefulWidget {
 }
 
 class _DocumentListPageState extends ConsumerState<DocumentListPage> {
-  List<DocumentRecord>? _documents;
-  List<DocumentRecord> _filtered = [];
-  String? _error;
   final _searchController = TextEditingController();
+  final List<DocumentRecord> _documents = [];
+  Timer? _searchDebounce;
   String _searchQuery = '';
+  String? _error;
+  int _total = 0;
+  bool _initialLoading = true;
+  bool _loadingMore = false;
+
+  bool get _hasMore => _documents.length < _total;
 
   @override
   void initState() {
     super.initState();
-    _load();
+    _load(reset: true);
   }
 
   @override
   void dispose() {
+    _searchDebounce?.cancel();
     _searchController.dispose();
     super.dispose();
   }
 
-  Future<void> _load() async {
+  Future<void> _load({required bool reset}) async {
+    if (_loadingMore) return;
+
+    setState(() {
+      if (reset) {
+        _initialLoading = true;
+        _error = null;
+      } else {
+        _loadingMore = true;
+      }
+    });
+
     try {
       final repo = ref.read(documentRepositoryProvider);
-      final docs = await repo.listAll();
+      final page = await repo.listPage(
+        query: _searchQuery,
+        limit: _documentPageSize,
+        offset: reset ? 0 : _documents.length,
+      );
+      if (!mounted) return;
       setState(() {
-        _documents = docs;
+        if (reset) {
+          _documents
+            ..clear()
+            ..addAll(page.documents);
+        } else {
+          _documents.addAll(page.documents);
+        }
+        _total = page.total;
         _error = null;
-        _applyFilter();
+        _initialLoading = false;
+        _loadingMore = false;
       });
     } catch (e) {
-      setState(() => _error = e.toString());
+      if (!mounted) return;
+      setState(() {
+        _error = e.toString();
+        _initialLoading = false;
+        _loadingMore = false;
+      });
     }
   }
 
-  void _applyFilter() {
-    if (_documents == null) return;
-    final q = _searchQuery.toLowerCase();
-    setState(() {
-      _filtered = _documents!
-          .where(
-            (d) =>
-                d.displayTitle.toLowerCase().contains(q) ||
-                (d.authors ?? '').toLowerCase().contains(q) ||
-                d.filename.toLowerCase().contains(q),
-          )
-          .toList();
+  void _scheduleSearch(String value) {
+    _searchQuery = value;
+    _searchDebounce?.cancel();
+    _searchDebounce = Timer(const Duration(milliseconds: 350), () {
+      if (!mounted) return;
+      _load(reset: true);
     });
   }
 
@@ -113,20 +146,17 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
             borderSide: const BorderSide(color: AppColors.primary200),
           ),
         ),
-        onChanged: (v) {
-          _searchQuery = v;
-          _applyFilter();
-        },
+        onChanged: _scheduleSearch,
       ),
     );
   }
 
   Widget _buildContent(AppLocalizations l10n) {
     if (_error != null) {
-      return ErrorState(message: _error!, onRetry: _load);
+      return ErrorState(message: _error!, onRetry: () => _load(reset: true));
     }
 
-    if (_documents == null) {
+    if (_initialLoading) {
       return ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: 4,
@@ -137,25 +167,24 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
       );
     }
 
-    final docs = _documents;
-    if (docs == null) return const SizedBox.shrink();
-
-    if (_filtered.isEmpty) {
+    if (_documents.isEmpty) {
       return EmptyState(
         icon: Icons.menu_book_outlined,
-        title: l10n.kbEmpty,
-        subtitle: l10n.noSuggestionsSub,
+        title: _searchQuery.trim().isEmpty
+            ? l10n.kbEmpty
+            : l10n.searchNoResults,
+        subtitle: '',
       );
     }
 
-    final indexed = docs.where((d) => d.ingested).length;
+    final indexed = _documents.where((d) => d.ingested).length;
 
     return RefreshIndicator(
-      onRefresh: _load,
+      onRefresh: () => _load(reset: true),
       color: AppColors.primary,
       child: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: _filtered.length + 1,
+        itemCount: _documents.length + 1 + (_hasMore ? 1 : 0),
         itemBuilder: (context, index) {
           if (index == 0) {
             return Padding(
@@ -176,7 +205,11 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        l10n.indexedDocsCount(indexed),
+                        l10n.documentPageSummary(
+                          _documents.length,
+                          _total,
+                          indexed,
+                        ),
                         style: const TextStyle(
                           fontSize: AppTokens.metaSize,
                           fontWeight: FontWeight.w500,
@@ -191,7 +224,19 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
             );
           }
 
-          final d = _filtered[index - 1];
+          if (index == _documents.length + 1) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 24),
+              child: AppButton.secondary(
+                label: l10n.loadMore,
+                icon: Icons.expand_more,
+                isLoading: _loadingMore,
+                onPressed: _loadingMore ? null : () => _load(reset: false),
+              ),
+            );
+          }
+
+          final d = _documents[index - 1];
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: AppCard(
@@ -199,21 +244,15 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          d.displayTitle,
-                          style: const TextStyle(
-                            fontSize: AppTokens.bodySmallSize,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    d.displayTitle,
+                    style: const TextStyle(
+                      fontSize: AppTokens.bodySmallSize,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   if (d.authors != null && d.authors!.isNotEmpty) ...[
                     const SizedBox(height: 4),
@@ -228,12 +267,12 @@ class _DocumentListPageState extends ConsumerState<DocumentListPage> {
                     ),
                   ],
                   const SizedBox(height: 8),
-                  Row(
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
                     children: [
                       _infoBadge(d.displayType, AppColors.info),
-                      const SizedBox(width: 6),
                       _infoBadge(d.displaySize, AppColors.textSecondary),
-                      const SizedBox(width: 6),
                       _infoBadge(
                         d.ingested ? l10n.ingested : l10n.notIngested,
                         d.ingested ? AppColors.success : AppColors.warning,

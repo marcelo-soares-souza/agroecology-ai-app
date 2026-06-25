@@ -55,17 +55,53 @@ class SuggestionController extends StateNotifier<SuggestionListState> {
     }
   }
 
-  Future<String?> create(String filePath, String comment) async {
+  Future<String?> create({
+    required String filePath,
+    required String comment,
+    String? title,
+    String? authors,
+    String? url,
+  }) async {
     state = state.copyWith(isLoading: true, clearError: true);
 
     try {
-      await _repository.create(filePath: filePath, userComment: comment);
+      await _repository.create(
+        filePath: filePath,
+        userComment: comment,
+        title: title,
+        authors: authors,
+        url: url,
+      );
       state = state.copyWith(isLoading: false);
       return null;
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
       return e.toString();
     }
+  }
+
+  Future<DocumentSuggestion> update(
+    String id, {
+    String? title,
+    String? authors,
+    String? url,
+    String? userComment,
+  }) async {
+    final updated = await _repository.update(
+      id,
+      title: title,
+      authors: authors,
+      url: url,
+      userComment: userComment,
+    );
+    await load(status: state.statusFilter);
+    return updated;
+  }
+
+  Future<DocumentSuggestion> replaceFile(String id, String filePath) async {
+    final updated = await _repository.replaceFile(id, filePath);
+    await load(status: state.statusFilter);
+    return updated;
   }
 
   Future<void> delete(String id) async {

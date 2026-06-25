@@ -10,6 +10,31 @@ class DocumentApiDataSource {
 
   DocumentApiDataSource(this._client, this._apiBaseUrl);
 
+  Future<Map<String, dynamic>> listPage({
+    String? query,
+    bool fullMetadata = false,
+    int limit = 50,
+    int offset = 0,
+  }) async {
+    final params = <String, dynamic>{'limit': limit, 'offset': offset};
+    if (query != null && query.trim().isNotEmpty) {
+      params['q'] = query.trim();
+    }
+    if (fullMetadata) params['full_metadata'] = true;
+
+    final data = await _client.get(
+      '/api/v1/documents',
+      queryParameters: params,
+    );
+    if (data is Map<String, dynamic>) return data;
+    return {
+      'data': data is List ? data : [],
+      'total': 0,
+      'limit': limit,
+      'offset': offset,
+    };
+  }
+
   Future<List<Map<String, dynamic>>> listAll() async {
     const pageSize = 100;
     final documents = <Map<String, dynamic>>[];
@@ -17,18 +42,7 @@ class DocumentApiDataSource {
     int? total;
 
     do {
-      final data = await _client.get(
-        '/api/v1/documents',
-        queryParameters: {'limit': pageSize, 'offset': offset},
-      );
-
-      if (data is List) {
-        return data.cast<Map<String, dynamic>>();
-      }
-
-      if (data is! Map<String, dynamic>) {
-        return documents;
-      }
+      final data = await listPage(limit: pageSize, offset: offset);
 
       final page = data['data'];
       if (page is! List) {

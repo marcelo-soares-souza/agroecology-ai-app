@@ -19,6 +19,9 @@ class SuggestionCreatePage extends ConsumerStatefulWidget {
 }
 
 class _SuggestionCreatePageState extends ConsumerState<SuggestionCreatePage> {
+  final _titleController = TextEditingController();
+  final _authorsController = TextEditingController();
+  final _urlController = TextEditingController();
   final _commentController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String? _filePath;
@@ -28,6 +31,9 @@ class _SuggestionCreatePageState extends ConsumerState<SuggestionCreatePage> {
 
   @override
   void dispose() {
+    _titleController.dispose();
+    _authorsController.dispose();
+    _urlController.dispose();
     _commentController.dispose();
     super.dispose();
   }
@@ -76,7 +82,13 @@ class _SuggestionCreatePageState extends ConsumerState<SuggestionCreatePage> {
 
     final error = await ref
         .read(suggestionControllerProvider.notifier)
-        .create(_filePath!, _commentController.text.trim());
+        .create(
+          filePath: _filePath!,
+          comment: _commentController.text.trim(),
+          title: _titleController.text.trim(),
+          authors: _authorsController.text.trim(),
+          url: _urlController.text.trim(),
+        );
 
     if (error != null) {
       setState(() => _error = error);
@@ -222,6 +234,49 @@ class _SuggestionCreatePageState extends ConsumerState<SuggestionCreatePage> {
                 ),
               ),
             ),
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _titleController,
+            decoration: InputDecoration(
+              labelText: l10n.suggestionTitleLabel,
+              hintText: l10n.suggestionTitleHint,
+              helperText: l10n.suggestionTitleHelper,
+              prefixIcon: const Icon(Icons.title),
+            ),
+            textInputAction: TextInputAction.next,
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _authorsController,
+            decoration: InputDecoration(
+              labelText: l10n.suggestionAuthorsLabel,
+              hintText: l10n.suggestionAuthorsHint,
+              helperText: l10n.suggestionAuthorsHelper,
+              prefixIcon: const Icon(Icons.groups_outlined),
+            ),
+            textInputAction: TextInputAction.next,
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _urlController,
+            decoration: InputDecoration(
+              labelText: l10n.suggestionUrlLabel,
+              hintText: l10n.linkHint,
+              helperText: l10n.suggestionUrlHelper,
+              prefixIcon: const Icon(Icons.link),
+            ),
+            keyboardType: TextInputType.url,
+            textInputAction: TextInputAction.next,
+            validator: (v) {
+              final value = v?.trim() ?? '';
+              if (value.isEmpty) return null;
+              if (!value.startsWith('http://') &&
+                  !value.startsWith('https://')) {
+                return l10n.linkValidation;
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 16),
           TextFormField(

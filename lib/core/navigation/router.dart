@@ -8,6 +8,7 @@ import '../../bootstrap/providers.dart';
 import '../../core/error/exceptions.dart';
 import '../../l10n/app_localizations.dart';
 import '../../features/chat/presentation/pages/chat_page.dart';
+import '../../features/auth/presentation/pages/account_link_pages.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/community/presentation/pages/community_page.dart';
 import '../../features/community/presentation/pages/about_page.dart';
@@ -16,6 +17,7 @@ import '../../features/community/presentation/pages/terms_of_service_page.dart';
 import '../../features/suggestions/presentation/pages/suggestion_create_page.dart';
 import '../../features/suggestions/presentation/pages/suggestion_list_page.dart';
 import '../../features/suggestions/presentation/pages/suggestion_detail_page.dart';
+import '../../features/suggestions/presentation/pages/suggestion_edit_page.dart';
 import '../../features/documents/presentation/pages/document_list_page.dart';
 import '../../features/documents/presentation/pages/document_detail_page.dart';
 import '../../features/documents/presentation/pages/document_pdf_view_page.dart';
@@ -209,8 +211,33 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
       GoRoute(
         path: '/reset-password',
         name: 'reset-password',
+        builder: (context, state) => _AuthScaffold(
+          child: _ResetPasswordPage(
+            initialToken: state.uri.queryParameters['token'],
+          ),
+        ),
+      ),
+      GoRoute(
+        path: '/confirm-email',
+        name: 'confirm-email',
+        builder: (context, state) => _AuthScaffold(
+          child: ConfirmEmailPage(token: state.uri.queryParameters['token']),
+        ),
+      ),
+      GoRoute(
+        path: '/resend-confirmation',
+        name: 'resend-confirmation',
         builder: (context, state) =>
-            const _AuthScaffold(child: _ResetPasswordPage()),
+            const _AuthScaffold(child: ResendConfirmationPage()),
+      ),
+      GoRoute(
+        path: '/confirm-delete-account',
+        name: 'confirm-delete-account',
+        builder: (context, state) => _AuthScaffold(
+          child: ConfirmDeleteAccountPage(
+            token: state.uri.queryParameters['token'],
+          ),
+        ),
       ),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
@@ -259,6 +286,14 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
                 name: 'profile-edit',
                 builder: (context, state) => const ProfileEditPage(),
               ),
+              GoRoute(
+                path: ':slug',
+                name: 'profile-public',
+                builder: (context, state) {
+                  final slug = state.pathParameters['slug']!;
+                  return CommunityDetailPage(slug: slug);
+                },
+              ),
             ],
           ),
           GoRoute(
@@ -285,6 +320,14 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
                 path: 'new',
                 name: 'suggestions-new',
                 builder: (context, state) => const SuggestionCreatePage(),
+              ),
+              GoRoute(
+                path: ':id/edit',
+                name: 'suggestions-edit',
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return SuggestionEditPage(id: id);
+                },
               ),
               GoRoute(
                 path: ':id',
@@ -331,13 +374,17 @@ GoRouter createRouter(AuthChangeNotifier authNotifier) {
           state.uri.path == '/login' ||
           state.uri.path == '/register' ||
           state.uri.path == '/forgot-password' ||
-          state.uri.path == '/reset-password';
+          state.uri.path == '/reset-password' ||
+          state.uri.path == '/resend-confirmation';
       final isSplash = state.uri.path == '/splash';
       final isPublicRoute =
           state.uri.path == '/' ||
           state.uri.path == '/about' ||
           state.uri.path == '/privacy' ||
           state.uri.path == '/terms' ||
+          state.uri.path == '/confirm-email' ||
+          state.uri.path == '/confirm-delete-account' ||
+          state.uri.path.startsWith('/profile/') ||
           state.uri.path == '/community' ||
           state.uri.path.startsWith('/community/') ||
           state.uri.path == '/profile' ||
@@ -399,7 +446,10 @@ class _ShellPage extends ConsumerWidget {
               duration: const Duration(seconds: 3),
             ),
           );
-          context.go('/');
+          final path = GoRouterState.of(context).uri.path;
+          if (path != '/confirm-delete-account') {
+            context.go('/');
+          }
         });
       }
     });
@@ -439,7 +489,10 @@ class _AuthScaffold extends ConsumerWidget {
               duration: const Duration(seconds: 3),
             ),
           );
-          context.go('/');
+          final path = GoRouterState.of(context).uri.path;
+          if (path != '/confirm-delete-account') {
+            context.go('/');
+          }
         });
       }
     });
@@ -1321,11 +1374,9 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
     setState(() => _loading = true);
 
     try {
-      final client = ref.read(apiClientProvider);
-      await client.post(
-        '/api/v1/auth/password-reset/request',
-        data: {'email': _emailController.text.trim()},
-      );
+      await ref
+          .read(authControllerProvider.notifier)
+          .requestPasswordReset(_emailController.text.trim());
     } catch (_) {}
 
     ref
@@ -1338,7 +1389,9 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
 }
 
 class _ResetPasswordPage extends ConsumerStatefulWidget {
-  const _ResetPasswordPage();
+  final String? initialToken;
+
+  const _ResetPasswordPage({this.initialToken});
 
   @override
   ConsumerState<_ResetPasswordPage> createState() => _ResetPasswordPageState();
@@ -1357,6 +1410,12 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
     _tokenController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _tokenController.text = widget.initialToken?.trim() ?? '';
   }
 
   @override
@@ -1496,14 +1555,12 @@ class _ResetPasswordPageState extends ConsumerState<_ResetPasswordPage> {
     setState(() => _loading = true);
 
     try {
-      final client = ref.read(apiClientProvider);
-      await client.post(
-        '/api/v1/auth/password-reset/confirm',
-        data: {
-          'token': _tokenController.text.trim(),
-          'new_password': _passwordController.text,
-        },
-      );
+      await ref
+          .read(authControllerProvider.notifier)
+          .confirmPasswordReset(
+            token: _tokenController.text.trim(),
+            newPassword: _passwordController.text,
+          );
       ref
           .read(authControllerProvider.notifier)
           .showSuccessMessage('passwordResetSuccess');

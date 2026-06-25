@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../bootstrap/providers.dart';
@@ -23,6 +26,9 @@ class SuggestionDetailPage extends ConsumerStatefulWidget {
 class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
   DocumentSuggestion? _suggestion;
   String? _error;
+  String? _pdfFilePath;
+  bool _pdfLoading = false;
+  String? _pdfError;
 
   @override
   void initState() {
@@ -38,9 +44,66 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
         _suggestion = suggestion;
         _error = null;
       });
+      if (suggestion.fileType == 'pdf' && suggestion.originalFilename != null) {
+        _loadPdf(suggestion.id);
+      }
     } catch (e) {
       setState(() => _error = e.toString());
     }
+  }
+
+  Future<void> _loadPdf(String suggestionId) async {
+    setState(() {
+      _pdfLoading = true;
+      _pdfError = null;
+    });
+
+    try {
+      final repo = ref.read(suggestionRepositoryProvider);
+      final bytes = await repo.fileBytes(suggestionId);
+      final tempFile = File('${Directory.systemTemp.path}/$suggestionId.pdf');
+      await tempFile.writeAsBytes(bytes);
+      if (!mounted) return;
+      setState(() {
+        _pdfFilePath = tempFile.path;
+        _pdfLoading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _pdfError = e.toString();
+        _pdfLoading = false;
+      });
+    }
+  }
+
+  Future<void> _confirmDelete(
+    AppLocalizations l10n,
+    DocumentSuggestion s,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.deleteSuggestion),
+        content: Text(l10n.deleteSuggestionConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: Text(l10n.delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    await ref.read(suggestionControllerProvider.notifier).delete(s.id);
+    if (!mounted) return;
+    context.go('/suggestions');
   }
 
   @override
@@ -66,6 +129,28 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (s.isPending) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton.icon(
+                        onPressed: () =>
+                            context.push('/suggestions/${s.id}/edit'),
+                        icon: const Icon(Icons.edit_outlined, size: 16),
+                        label: Text(l10n.editSuggestion),
+                      ),
+                      TextButton.icon(
+                        onPressed: () => _confirmDelete(l10n, s),
+                        icon: const Icon(Icons.delete_outline, size: 16),
+                        label: Text(l10n.delete),
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.error,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                ],
                 Row(
                   children: [
                     Expanded(
@@ -150,7 +235,7 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    l10n.adminComment,
+                    l10n.reviewComment,
                     style: const TextStyle(
                       fontSize: AppTokens.sectionTitleSize,
                       fontWeight: FontWeight.w600,
@@ -177,6 +262,10 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
                 ],
               ),
             ),
+          ],
+          if (s.originalFilename != null && s.fileType == 'pdf') ...[
+            const SizedBox(height: 16),
+            _buildPdfPreview(s.id),
           ],
           if (s.documentId != null) ...[
             const SizedBox(height: 16),
@@ -241,6 +330,74 @@ class _SuggestionDetailPageState extends ConsumerState<SuggestionDetailPage> {
           fontSize: AppTokens.microSize,
           fontWeight: FontWeight.w500,
           color: color,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPdfPreview(String suggestionId) {
+    final l10n = AppLocalizations.of(context)!;
+
+    if (_pdfLoading) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(32),
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    if (_pdfError != null) {
+      return ErrorState(
+        message: _pdfError!,
+        onRetry: () => _loadPdf(suggestionId),
+      );
+    }
+
+    if (_pdfFilePath == null) return const SizedBox.shrink();
+
+    return AppCard(
+      padding: EdgeInsets.zero,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.55,
+          child: Stack(
+            children: [
+              PDFView(
+                filePath: _pdfFilePath!,
+                enableSwipe: true,
+                swipeHorizontal: false,
+                autoSpacing: false,
+                pageFling: false,
+                onError: (error) {
+                  setState(() => _pdfError = error.toString());
+                },
+              ),
+              Positioned(
+                left: 8,
+                top: 8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.9),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    l10n.attachedPdf,
+                    style: const TextStyle(
+                      fontSize: AppTokens.microSize,
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

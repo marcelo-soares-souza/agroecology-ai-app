@@ -21,6 +21,31 @@ class DocumentRepositoryImpl implements DocumentRepository {
   }
 
   @override
+  Future<DocumentPage> listPage({
+    String? query,
+    bool fullMetadata = false,
+    int limit = 50,
+    int offset = 0,
+  }) async {
+    final data = await _remote.listPage(
+      query: query,
+      fullMetadata: fullMetadata,
+      limit: limit,
+      offset: offset,
+    );
+    final items = data['data'] is List
+        ? List<Map<String, dynamic>>.from(data['data'] as List)
+        : <Map<String, dynamic>>[];
+
+    return DocumentPage(
+      documents: items.map(DocumentMapper.fromJson).toList(),
+      total: (data['total'] as num?)?.toInt() ?? items.length,
+      limit: (data['limit'] as num?)?.toInt() ?? limit,
+      offset: (data['offset'] as num?)?.toInt() ?? offset,
+    );
+  }
+
+  @override
   Future<DocumentRecord> getOne(String id) async {
     final data = await _remote.getOne(id);
     return DocumentMapper.fromJson(data);

@@ -202,17 +202,10 @@ class ChatMessageWidget extends StatelessWidget {
   }
 }
 
-class _SourcesSection extends StatefulWidget {
+class _SourcesSection extends StatelessWidget {
   final List<SourceChunk> sources;
 
   const _SourcesSection({required this.sources});
-
-  @override
-  State<_SourcesSection> createState() => _SourcesSectionState();
-}
-
-class _SourcesSectionState extends State<_SourcesSection> {
-  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -223,37 +216,24 @@ class _SourcesSectionState extends State<_SourcesSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () => setState(() => _expanded = !_expanded),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  _expanded ? Icons.expand_less : Icons.expand_more,
-                  size: 16,
-                  color: AppColors.textSecondary,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  '${l10n.sources} (${widget.sources.length})',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
+          Text(
+            '${l10n.sources} (${sources.length})',
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textSecondary,
             ),
           ),
-          if (_expanded) ...[
-            const SizedBox(height: 8),
-            ...widget.sources.take(5).map((source) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: _SourceCard(source: source),
-              );
-            }),
-          ],
+          const SizedBox(height: 8),
+          ...sources.asMap().entries.map((entry) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: _SourceCard(
+                source: entry.value,
+                fallbackRank: entry.key + 1,
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -262,13 +242,19 @@ class _SourcesSectionState extends State<_SourcesSection> {
 
 class _SourceCard extends StatelessWidget {
   final SourceChunk source;
+  final int fallbackRank;
 
-  const _SourceCard({required this.source});
+  const _SourceCard({required this.source, required this.fallbackRank});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final documentId = source.metadata?.documentId;
+    final documentId = _extractDocumentId(source);
+    final citationNumber = source.rank != null && source.rank! > 0
+        ? source.rank!
+        : fallbackRank;
+    final sourceName = source.metadata?.displayName ?? '';
+    final displayName = sourceName.isEmpty ? l10n.sourceFallback : sourceName;
 
     final card = Container(
       padding: const EdgeInsets.all(10),
@@ -280,6 +266,26 @@ class _SourceCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _CitationBadge(number: citationNumber),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  source.text,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                    height: 1.3,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
           Row(
             children: [
               Icon(
@@ -294,7 +300,7 @@ class _SourceCard extends StatelessWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  source.metadata?.displayName ?? l10n.sourceFallback,
+                  displayName,
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
@@ -333,17 +339,6 @@ class _SourceCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            source.text,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondary,
-              height: 1.3,
-            ),
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
         ],
       ),
     );
@@ -356,5 +351,48 @@ class _SourceCard extends StatelessWidget {
     }
 
     return card;
+  }
+
+  String? _extractDocumentId(SourceChunk source) {
+    final explicitId = source.metadata?.documentId;
+    if (explicitId != null && explicitId.isNotEmpty) return explicitId;
+
+    final rawSource = source.metadata?.source;
+    if (rawSource == null || rawSource.isEmpty) return null;
+
+    final filename = rawSource.split('/').last;
+    if (filename.isEmpty) return null;
+
+    final dotIndex = filename.lastIndexOf('.');
+    if (dotIndex > 0) return filename.substring(0, dotIndex);
+    return filename;
+  }
+}
+
+class _CitationBadge extends StatelessWidget {
+  final int number;
+
+  const _CitationBadge({required this.number});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minWidth: 22, minHeight: 22),
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        '$number',
+        style: const TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+          height: 1,
+        ),
+      ),
+    );
   }
 }

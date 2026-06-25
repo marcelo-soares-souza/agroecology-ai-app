@@ -120,6 +120,7 @@ class ApiClient {
         path == '/api/v1/auth/human-challenge' ||
         path == '/api/v1/auth/confirm-email' ||
         path == '/api/v1/auth/confirm-email/resend' ||
+        path == '/api/v1/auth/me/delete-confirm' ||
         path.startsWith('/api/v1/auth/password-reset/');
   }
 

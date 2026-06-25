@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../../../bootstrap/providers.dart';
 import '../../../../core/constants/app_constants.dart';
@@ -81,7 +84,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
     Future<void> handleExport() async {
       try {
-        await ref.read(authControllerProvider.notifier).exportMyData();
+        final data = await ref
+            .read(authControllerProvider.notifier)
+            .exportMyData();
+        final profileSlug = profile?.slug ?? auth.session?.slug ?? 'profile';
+        final encoded = const JsonEncoder.withIndent('  ').convert(data);
+        final savedPath = await FilePicker.platform.saveFile(
+          fileName: 'agroecology-export-$profileSlug.json',
+          bytes: Uint8List.fromList(utf8.encode(encoded)),
+          type: FileType.custom,
+          allowedExtensions: ['json'],
+        );
+        if (savedPath == null) return;
         if (!mounted) return;
         ScaffoldMessenger.of(
           context,
@@ -182,14 +196,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     ),
                     const SizedBox(width: 8),
                     ...profile?.roles
+                            .where((r) => r != 'admin')
                             .map(
                               (r) => Padding(
                                 padding: const EdgeInsets.only(left: 8),
-                                child: r == 'admin'
-                                    ? StatusBadge.admin(label: l10n.roleAdmin)
-                                    : StatusBadge.info(
-                                        label: r == 'user' ? l10n.roleUser : r,
-                                      ),
+                                child: StatusBadge.info(
+                                  label: r == 'user' ? l10n.roleUser : r,
+                                ),
                               ),
                             )
                             .toList() ??

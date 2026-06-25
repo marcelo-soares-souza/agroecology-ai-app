@@ -41,6 +41,19 @@
   "newPassword": "Nouveau Mot de Passe",
   "passwordResetSuccess": "Mot de passe réinitialisé avec succès.",
   "goToSignIn": "Aller à la Connexion",
+  "confirmingEmail": "Confirmation de votre email...",
+  "emailConfirmationTitle": "Confirmation d'Email",
+  "emailConfirmedTitle": "Email Confirmé",
+  "emailConfirmationFailed": "Impossible de confirmer l'email.",
+  "missingToken": "Le jeton de confirmation est manquant.",
+  "resendConfirmationTitle": "Renvoyer la Confirmation",
+  "resendConfirmationInstruction": "Entrez l'email de votre compte pour recevoir un nouveau lien de confirmation.",
+  "resendConfirmationButton": "Renvoyer la Confirmation",
+  "resendConfirmationSentTitle": "Confirmation Envoyée",
+  "resendConfirmationSentBody": "Si l'email existe et nécessite encore une confirmation, un nouveau lien a été envoyé.",
+  "resendConfirmationFailed": "Impossible de renvoyer la confirmation.",
+  "deleteAccountConfirming": "Confirmation de la suppression du compte...",
+  "accountDeletedTitle": "Compte Supprimé",
   "resetTokenInstruction": "Entrez le jeton de réinitialisation de votre email et votre nouveau mot de passe.",
   "resetTokenLabel": "Jeton de Réinitialisation",
   "resetTokenHint": "Collez le jeton de votre email",
@@ -155,6 +168,16 @@
   "suggestionCountLabel": "suggestions",
   "newSuggestion": "Nouvelle Suggestion",
   "newSuggestionSubtitle": "Envoyez des contenus pertinents pour élargir la couverture de la base de connaissances.",
+  "editSuggestion": "Modifier la Suggestion",
+  "editSuggestionSubtitle": "Les suggestions en attente peuvent être ajustées avant révision.",
+  "suggestionTitleLabel": "Titre",
+  "suggestionTitleHint": "Titre du document",
+  "suggestionTitleHelper": "Facultatif, mais utile pour identifier le document.",
+  "suggestionAuthorsLabel": "Auteurs",
+  "suggestionAuthorsHint": "Auteurs ou organisation",
+  "suggestionAuthorsHelper": "Auteur, institution, collectif ou éditeur, le cas échéant.",
+  "suggestionUrlLabel": "URL de référence",
+  "suggestionUrlHelper": "Source facultative, page de publication, DOI ou lien institutionnel.",
   "suggestionReviewTitle": "Fonctionnement de la révision",
   "suggestionReviewBody": "L'équipe évalue la pertinence, la qualité et l'adéquation avant d'approuver un document pour la consultation publique.",
   "selectPdf": "Sélectionner un fichier PDF",
@@ -189,7 +212,13 @@
   "untitled": "Sans titre",
   "filename": "Nom du fichier",
   "suggestionDetail": "Détail de la Suggestion",
-  "adminComment": "Commentaire Admin",
+  "suggestionNotFound": "Suggestion introuvable.",
+  "suggestionNotEditable": "Seules les suggestions en attente peuvent être modifiées.",
+  "currentFile": "Fichier actuel",
+  "replacePdf": "Remplacer le PDF",
+  "noFileSelected": "Aucun fichier sélectionné",
+  "attachedPdf": "PDF joint",
+  "reviewComment": "Commentaire de révision",
   "resultingDocument": "Document Résultant",
   "viewDocument": "Voir le Document",
   "kbTitle": "Base de Connaissances",
@@ -217,6 +246,21 @@
     }
   },
   "kbIndexedTooltip": "Les documents indexés peuvent déjà être trouvés par le chat. Les fichiers non indexés restent lisibles manuellement.",
+  "documentPageSummary": "{loaded} sur {total} chargés · {indexed} indexés",
+  "@documentPageSummary": {
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "indexed": {
+        "type": "int"
+      }
+    }
+  },
+  "loadMore": "Charger plus",
   "documentDetail": "Détail du Document",
   "documentIndexedTitle": "Disponible pour l'IA",
   "documentIndexedBody": "Ce document a été indexé et peut servir à fonder les réponses du chat.",
@@ -271,7 +315,6 @@
   "statusActive": "actif",
   "statusSuspended": "suspendu",
   "statusDeleted": "supprimé",
-  "roleAdmin": "admin",
   "roleUser": "utilisateur",
   "loggedOut": "Vous avez été déconnecté.",
   "searchCommunity": "Rechercher la communauté...",

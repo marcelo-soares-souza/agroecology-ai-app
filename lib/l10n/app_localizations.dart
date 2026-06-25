@@ -348,6 +348,84 @@ abstract class AppLocalizations {
   /// **'Go to Sign In'**
   String get goToSignIn;
 
+  /// No description provided for @confirmingEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirming your email...'**
+  String get confirmingEmail;
+
+  /// No description provided for @emailConfirmationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Confirmation'**
+  String get emailConfirmationTitle;
+
+  /// No description provided for @emailConfirmedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Confirmed'**
+  String get emailConfirmedTitle;
+
+  /// No description provided for @emailConfirmationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to confirm email.'**
+  String get emailConfirmationFailed;
+
+  /// No description provided for @missingToken.
+  ///
+  /// In en, this message translates to:
+  /// **'The confirmation token is missing.'**
+  String get missingToken;
+
+  /// No description provided for @resendConfirmationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Confirmation'**
+  String get resendConfirmationTitle;
+
+  /// No description provided for @resendConfirmationInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your account email to receive a new confirmation link.'**
+  String get resendConfirmationInstruction;
+
+  /// No description provided for @resendConfirmationButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Confirmation'**
+  String get resendConfirmationButton;
+
+  /// No description provided for @resendConfirmationSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation Sent'**
+  String get resendConfirmationSentTitle;
+
+  /// No description provided for @resendConfirmationSentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If the email exists and still needs confirmation, a new link was sent.'**
+  String get resendConfirmationSentBody;
+
+  /// No description provided for @resendConfirmationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to resend confirmation.'**
+  String get resendConfirmationFailed;
+
+  /// No description provided for @deleteAccountConfirming.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirming account deletion...'**
+  String get deleteAccountConfirming;
+
+  /// No description provided for @accountDeletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Deleted'**
+  String get accountDeletedTitle;
+
   /// No description provided for @resetTokenInstruction.
   ///
   /// In en, this message translates to:
@@ -906,6 +984,66 @@ abstract class AppLocalizations {
   /// **'Send relevant materials to expand the coverage of the knowledge base.'**
   String get newSuggestionSubtitle;
 
+  /// No description provided for @editSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Suggestion'**
+  String get editSuggestion;
+
+  /// No description provided for @editSuggestionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending suggestions can be adjusted before review.'**
+  String get editSuggestionSubtitle;
+
+  /// No description provided for @suggestionTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get suggestionTitleLabel;
+
+  /// No description provided for @suggestionTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Document title'**
+  String get suggestionTitleHint;
+
+  /// No description provided for @suggestionTitleHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional, but it helps reviewers identify the material.'**
+  String get suggestionTitleHelper;
+
+  /// No description provided for @suggestionAuthorsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Authors'**
+  String get suggestionAuthorsLabel;
+
+  /// No description provided for @suggestionAuthorsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Authors or organization'**
+  String get suggestionAuthorsHint;
+
+  /// No description provided for @suggestionAuthorsHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional authorship, institution, collective, or publisher.'**
+  String get suggestionAuthorsHelper;
+
+  /// No description provided for @suggestionUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference URL'**
+  String get suggestionUrlLabel;
+
+  /// No description provided for @suggestionUrlHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional source, publication page, DOI page, or institutional link.'**
+  String get suggestionUrlHelper;
+
   /// No description provided for @suggestionReviewTitle.
   ///
   /// In en, this message translates to:
@@ -1068,11 +1206,47 @@ abstract class AppLocalizations {
   /// **'Suggestion Detail'**
   String get suggestionDetail;
 
-  /// No description provided for @adminComment.
+  /// No description provided for @suggestionNotFound.
   ///
   /// In en, this message translates to:
-  /// **'Admin Comment'**
-  String get adminComment;
+  /// **'Suggestion not found.'**
+  String get suggestionNotFound;
+
+  /// No description provided for @suggestionNotEditable.
+  ///
+  /// In en, this message translates to:
+  /// **'Only pending suggestions can be edited.'**
+  String get suggestionNotEditable;
+
+  /// No description provided for @currentFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Current file'**
+  String get currentFile;
+
+  /// No description provided for @replacePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace PDF'**
+  String get replacePdf;
+
+  /// No description provided for @noFileSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No file selected'**
+  String get noFileSelected;
+
+  /// No description provided for @attachedPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Attached PDF'**
+  String get attachedPdf;
+
+  /// No description provided for @reviewComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Comment'**
+  String get reviewComment;
 
   /// No description provided for @resultingDocument.
   ///
@@ -1133,6 +1307,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Indexed documents can already be found by chat. Non-indexed files can still be read manually.'**
   String get kbIndexedTooltip;
+
+  /// No description provided for @documentPageSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{loaded} of {total} loaded · {indexed} indexed'**
+  String documentPageSummary(int loaded, int total, int indexed);
+
+  /// No description provided for @loadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load more'**
+  String get loadMore;
 
   /// No description provided for @documentDetail.
   ///
@@ -1457,12 +1643,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'deleted'**
   String get statusDeleted;
-
-  /// No description provided for @roleAdmin.
-  ///
-  /// In en, this message translates to:
-  /// **'admin'**
-  String get roleAdmin;
 
   /// No description provided for @roleUser.
   ///

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import '../../../../core/http/api_client.dart';
 import '../../domain/entities/document_suggestion.dart';
 import '../../domain/repositories/suggestion_repository.dart';
@@ -14,8 +16,17 @@ class SuggestionRepositoryImpl implements SuggestionRepository {
   Future<DocumentSuggestion> create({
     required String filePath,
     required String userComment,
+    String? title,
+    String? authors,
+    String? url,
   }) async {
-    return _remote.create(filePath: filePath, userComment: userComment);
+    return _remote.create(
+      filePath: filePath,
+      userComment: userComment,
+      title: title,
+      authors: authors,
+      url: url,
+    );
   }
 
   @override
@@ -28,6 +39,35 @@ class SuggestionRepositoryImpl implements SuggestionRepository {
   Future<DocumentSuggestion> getOne(String id) async {
     final data = await _remote.getOne(id);
     return SuggestionMapper.fromJson(data);
+  }
+
+  @override
+  Future<DocumentSuggestion> update(
+    String id, {
+    String? title,
+    String? authors,
+    String? url,
+    String? userComment,
+  }) async {
+    final data = await _remote.update(
+      id,
+      title: title,
+      authors: authors,
+      url: url,
+      userComment: userComment,
+    );
+    return SuggestionMapper.fromJson(data);
+  }
+
+  @override
+  Future<DocumentSuggestion> replaceFile(String id, String filePath) async {
+    final data = await _remote.replaceFile(id, filePath);
+    return SuggestionMapper.fromJson(data);
+  }
+
+  @override
+  Future<Uint8List> fileBytes(String id) async {
+    return _remote.fileBytes(id);
   }
 
   @override
