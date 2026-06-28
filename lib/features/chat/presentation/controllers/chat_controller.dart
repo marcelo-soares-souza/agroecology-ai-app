@@ -78,7 +78,7 @@ class ChatController extends StateNotifier<ChatState> {
     state = state.copyWith(messages: history, historyLoaded: true);
   }
 
-  Future<void> sendMessage(String question) async {
+  Future<void> sendMessage(String question, {String? locale}) async {
     if (question.trim().isEmpty || state.isSending) return;
 
     final userMsg = ChatMessage(
@@ -115,6 +115,7 @@ class ChatController extends StateNotifier<ChatState> {
       final result = await _repository.sendQuestion(
         question: question.trim(),
         history: history,
+        locale: locale,
       );
 
       state = state.copyWith(

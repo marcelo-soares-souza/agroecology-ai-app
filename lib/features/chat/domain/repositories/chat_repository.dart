@@ -4,6 +4,7 @@ abstract class ChatRepository {
   Future<AskResult> sendQuestion({
     required String question,
     required List<Map<String, dynamic>> history,
+    String? locale,
     int topK = 6,
   });
 

@@ -59,6 +59,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final chatState = ref.watch(chatControllerProvider);
+    final locale = ref.watch(localeProvider);
     final messages = chatState.messages;
 
     if (messages.isNotEmpty) {
@@ -85,7 +86,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           sendTooltip: l10n.sendQuestionTooltip,
           enabled: !chatState.isSending,
           onSend: (text) {
-            ref.read(chatControllerProvider.notifier).sendMessage(text);
+            ref
+                .read(chatControllerProvider.notifier)
+                .sendMessage(text, locale: locale);
           },
         ),
       ],

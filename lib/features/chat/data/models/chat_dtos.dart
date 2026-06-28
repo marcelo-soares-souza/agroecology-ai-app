@@ -2,15 +2,22 @@ class AskRequestDto {
   final String question;
   final int topK;
   final List<Map<String, dynamic>> history;
+  final String? locale;
 
   const AskRequestDto({
     required this.question,
     required this.topK,
     this.history = const [],
+    this.locale,
   });
 
   Map<String, dynamic> toJson() {
-    return {'question': question, 'top_k': topK, 'history': history};
+    return {
+      'question': question,
+      'top_k': topK,
+      'history': history,
+      if (locale != null && locale!.trim().isNotEmpty) 'locale': locale,
+    };
   }
 }
 

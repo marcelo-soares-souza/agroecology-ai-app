@@ -19,10 +19,16 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<AskResult> sendQuestion({
     required String question,
     required List<Map<String, dynamic>> history,
+    String? locale,
     int topK = 6,
   }) async {
     final response = await _remote.ask(
-      AskRequestDto(question: question, topK: topK, history: history),
+      AskRequestDto(
+        question: question,
+        topK: topK,
+        history: history,
+        locale: locale,
+      ),
     );
 
     return AskResult(taskId: response.taskId, status: response.status);
