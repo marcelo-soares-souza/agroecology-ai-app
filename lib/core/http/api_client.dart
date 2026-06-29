@@ -100,6 +100,16 @@ class ApiClient {
           }
         } catch (_) {}
 
+        final latestRefreshToken = await tokenStorage.getRefreshToken();
+        if (latestRefreshToken != null && latestRefreshToken != refreshToken) {
+          for (final completer in _refreshQueue) {
+            completer.complete();
+          }
+          _refreshQueue.clear();
+          _isRefreshing = false;
+          return _retryRequest(error, handler);
+        }
+
         _isRefreshing = false;
         for (final completer in _refreshQueue) {
           completer.completeError(AppException(message: 'Refresh failed'));

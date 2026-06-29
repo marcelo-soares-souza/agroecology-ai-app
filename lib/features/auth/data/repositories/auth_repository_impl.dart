@@ -230,6 +230,26 @@ class AuthRepositoryImpl implements AuthRepository {
       try {
         return await refreshSession(refreshToken);
       } catch (_) {
+        final latestRefreshToken = await _tokenStorage.getRefreshToken();
+        final latestAccessToken = await _tokenStorage.getAccessToken();
+        if (latestRefreshToken != null &&
+            latestAccessToken != null &&
+            latestRefreshToken != refreshToken) {
+          try {
+            final payload = JwtPayload.fromToken(latestAccessToken);
+            final user = await getMe();
+            return AuthSession(
+              userId: payload.sub,
+              email: payload.email ?? user.email,
+              fullName: user.fullName,
+              slug: user.slug,
+              roles: user.roles,
+              accessToken: latestAccessToken,
+              refreshToken: latestRefreshToken,
+              expiresAt: payload.exp,
+            );
+          } catch (_) {}
+        }
         await _tokenStorage.clearTokens();
       }
     }
