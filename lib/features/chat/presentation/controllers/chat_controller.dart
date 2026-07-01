@@ -58,6 +58,7 @@ class ChatController extends StateNotifier<ChatState> {
   final ChatRepositoryImpl _repository;
   final String _userId;
   Timer? _pollTimer;
+  int _historyLoadGeneration = 0;
 
   ChatController({
     required ChatRepositoryImpl repository,
@@ -69,12 +70,16 @@ class ChatController extends StateNotifier<ChatState> {
   Future<void> loadHistory() async {
     if (state.historyLoaded) return;
 
+    final generation = _historyLoadGeneration;
     final history = await _repository.loadHistory(_userId);
+    if (generation != _historyLoadGeneration) return;
     state = state.copyWith(messages: history, historyLoaded: true);
   }
 
   Future<void> reloadHistory() async {
+    final generation = _historyLoadGeneration;
     final history = await _repository.loadHistory(_userId);
+    if (generation != _historyLoadGeneration) return;
     state = state.copyWith(messages: history, historyLoaded: true);
   }
 
@@ -246,12 +251,14 @@ class ChatController extends StateNotifier<ChatState> {
 
   Future<void> clearChat() async {
     _cancelPolling();
+    _historyLoadGeneration++;
     await _repository.clearHistory(_userId);
     state = state.copyWith(
       messages: const [],
       sendStatus: ChatSendStatus.idle,
       clearPolling: true,
       clearError: true,
+      historyLoaded: true,
     );
   }
 
