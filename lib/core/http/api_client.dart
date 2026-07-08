@@ -172,6 +172,9 @@ class ApiClient {
           message = detail;
         } else if (detail is Map<String, dynamic>) {
           final code = detail['code'] as String?;
+          if (code == 'chat_conversation_limit_reached') {
+            message = 'chatConversationLimitReached';
+          }
           if (response.statusCode == 429 && code == 'auth_rate_limited') {
             final retryAfterSeconds =
                 (detail['retry_after_seconds'] as num?)?.toInt() ??
@@ -188,7 +191,9 @@ class ApiClient {
               blockedUntil: blockedUntil,
             );
           }
-          message = detail['message'] as String? ?? message;
+          if (code != 'chat_conversation_limit_reached') {
+            message = detail['message'] as String? ?? message;
+          }
         } else if (detail is List) {
           for (final item in detail) {
             if (item is Map<String, dynamic>) {
@@ -300,6 +305,23 @@ class ApiClient {
   }) async {
     try {
       final response = await _dio.put<Map<String, dynamic>>(
+        path,
+        data: data,
+        cancelToken: cancelToken,
+      );
+      return response.data ?? {};
+    } on DioException catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  Future<Map<String, dynamic>> patch(
+    String path, {
+    dynamic data,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+      final response = await _dio.patch<Map<String, dynamic>>(
         path,
         data: data,
         cancelToken: cancelToken,

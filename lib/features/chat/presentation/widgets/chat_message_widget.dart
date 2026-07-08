@@ -12,6 +12,7 @@ String? _resolveError(AppLocalizations l10n, String? key) {
     'requestTimeout' => l10n.requestTimeout,
     'chatError' => l10n.chatError,
     'connectionError' => l10n.connectionError,
+    'chatConversationLimitReached' => l10n.chatConversationLimitReached,
     _ => key,
   };
 }

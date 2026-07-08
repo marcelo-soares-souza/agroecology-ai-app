@@ -621,8 +621,38 @@ abstract class AppLocalizations {
   /// No description provided for @newChatTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Clears the current conversation and starts a new question from scratch.'**
+  /// **'Creates a new saved conversation.'**
   String get newChatTooltip;
+
+  /// No description provided for @chatConversations.
+  ///
+  /// In en, this message translates to:
+  /// **'Conversations'**
+  String get chatConversations;
+
+  /// No description provided for @noChatConversations.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved conversations yet.'**
+  String get noChatConversations;
+
+  /// No description provided for @deleteChatConversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete conversation'**
+  String get deleteChatConversation;
+
+  /// No description provided for @deleteChatConversationConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this conversation and all its messages?'**
+  String get deleteChatConversationConfirm;
+
+  /// No description provided for @chatConversationLimitReached.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the limit of 10 saved conversations. Delete one to start a new chat.'**
+  String get chatConversationLimitReached;
 
   /// No description provided for @askPlaceholder.
   ///
@@ -1521,7 +1551,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicyContent.
   ///
   /// In en, this message translates to:
-  /// **'Agroecology Map AI is a free software platform for querying agroecological knowledge with AI.\n\nData We Collect:\n- Full name, email, and hashed password for account access\n- Preferred language/locale\n- Optional profile data: bio, external link, and avatar\n- Document suggestion comments and uploaded files, when you choose to submit them\n- IP address in transient request logs for security and debugging\n\nLocal Storage:\nThe app may store session data, language preference, and recent chat history on your device.\n\nAI Processing:\nAI models and embeddings run locally or on infrastructure controlled by the project. External AI providers are disabled by default and may only be enabled by a deployment with documented privacy terms. Questions, chat history, embeddings, and documents are not sent to external AI APIs unless that deployment explicitly enables and discloses an external provider.\n\nWe DO NOT collect advertising IDs, browsing history, background location, contacts, payment information, or sensitive personal data.\n\nData Sharing:\nWe do not sell, rent, trade, or share your personal data with advertisers, data brokers, external analytics services, or undocumented external AI providers.\n\nYour Rights:\nYou can export your data, edit your profile, delete your account, request portability, and withdraw consent by stopping use or deleting your account.\n\nAccount Deletion:\nUse \'Delete My Account\' in your profile. A confirmation email is sent. Once confirmed, personal data is permanently anonymized and sessions are terminated.\n\nMobile Privacy:\nThe app does not request camera, microphone, contacts, or location access. Photo library access may be requested only when you choose a profile avatar; only the selected image is uploaded. The app has no third-party analytics SDKs and uses HTTPS.\n\nContact and DPO: contact@agroecologymap.org\nLicense: GPLv3 (Free Software)\nRepository: https://codeberg.org/agroecologymap'**
+  /// **'Agroecology Map AI is a free software platform for querying agroecological knowledge with AI.\n\nData We Collect:\n- Full name, email, and hashed password for account access\n- Preferred language/locale\n- Optional profile data: bio, external link, and avatar\n- Document suggestion comments and uploaded files, when you choose to submit them\n- Chat conversations, messages, and retrieved sources so you can continue your research later\n- IP address in transient request logs for security and debugging\n\nLocal Storage:\nThe app may store session data and language preference on your device.\n\nAI Processing:\nAI models and embeddings run locally or on infrastructure controlled by the project. External AI providers are disabled by default and may only be enabled by a deployment with documented privacy terms. Questions, chat history, embeddings, and documents are not sent to external AI APIs unless that deployment explicitly enables and discloses an external provider.\n\nWe DO NOT collect advertising IDs, browsing history, background location, contacts, payment information, or sensitive personal data.\n\nData Sharing:\nWe do not sell, rent, trade, or share your personal data with advertisers, data brokers, external analytics services, or undocumented external AI providers.\n\nYour Rights:\nYou can export your data, edit your profile, delete your account, request portability, and withdraw consent by stopping use or deleting your account.\n\nAccount Deletion:\nUse \'Delete My Account\' in your profile. A confirmation email is sent. Once confirmed, personal data is permanently anonymized, saved chat conversations are deleted, and sessions are terminated.\n\nMobile Privacy:\nThe app does not request camera, microphone, contacts, or location access. Photo library access may be requested only when you choose a profile avatar; only the selected image is uploaded. The app has no third-party analytics SDKs and uses HTTPS.\n\nContact and DPO: contact@agroecologymap.org\nLicense: GPLv3 (Free Software)\nRepository: https://codeberg.org/agroecologymap'**
   String get privacyPolicyContent;
 
   /// No description provided for @termsOfServiceTitle.

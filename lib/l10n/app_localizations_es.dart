@@ -292,8 +292,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get newChat => 'Nueva conversación';
 
   @override
-  String get newChatTooltip =>
-      'Limpia la conversación actual e inicia una nueva pregunta desde cero.';
+  String get newChatTooltip => 'Crea una nueva conversación guardada.';
+
+  @override
+  String get chatConversations => 'Conversaciones';
+
+  @override
+  String get noChatConversations => 'Aún no hay conversaciones guardadas.';
+
+  @override
+  String get deleteChatConversation => 'Eliminar conversación';
+
+  @override
+  String get deleteChatConversationConfirm =>
+      '¿Eliminar esta conversación y todos sus mensajes?';
+
+  @override
+  String get chatConversationLimitReached =>
+      'Has alcanzado el límite de 10 conversaciones guardadas. Elimina una conversación para iniciar otra.';
 
   @override
   String get askPlaceholder => 'Haz una pregunta...';
@@ -798,7 +814,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get privacyPolicyContent =>
-      'Agroecology Map AI es una plataforma de software libre para consultar conocimiento agroecológico con IA.\n\nDatos que recopilamos:\n- Nombre completo, email y contraseña con hash para acceso a la cuenta\n- Idioma o configuración regional preferida\n- Datos opcionales de perfil: bio, enlace externo y avatar\n- Comentarios y archivos de sugerencias de documentos, cuando decides enviarlos\n- Dirección IP en logs transitorios para seguridad y depuración\n\nAlmacenamiento local:\nLa app puede almacenar datos de sesión, idioma e historial reciente del chat en tu dispositivo.\n\nProcesamiento de IA:\nLos modelos de IA y embeddings se ejecutan localmente o en infraestructura controlada por el proyecto. Los proveedores externos de IA están desactivados por defecto y solo pueden habilitarse en un despliegue con términos de privacidad documentados. Las preguntas, el historial del chat, los embeddings y los documentos no se envían a APIs externas de IA salvo cuando ese despliegue habilita y divulga explícitamente un proveedor externo.\n\nNO recopilamos IDs publicitarios, historial de navegación, ubicación en segundo plano, contactos, información de pago ni datos personales sensibles.\n\nCompartición:\nNo vendemos, alquilamos, negociamos ni compartimos tus datos personales con anunciantes, corredores de datos, servicios externos de analytics o proveedores externos de IA no documentados.\n\nTus derechos:\nPuedes exportar tus datos, editar tu perfil, eliminar tu cuenta, solicitar portabilidad y retirar el consentimiento dejando de usar o eliminando la cuenta.\n\nEliminación de cuenta:\nUsa \'Eliminar Mi Cuenta\' en el perfil. Se envía un email de confirmación. Después de confirmar, los datos personales se anonimizan permanentemente y las sesiones se terminan.\n\nPrivacidad móvil:\nLa app no solicita cámara, micrófono, contactos o ubicación. El acceso a la galería puede solicitarse solo cuando eliges un avatar; solo se envía la imagen seleccionada. La app no usa SDKs externos de analytics y usa HTTPS.\n\nContacto y DPO: contact@agroecologymap.org\nLicencia: GPLv3 (software libre)';
+      'Agroecology Map AI es una plataforma de software libre para consultar conocimiento agroecológico con IA.\n\nDatos que recopilamos:\n- Nombre completo, email y contraseña con hash para acceso a la cuenta\n- Idioma o configuración regional preferida\n- Datos opcionales de perfil: bio, enlace externo y avatar\n- Comentarios y archivos de sugerencias de documentos, cuando decides enviarlos\n- Conversaciones del chat, mensajes y fuentes recuperadas para continuar la investigación después\n- Dirección IP en logs transitorios para seguridad y depuración\n\nAlmacenamiento local:\nLa app puede almacenar datos de sesión e idioma en tu dispositivo.\n\nProcesamiento de IA:\nLos modelos de IA y embeddings se ejecutan localmente o en infraestructura controlada por el proyecto. Los proveedores externos de IA están desactivados por defecto y solo pueden habilitarse en un despliegue con términos de privacidad documentados. Las preguntas, el historial del chat, los embeddings y los documentos no se envían a APIs externas de IA salvo cuando ese despliegue habilita y divulga explícitamente un proveedor externo.\n\nNO recopilamos IDs publicitarios, historial de navegación, ubicación en segundo plano, contactos, información de pago ni datos personales sensibles.\n\nCompartición:\nNo vendemos, alquilamos, negociamos ni compartimos tus datos personales con anunciantes, corredores de datos, servicios externos de analytics o proveedores externos de IA no documentados.\n\nTus derechos:\nPuedes exportar tus datos, editar tu perfil, eliminar tu cuenta, solicitar portabilidad y retirar el consentimiento dejando de usar o eliminando la cuenta.\n\nEliminación de cuenta:\nUsa \'Eliminar Mi Cuenta\' en el perfil. Se envía un email de confirmación. Después de confirmar, los datos personales se anonimizan permanentemente, las conversaciones guardadas del chat se eliminan y las sesiones se terminan.\n\nPrivacidad móvil:\nLa app no solicita cámara, micrófono, contactos o ubicación. El acceso a la galería puede solicitarse solo cuando eliges un avatar; solo se envía la imagen seleccionada. La app no usa SDKs externos de analytics y usa HTTPS.\n\nContacto y DPO: contact@agroecologymap.org\nLicencia: GPLv3 (software libre)';
 
   @override
   String get termsOfServiceTitle => 'Términos de Servicio';

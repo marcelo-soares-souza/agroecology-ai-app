@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../bootstrap/providers.dart';
+import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/theme/app_theme.dart';
+import '../../domain/entities/chat_conversation.dart';
 import '../controllers/chat_controller.dart';
 import '../widgets/chat_composer.dart';
 import '../widgets/chat_message_widget.dart';
@@ -14,6 +15,16 @@ class ChatPage extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ChatPage> createState() => _ChatPageState();
+}
+
+String _resolveChatError(AppLocalizations l10n, String message) {
+  return switch (message) {
+    'chatConversationLimitReached' => l10n.chatConversationLimitReached,
+    'connectionError' => l10n.connectionError,
+    'requestTimeout' => l10n.requestTimeout,
+    'chatError' => l10n.chatError,
+    _ => message,
+  };
 }
 
 class _ChatPageState extends ConsumerState<ChatPage> {
@@ -62,6 +73,17 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final locale = ref.watch(localeProvider);
     final messages = chatState.messages;
 
+    ref.listen<ChatState>(chatControllerProvider, (previous, next) {
+      final message = next.errorMessage;
+      if (message == null || message == previous?.errorMessage) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_resolveChatError(l10n, message)),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    });
+
     if (messages.isNotEmpty) {
       _scrollToBottom();
     }
@@ -70,7 +92,11 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       children: [
         _buildHeader(l10n, chatState),
         Expanded(
-          child: messages.isEmpty
+          child: chatState.conversationsLoading || chatState.conversationLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: AppColors.primary),
+                )
+              : messages.isEmpty
               ? _buildEmptyState(l10n)
               : ListView.builder(
                   controller: _scrollController,
@@ -84,7 +110,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ChatComposer(
           hint: l10n.askPlaceholder,
           sendTooltip: l10n.sendQuestionTooltip,
-          enabled: !chatState.isSending,
+          enabled: !chatState.isBusy,
           onSend: (text) {
             ref
                 .read(chatControllerProvider.notifier)
@@ -96,6 +122,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 
   Widget _buildHeader(AppLocalizations l10n, ChatState state) {
+    final activeConversation = state.activeConversation;
+
     return Container(
       decoration: const BoxDecoration(
         color: AppColors.surface,
@@ -103,33 +131,237 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           bottom: BorderSide(color: AppColors.primary100, width: 1),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: Row(
-              children: [
-                const Spacer(),
-                Tooltip(
-                  message: l10n.newChatTooltip,
-                  triggerMode: TooltipTriggerMode.tap,
-                  child: TextButton.icon(
-                    onPressed: state.isSending
-                        ? null
-                        : () => ref
-                              .read(chatControllerProvider.notifier)
-                              .clearChat(),
-                    icon: const Icon(Icons.add, size: 16),
-                    label: Text(l10n.newChat),
-                  ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextButton.icon(
+                onPressed: state.isSending
+                    ? null
+                    : () => _showConversationHistory(l10n, state),
+                icon: const Icon(Icons.history, size: 18),
+                label: Text(
+                  activeConversation?.title ?? l10n.chatConversations,
+                  overflow: TextOverflow.ellipsis,
                 ),
+              ),
+            ),
+            Tooltip(
+              message: l10n.newChatTooltip,
+              triggerMode: TooltipTriggerMode.tap,
+              child: IconButton(
+                onPressed: state.isBusy
+                    ? null
+                    : () => ref
+                          .read(chatControllerProvider.notifier)
+                          .newConversation(l10n.newChat),
+                icon: state.creatingConversation
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppColors.primary,
+                        ),
+                      )
+                    : const Icon(Icons.add),
+                tooltip: l10n.newChat,
+              ),
+            ),
+            IconButton(
+              onPressed: activeConversation == null || state.isBusy
+                  ? null
+                  : () => _confirmDeleteConversation(l10n, activeConversation),
+              icon:
+                  state.deletingConversationId != null &&
+                      state.deletingConversationId == activeConversation?.id
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.error,
+                      ),
+                    )
+                  : const Icon(Icons.delete_outline),
+              tooltip: l10n.deleteChatConversation,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showConversationHistory(
+    AppLocalizations l10n,
+    ChatState state,
+  ) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) {
+        final conversations = state.conversations;
+        final maxListHeight = MediaQuery.sizeOf(context).height * 0.55;
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.chatConversations,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: state.isBusy
+                          ? null
+                          : () {
+                              Navigator.pop(context);
+                              ref
+                                  .read(chatControllerProvider.notifier)
+                                  .newConversation(l10n.newChat);
+                            },
+                      icon: const Icon(Icons.add, size: 16),
+                      label: Text(l10n.newChat),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (conversations.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: Text(
+                      l10n.noChatConversations,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: AppTokens.bodySmallSize,
+                      ),
+                    ),
+                  )
+                else
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: maxListHeight),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: conversations.length,
+                      separatorBuilder: (_, _) =>
+                          const Divider(height: 1, color: AppColors.primary100),
+                      itemBuilder: (context, index) {
+                        final conversation = conversations[index];
+                        final selected =
+                            conversation.id == state.activeConversationId;
+                        return ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          selected: selected,
+                          leading: Icon(
+                            selected
+                                ? Icons.chat_bubble
+                                : Icons.chat_bubble_outline,
+                            color: selected
+                                ? AppColors.primary
+                                : AppColors.textSecondary,
+                          ),
+                          title: Text(
+                            conversation.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: Text(
+                            _conversationSubtitle(l10n, conversation),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete_outline),
+                            tooltip: l10n.deleteChatConversation,
+                            onPressed: state.isBusy
+                                ? null
+                                : () {
+                                    Navigator.pop(context);
+                                    _confirmDeleteConversation(
+                                      l10n,
+                                      conversation,
+                                    );
+                                  },
+                          ),
+                          onTap: state.isBusy
+                              ? null
+                              : () {
+                                  Navigator.pop(context);
+                                  ref
+                                      .read(chatControllerProvider.notifier)
+                                      .openConversation(conversation.id);
+                                },
+                        );
+                      },
+                    ),
+                  ),
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _confirmDeleteConversation(
+    AppLocalizations l10n,
+    ChatConversation conversation,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.deleteChatConversation),
+        content: Text(l10n.deleteChatConversationConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(l10n.delete),
           ),
         ],
       ),
     );
+
+    if (confirmed != true || !mounted) return;
+    await ref
+        .read(chatControllerProvider.notifier)
+        .deleteConversation(conversation.id);
+  }
+
+  String _conversationSubtitle(
+    AppLocalizations l10n,
+    ChatConversation conversation,
+  ) {
+    final preview = conversation.lastMessagePreview;
+    final date = _formatConversationDate(conversation.lastMessageAt);
+    if (preview == null || preview.trim().isEmpty) {
+      return date;
+    }
+    return '$date · $preview';
+  }
+
+  String _formatConversationDate(DateTime value) {
+    final local = value.toLocal();
+    final day = local.day.toString().padLeft(2, '0');
+    final month = local.month.toString().padLeft(2, '0');
+    final hour = local.hour.toString().padLeft(2, '0');
+    final minute = local.minute.toString().padLeft(2, '0');
+    return '$day/$month $hour:$minute';
   }
 
   Widget _buildEmptyState(AppLocalizations l10n) {

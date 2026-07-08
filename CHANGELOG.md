@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.3.0
+
+### Added
+
+- Registered Chat Conversations: chat history is now stored as backend conversations that users can reopen and continue later.
+- Conversation Picker: added a conversation list with support for opening previous chats, starting a new saved conversation, and deleting an entire conversation.
+- Backend Conversation API Integration: chat requests now send `conversation_id`, load persisted messages, and keep follow-up questions scoped to the selected conversation.
+
+### Changed
+
+- New Chat Flow: creating a new chat now creates a saved conversation instead of only clearing the current chat screen.
+- First Question Titles: new conversations are titled from the first question when possible, replacing the generic "New Chat" label.
+- Privacy Copy: updated localized privacy text to explain that chat conversations are saved to the user's account.
+
+### Fixed
+
+- Prevented follow-up context from mixing between separate conversations.
+- Improved small-viewport chat history access with a compact conversation picker and delete action.
+
 ## 1.2.0
 
 - Added GDPR/LGPD controls: data export, account deletion, consent, and updated privacy/terms content.
