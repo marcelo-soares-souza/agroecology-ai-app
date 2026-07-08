@@ -329,21 +329,21 @@ class ChatController extends StateNotifier<ChatState> {
         locale: locale,
       );
 
-      if (shouldRename) {
-        try {
-          await _renameConversation(
-            activeConversationId,
-            _titleFromQuestion(cleanQuestion),
-          );
-        } catch (_) {}
-      }
-
       state = state.copyWith(
         sendStatus: ChatSendStatus.polling,
         pollingTaskId: result.taskId,
       );
 
       _startPolling(result.taskId);
+
+      if (shouldRename) {
+        unawaited(
+          _renameConversation(
+            activeConversationId,
+            _titleFromQuestion(cleanQuestion),
+          ).catchError((_) {}),
+        );
+      }
     } catch (e) {
       _updateAssistantMessage(
         assistantMsg.id,
