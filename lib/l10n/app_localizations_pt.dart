@@ -36,6 +36,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get emailRequired => 'Email é obrigatório';
 
   @override
+  String get emailInvalid => 'Informe um email válido';
+
+  @override
   String get passwordLabel => 'Senha';
 
   @override

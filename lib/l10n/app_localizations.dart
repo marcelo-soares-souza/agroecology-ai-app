@@ -150,6 +150,12 @@ abstract class AppLocalizations {
   /// **'Email is required'**
   String get emailRequired;
 
+  /// No description provided for @emailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address'**
+  String get emailInvalid;
+
   /// No description provided for @passwordLabel.
   ///
   /// In en, this message translates to:

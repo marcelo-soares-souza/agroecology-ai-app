@@ -8,6 +8,7 @@
   "emailHint": "seu@email.com",
   "emailHelper": "Use o email da sua conta para receber confirmações e avisos importantes.",
   "emailRequired": "Email é obrigatório",
+  "emailInvalid": "Informe um email válido",
   "passwordLabel": "Senha",
   "passwordHint": "Sua senha",
   "passwordHelper": "Sua senha protege o acesso ao seu histórico e perfil.",

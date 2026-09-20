@@ -8,6 +8,7 @@
   "emailHint": "your@email.com",
   "emailHelper": "Use your account email to receive confirmations and important notices.",
   "emailRequired": "Email is required",
+  "emailInvalid": "Enter a valid email address",
   "passwordLabel": "Password",
   "passwordHint": "Your password",
   "passwordHelper": "Your password protects access to your history and profile.",

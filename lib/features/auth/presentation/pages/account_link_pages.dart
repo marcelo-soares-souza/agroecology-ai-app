@@ -7,6 +7,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/app_tokens.dart';
 import '../../../../core/ui/components.dart';
+import '../../../../core/utils/email_validator.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class ConfirmEmailPage extends ConsumerStatefulWidget {
@@ -181,8 +182,12 @@ class _ResendConfirmationPageState
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (_) => _submit(),
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
+                  final email = value?.trim() ?? '';
+                  if (email.isEmpty) {
                     return l10n.emailRequired;
+                  }
+                  if (!isValidEmail(email)) {
+                    return l10n.emailInvalid;
                   }
                   return null;
                 },

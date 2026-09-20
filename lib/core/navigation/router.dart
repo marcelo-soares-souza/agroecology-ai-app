@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../bootstrap/providers.dart';
 import '../../core/error/exceptions.dart';
+import '../../core/utils/email_validator.dart';
 import '../../l10n/app_localizations.dart';
 import '../../features/chat/presentation/pages/chat_page.dart';
 import '../../features/auth/presentation/pages/account_link_pages.dart';
@@ -753,8 +754,12 @@ class _LoginPageState extends ConsumerState<_LoginPage> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
+                        final email = value?.trim() ?? '';
+                        if (email.isEmpty) {
                           return l10n.emailRequired;
+                        }
+                        if (!isValidEmail(email)) {
+                          return l10n.emailInvalid;
                         }
                         return null;
                       },
@@ -1047,8 +1052,12 @@ class _RegisterPageState extends ConsumerState<_RegisterPage> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
+                      final email = value?.trim() ?? '';
+                      if (email.isEmpty) {
                         return l10n.emailRequired;
+                      }
+                      if (!isValidEmail(email)) {
+                        return l10n.emailInvalid;
                       }
                       return null;
                     },
@@ -1331,8 +1340,12 @@ class _ForgotPasswordPageState extends ConsumerState<_ForgotPasswordPage> {
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.done,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    final email = value?.trim() ?? '';
+                    if (email.isEmpty) {
                       return l10n.emailRequired;
+                    }
+                    if (!isValidEmail(email)) {
+                      return l10n.emailInvalid;
                     }
                     return null;
                   },

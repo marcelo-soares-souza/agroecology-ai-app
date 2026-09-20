@@ -36,6 +36,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get emailRequired => 'El email es obligatorio';
 
   @override
+  String get emailInvalid => 'Ingresa un email válido';
+
+  @override
   String get passwordLabel => 'Contraseña';
 
   @override
